@@ -1,0 +1,1 @@
+<?php /**PATH C:\Program Files\Ampps\www\CustomAirData\resources\views/puntosMonitoreo/modal.blade.php ENDPATH**/ ?>

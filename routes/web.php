@@ -1,0 +1,51 @@
+<?php
+
+Auth::routes();
+Route::get('/', 'HomeController@index')->name('home');
+
+// Map dashboard
+Route::get('/mapa', 'MapaController@index')->name('mapa');
+Route::get('get_chart/{id}/{val}/{conv}', 'MapaController@grafica')->name('get_chart');
+Route::get('/map-chart/{id}', 'MapaController@descripcionMapa')->name('mapChart');
+
+// Panel de análisis
+Route::get('/dashboard', 'PanelAnalisisController@index')->name('dashboard');
+
+//Consulta de datos
+Route::get('/consulta-de-datos', 'ConsultaDatosController@index')->name('consulta-de-datos');
+Route::get('/submit-filter', 'ConsultaDatosController@cargaFiltro')->name('submit_filter');
+Route::get('/cargar-tabla', 'ConsultaDatosController@cargarTabla')->name('cargarTabla');
+Route::get('/cargar-contaminantes/{punto}', 'ConsultaDatosController@cargarContaminantes')->name('cargarContaminantes');
+
+// Carga manual
+Route::get('/manual-upload', 'DatosController@manual_upload')->name('manual-upload');
+Route::post('file-upload', 'DatosController@fileUploadPost')->name('file.upload.post');
+
+//Empresas
+Route::get('empresas/delete/{id}', 'EmpresasController@destroy')->name('empresas.destroy');
+Route::resource('empresas', 'EmpresasController', ['except' => ['destroy']]);
+
+// Usuarios
+Route::get('users/delete/{id}', 'UsersController@destroy')->name('users.destroy');
+Route::resource('users', 'UsersController', ['except' => ['destroy']]);
+
+// Estaciones
+Route::get('estaciones/delete/{id}', 'EstacionesController@destroy')->name('estaciones.destroy');
+Route::resource('estaciones', 'EstacionesController', ['except' => ['destroy']]);
+
+// Campañas
+Route::get('campanas/delete/{id}', 'CampanasController@destroy')->name('campanas.destroy');
+Route::resource('campanas', 'CampanasController', ['except' => ['destroy']]);
+
+// Puntos de monitoreo
+Route::get('puntos-monitoreo/{id}', 'PuntosMonitoreoController@index')->name('puntos-monitoreo.index');
+Route::get('puntos-monitoreo/{id}/show', 'PuntosMonitoreoController@show')->name('puntos-monitoreo.show');
+Route::get('puntos-monitoreo/create/{id}', 'PuntosMonitoreoController@create')->name('puntos-monitoreo.create');
+Route::post('puntos-monitoreo/store/{id}', 'PuntosMonitoreoController@store')->name('puntos-monitoreo.store');
+Route::get('puntos-monitoreo/delete/{id}', 'PuntosMonitoreoController@destroy')->name('puntos-monitoreo.destroy');
+Route::get('puntos-monitoreo/imprimir-detalles/{punto}', 'PuntosMonitoreoController@imprimir')->name('puntos-monitoreo.imprimir');
+Route::resource('puntos-monitoreo', 'PuntosMonitoreoController', ['except' => ['index', 'create', 'store', 'show', 'destroy']]); 
+
+// Configuración de cuenta
+Route::get('cuenta', 'ConfiguracionCuentaController@edit')->name('cuenta.edit');
+Route::post('cuenta', 'ConfiguracionCuentaController@update')->name('cuenta.update');
