@@ -96,7 +96,9 @@
             $.blockUI({message: '<h1>Por favor espera...</h1>' });
 
             if (!$(this).val()) {
-                $('.rango').val('');
+                $('#dates').val('');
+                $('#contaminantes').empty();
+                $.unblockUI();
                 
             } else {
                 var selected = $(this).find('option:selected');
