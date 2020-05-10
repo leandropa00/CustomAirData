@@ -28,7 +28,7 @@
             </table>
         </div>
         <div class="col-12 col-md-8">
-            <iframe frameBorder="0" id="crtifrm" style="background-color: #f8f8f8; width:95%; height:100%;"></iframe>
+            <iframe src="{{ route('graficar', [$punto->id, $contaminantes[0]->nombre_campo, $contaminantes[0]->conversion]) }}" frameBorder="0" id="crtifrm" style="background-color: #f8f8f8; width:95%; height:100%;"></iframe>
         </div>
     </div>
 @else

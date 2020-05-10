@@ -5,7 +5,7 @@ Route::get('/', 'HomeController@index')->name('home');
 
 // Map dashboard
 Route::get('/mapa', 'MapaController@index')->name('mapa');
-Route::get('get_chart/{id}/{val}/{conv}', 'MapaController@grafica')->name('get_chart');
+Route::get('graficar/{id}/{val}/{conv}', 'MapaController@grafica')->name('graficar');
 Route::get('/map-chart/{id}', 'MapaController@descripcionMapa')->name('mapChart');
 
 // Panel de análisis
