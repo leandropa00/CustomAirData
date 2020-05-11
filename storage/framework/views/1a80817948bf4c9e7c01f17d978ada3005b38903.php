@@ -128,6 +128,7 @@
                 html = res;   
             }
         });
+
         return html;
     }
 
@@ -185,14 +186,15 @@
             }
 
         }, 80);
-
     }
 
     function get_chart(loc_id,val,conv){
-        $(".prev_button").css('display','flex');
-        $("#pre_loc_id").val(loc_id);
-        $("#pre_val").val(val);
-        $('#crtifrm').attr('src', "<?php echo e(url('/')); ?>/get_chart/"+loc_id+"/"+val+"/"+conv);   
+        var url = "<?php echo e(route('graficar', [':id', ':val', ':conv'])); ?>";
+        url = url.replace(':id', loc_id);
+        url = url.replace(':val', val);
+        url = url.replace(':conv', conv);
+
+        $('#crtifrm').attr('src', url);   
     }
 
 </script>
