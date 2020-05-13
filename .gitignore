@@ -4,7 +4,6 @@
 /public/images/puntos_monitoreo
 /public/conexion_bd.php
 /storage/*.key
-/vendor
 .env
 .env.backup
 .phpunit.result.cache
