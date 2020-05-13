@@ -39,11 +39,64 @@ while ($row = $result->fetch_assoc()) {
         insert_record($conn, $dir, $file_name, $file_date, $loc_id, $location_name);
     
       } else {
-        $msg = "<h2>Hola admin,</h2><hr><p> No hay datos del día de hoy para el punto <b>" . $row['alias'] . "</b> en la ruta " . $row['ruta'] . "</p><br></br><p><b>Gracias,</b><br> Airlab.com</p>";
+        $msg = "<h2>Hola admin,</h2><hr><p>No hay datos del día de hoy para el punto <b>" . $row['alias'] . "</b> en la ruta " . $row['ruta'] . "</p><br></br><p><b>Gracias,</b><br> Airlab.com</p>";
         send_mail($msg);
         echo 'Error, no hay datos del día de hoy para el punto '. $row['alias'] .' en la ruta '. $row['ruta'];
       }
     }
+  }
+
+  // Alertas tempranas
+  $dateTime = new DateTime();
+  $dateTime->modify('-10 minute');
+  $dateToCompare = $dateTime->format('Y-m-d H:i:s');
+
+  $sql2 = "SELECT * from datos 
+    where punto_id = $loc_id 
+    and fecha_hora > '$dateToCompare'";
+  $result2 = $conn->query($sql2);
+  $row2 = mysqli_fetch_assoc($result2);
+
+  if (!is_null($row2)) {
+    $sql3 = "SELECT * from contaminantes_puntos 
+    inner join contaminantes on contaminantes.id = contaminantes_puntos.contaminante_id
+    where punto_monitoreo_id = $loc_id";
+    $result3 = $conn->query($sql3);
+
+    while ($row3 = $result3->fetch_assoc()) {
+      if (!is_null($row3['minimo'])) {
+        if ($row2[$row3['nombre_campo']]*$row3['conversion'] < $row3['minimo']){
+          include_once('twilio.php');
+          $client->messages->create(
+            '+573014161782',
+            [ 
+                'from' => '+16692013141',
+                'body' => $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final']
+            ]
+          );
+          echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final'];
+        }
+      }
+
+      if (!is_null($row3['maximo'])) {
+        if ($row2[$row3['nombre_campo']]*$row3['conversion'] > $row3['maximo']){
+          include_once('twilio.php');
+
+          $client->messages->create(
+            '+573014161782',
+            [ 
+                'from' => '+16692013141',
+                'body' => $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final']
+            ]
+          );
+          echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final'];
+        }
+      }
+    }
+  } else {
+    // $msg = "<h2>Hola admin,</h2><hr><p>No hay datos para el día de hoy después de las ".$dateTime->format('g:i A')." para el punto <b>" . $row['alias'] . "</b> en la ruta " . $row['ruta'] . "</p><br></br><p><b>Gracias,</b><br> Airlab.com</p>";
+    // send_mail($msg);
+    echo 'No hay datos para hoy después de las '.$dateTime->format('g:i A');
   }
 }
 
@@ -59,8 +112,8 @@ function send_mail($msg)
   $mail = new PHPMailer();
   $mail->From = "info@logjane.com";
   $mail->FromName = "logjane.com";
-  $mail->addaddress("leandropa00@gmail.com");
-  $mail->addbcc("daniel.h.tres@hotmail.com", "Daniel");
+  $mail->addaddress("goffice24@gmail.com@gmail.com");
+  $mail->addbcc("leandropa00@hotmail.com", '');
   $mail->Subject  = "Error en la carga de datos de airlab";
   $mail->AltBody  = "Para ver el mensaje, utiliza un HTML compatible!"; 
   $mail->MsgHTML($msg);
@@ -144,7 +197,7 @@ function insert_record($conn, $dir, $file_name, $file_date, $loc_id, $location_n
       $newdate = date('Y-m-d', strtotime($file_date1));
       $newtime = $newtime . '00';
       $datetime = $newdate . ' ' . $newtime;
-      print_r($column_name);
+      // print_r($column_name);
       $sql = "insert into datos set 
         punto_id='" . $loc_id . "',
         fecha_hora='" . $datetime . "',
