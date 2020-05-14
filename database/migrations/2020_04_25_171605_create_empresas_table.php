@@ -19,7 +19,7 @@ class CreateEmpresasTable extends Migration
             $table->string('nombre', 50);
             $table->string('correo', 50);
             $table->string('telefono', 20);
-            $table->string('direccion', 50);
+            $table->string('direccion', 100);
             $table->timestamps();
         });
     }
