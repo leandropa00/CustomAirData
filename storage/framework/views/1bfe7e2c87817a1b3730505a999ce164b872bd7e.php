@@ -1,10 +1,11 @@
 <?php $__env->startSection('content'); ?>
+    <!-- BEGIN: Content-->
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
-
         <div class="content-wrapper">
-            <div class="content-header row"></div>
+            <div class="content-header row">
+            </div>
             <div class="content-body">
                 <section id="basic-vertical-layouts">
                     <?php if($message = Session::get('failed')): ?>
@@ -18,228 +19,101 @@
                         </div>
                     <?php endif; ?>
 
-                    <form action="<?php echo e(route('campanas.store')); ?>" method="post" id="form">
-                        <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
-                            <div class="card collapse-icon accordion-icon-rotate">
+                    <div class="row match-height">
+                        <div class="col-md-12 col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Crear campaña</h4>
+                                </div>
+
                                 <div class="card-content">
                                     <div class="card-body">
+                                        <form class="form form-vertical" action="<?php echo e(route('campanas.store')); ?>" method="POST" >
+                                            <?php echo csrf_field(); ?>
+                                            <div class="form-body">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Nombre</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <input type="text" maxlength="30" class="form-control" name="nombre" minlength="3" placeholder="Ingrese un nombre para la estación" required>
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-tag"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                        <div class="accordion-default collapse-bordered">
-                                            <div class="card collapse-header">
-                                                <div id="heading1" class="card-header collapse-header" data-toggle="collapse" role="button" data-target="#accordion1" aria-expanded="false" aria-controls="accordion1">
-                                                    <span class="lead collapse-title">
-                                                        Datos básicos
-                                                    </span>
-                                                </div>
-                                                <div id="accordion1" role="tabpanel" data-parent="#accordionWrapa1" aria-labelledby="heading1" class="collapse">
-                                                    <div class="card-content">
-                                                        <div class="card-body">
-    
-                                                            <div class="form-body">
-                                                                <div class="row">
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label>Nombre del punto</label>
-                                                                            <input type="text"class="form-control" name="nombre" placeholder="First Name" required>
-                                                                        </div>
-                                                                    </div>
-    
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="email-id-icon">Email</label>
-                                                                            <select class="custom-select form-control" id="location1" name="location">
-                                                                                <option value="new-york">New York</option>
-                                                                                <option value="chicago">Chicago</option>
-                                                                                <option value="san-francisco">San Francisco</option>
-                                                                                <option value="boston">Boston</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-    
-                                                                    <div class="col-12">
-                                                                        <div class="form-group">
-                                                                            <label for="contact-info-icon">Descripcion del punto</label>
-                                                                            <textarea class="form-control" id="basicTextarea" rows="1" placeholder="Textarea"></textarea>
-                                                                        </div>
-                                                                    </div>
-    
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Empresa</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <select name="empresa_id" class="form-control">
+                                                                    <?php $__empty_1 = true; $__currentLoopData = $empresas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                                                        <option value="<?php echo e($item->id); ?>"><?php echo e($item->nombre); ?></option>
+                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                                                        <option>No hay empresas creadas</option>   
+                                                                    <?php endif; ?>
+                                                                </select>
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-home"></i>
                                                                 </div>
                                                             </div>
-                                                            
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
+            
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Fecha inicio</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <input type="date" class="form-control datepicker" name="fecha_inicio"  placeholder="Ingrese la fecha de inicio de la campaña" required>
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-calendar"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                        <div class="accordion-default collapse-bordered">
-                                            <div class="card collapse-header">
-                                                <div id="heading2" class="card-header collapse-header" data-toggle="collapse" role="button" data-target="#accordion2" aria-expanded="false" aria-controls="accordion1">
-                                                    <span class="lead collapse-title">
-                                                        Ubicación del punto
-                                                    </span>
-                                                </div>
-                                                <div id="accordion2" role="tabpanel" data-parent="#accordionWrapa1" aria-labelledby="heading1" class="collapse">
-                                                    <div class="card-content">
-                                                        <div class="card-body">
-    
-                                                            <div class="form-body">
-                                                                <div class="row">
-                                                                    FORM                                                                
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Fecha fin</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <input type="date" class="form-control datepicker" name="fecha_fin"  placeholder="Ingrese la fecha de finalización de la campaña" required>
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-calendar"></i>
+                                                                </div>
+                                                            </div>                                                            
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label for="password-icon">Observaciones</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <textarea  id="notes" maxlength="100" class="form-control" name="observaciones" placeholder="Ingresa información adicional (opcional)"></textarea>
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-clipboard"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-default collapse-bordered">
-                                            <div class="card collapse-header">
-                                                <div id="heading3" class="card-header collapse-header" data-toggle="collapse" role="button" data-target="#accordion3" aria-expanded="false" aria-controls="accordion1">
-                                                    <span class="lead collapse-title">
-                                                        Fotos del punto
-                                                    </span>
-                                                </div>
-                                                <div id="accordion3" role="tabpanel" data-parent="#accordionWrapa1" aria-labelledby="heading1" class="collapse">
-                                                    <div class="card-content">
-                                                        <div class="card-body">
-    
-                                                            <div class="form-body">
-                                                                <div class="row">
-                                                                    FORM
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-default collapse-bordered">
-                                            <div class="card collapse-header">
-                                                <div id="heading4" class="card-header collapse-header" data-toggle="collapse" role="button" data-target="#accordion4" aria-expanded="false" aria-controls="accordion1">
-                                                    <span class="lead collapse-title">
-                                                        Niveles I a III
-                                                    </span>
-                                                </div>
-                                                <div id="accordion4" role="tabpanel" data-parent="#accordionWrapa1" aria-labelledby="heading1" class="collapse">
-                                                    <div class="card-content">
-                                                        <div class="card-body">
-    
-                                                            <div class="form-body">
-                                                                <div class="row">
-                                                                    FORM    
-                                                                </div>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-default collapse-bordered">
-                                            <div class="card collapse-header">
-                                                <div id="heading5" class="card-header collapse-header" data-toggle="collapse" role="button" data-target="#accordion5" aria-expanded="false" aria-controls="accordion1">
-                                                    <span class="lead collapse-title">
-                                                        Nivel IV
-                                                    </span>
-                                                </div>
-                                                <div id="accordion5" role="tabpanel" data-parent="#accordionWrapa1" aria-labelledby="heading1" class="collapse">
-                                                    <div class="card-content">
-                                                        <div class="card-body">
-    
-                                                            <div class="form-body">
-                                                                <div class="row">
-                                                                    FORM    
-                                                                </div>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-default collapse-bordered">
-                                            <div class="card collapse-header">
-                                                <div id="heading6" class="card-header collapse-header" data-toggle="collapse" role="button" data-target="#accordion6" aria-expanded="false" aria-controls="accordion1">
-                                                    <span class="lead collapse-title">
-                                                        Datos de logística
-                                                    </span>
-                                                </div>
-                                                <div id="accordion6" role="tabpanel" data-parent="#accordionWrapa1" aria-labelledby="heading1" class="collapse">
-                                                    <div class="card-content">
-                                                        <div class="card-body">
-    
-                                                            <div class="form-body">
-                                                                <div class="row">
-                                                                    FORM    
-                                                                </div>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-default collapse-bordered">
-                                            <div class="card collapse-header">
-                                                <div id="heading7" class="card-header collapse-header" data-toggle="collapse" role="button" data-target="#accordion7" aria-expanded="false" aria-controls="accordion1">
-                                                    <span class="lead collapse-title">
-                                                        Criterios de microlocalización
-                                                    </span>
-                                                </div>
-                                                <div id="accordion7" role="tabpanel" data-parent="#accordionWrapa1" aria-labelledby="heading1" class="collapse">
-                                                    <div class="card-content">
-                                                        <div class="card-body">
-    
-                                                            <div class="form-body">
-                                                                <div class="row">
-                                                                    FORM    
-                                                                </div>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-default collapse-bordered">
-                                            <div class="card collapse-header">
-                                                <div id="heading8" class="card-header collapse-header" data-toggle="collapse" role="button" data-target="#accordion8" aria-expanded="false" aria-controls="accordion1">
-                                                    <span class="lead collapse-title">
-                                                        Personal de contacto
-                                                    </span>
-                                                </div>
-                                                <div id="accordion8" role="tabpanel" data-parent="#accordionWrapa1" aria-labelledby="heading1" class="collapse">
-                                                    <div class="card-content">
-                                                        <div class="card-body">
-    
-                                                            <div class="form-body">
-                                                                <div class="row">
-                                                                    FORM    
-                                                                </div>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                                    </div> 
 
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <button type="submit" class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Guardar</button>
-                                        </div>
+                                                    <div class="col-12">
+                                                        <button type="submit" class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </section>
             </div>
         </div>
     </div>
+    <!-- END: Content-->
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/logjanec/public_html/customair/resources/views/campanas/crear.blade.php ENDPATH**/ ?>

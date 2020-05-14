@@ -67,6 +67,7 @@
                                                         <td><?php echo e(carbon\Carbon::parse($data->fecha_compra)->format('d-m-Y g:i A')); ?></td>
                                                         <td><?php echo e($data->observaciones); ?></td>
                                                         <td>
+                                                            <button onclick="abrirModal(<?php echo e($data->id); ?>)" class="btn btn-icon btn-outline-primary waves-effect waves-light"><i class="feather icon-info"></i></button>                                                          
                                                             <a class="btn btn-icon btn-outline-warning waves-effect waves-light" href="<?php echo e(route('estaciones.edit', $data->id)); ?>"><i class="feather icon-edit"></i></a>
                                                             <a class="btn btn-icon btn-outline-danger waves-effect waves-light" href="<?php echo e(route('estaciones.destroy', $data->id)); ?>"><i class="feather icon-trash-2"></i></a>
                                                         </td>
@@ -89,6 +90,22 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetallesLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalDetallesBody">
+                Cargando...
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- END: Content-->
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
@@ -104,9 +121,24 @@
 <script src="<?php echo e(url('/')); ?>/includes/app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
 <!-- END: Page Vendor JS-->
 
-
 <!-- BEGIN: Page JS-->
 <script src="<?php echo e(url('/')); ?>/includes/app-assets/js/scripts/datatables/datatable.js"></script>
+<script>
+    function abrirModal(id){
+        var url = "<?php echo e(route('estaciones.show', ':id')); ?>"
+        url = url.replace(':id', id);
+
+        $.ajax({
+            type: "get",
+            url: url,
+            success: function (response) {
+                $("#modalDetalles").modal("show");                
+                $("#modalDetallesLabel").html('Historial de '+response.titulo);                
+                $("#modalDetallesBody").html(response.html);                   
+            }
+        });
+    }
+</script>
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/logjanec/public_html/customair/resources/views/estaciones/index.blade.php ENDPATH**/ ?>

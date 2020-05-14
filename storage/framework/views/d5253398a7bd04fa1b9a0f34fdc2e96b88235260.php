@@ -266,7 +266,7 @@
                                                                             <div>
                                                                                 <select name="time" id="time" class="form-control select2" data-style="form-control">
                                                                                     <option value="1">Fija</option>
-                                                                                    <option value="2">Inactiva</option>
+                                                                                    <option value="2">Indicativa</option>
                                                                                 </select>
                                                                             </div>
                                                                         </div>
@@ -441,7 +441,7 @@
                                                                                                         <div class="form-group">
                                                                                                             <label>Tipo</label>
                                                                                                             <div>
-                                                                                                                <input type="text" id="tipo" class="form-control" name="tipo" placeholder="Tipo" maxlength="10">
+                                                                                                                <input type="text" id="tipo" class="form-control" name="tipo" placeholder="Tipo" maxlength="20">
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
@@ -450,7 +450,7 @@
                                                                                                         <div class="form-group">
                                                                                                             <label>Distancia de la fuente</label>
                                                                                                             <div>
-                                                                                                                <input type="text" id="distancia" class="form-control" name="distancia" placeholder="Metros" maxlength="10">
+                                                                                                                <input type="text" id="distancia" class="form-control" name="distancia" placeholder="Metros" maxlength="20">
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>   
@@ -691,7 +691,7 @@
                                                                         <div class="form-group">
                                                                             <div>
                                                                                 <div>
-                                                                                    <input type="text" id="dist_est" maxlength="25" class="form-control" name="dist_est" placeholder="Mts">
+                                                                                    <input type="text" id="dist_est" maxlength="25" class="form-control" name="dist_est" placeholder="Kmt">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -791,8 +791,9 @@
                                                                         <div class="form-group">
                                                                             <div class="form-check">
                                                                                 <div class="custom-control custom-switch">
+                                                                                    No
                                                                                     <input type="checkbox" class="custom-control-input" id="cond_seg_check" name="cond_seg_check">
-                                                                                    <label class="custom-control-label" for="cond_seg_check">yes</label>
+                                                                                    <label class="custom-control-label" for="cond_seg_check"></label>Sí
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -818,8 +819,9 @@
                                                                         <div class="form-group">
                                                                             <div class="form-check">
                                                                                 <div class="custom-control custom-switch">
+                                                                                    No
                                                                                     <input type="checkbox" class="custom-control-input" id="expo_tom_check" name="expo_tom_check">
-                                                                                    <label class="custom-control-label" for="expo_tom_check"></label>
+                                                                                    <label class="custom-control-label" for="expo_tom_check"></label>Sí
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -847,8 +849,9 @@
                                                                         <div class="form-group">
                                                                             <div class="form-check">
                                                                                 <div class="custom-control custom-switch">
+                                                                                    No
                                                                                     <input type="checkbox" class="custom-control-input" id="cond_logis_check" name="cond_logis_check">
-                                                                                    <label class="custom-control-label" for="cond_logis_check"></label>
+                                                                                    <label class="custom-control-label" for="cond_logis_check"></label>Sí
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -874,8 +877,9 @@
                                                                         <div class="form-group">
                                                                             <div class="form-check">
                                                                                 <div class="custom-control custom-switch">
+                                                                                    No
                                                                                     <input type="checkbox" class="custom-control-input" id="cerc_parq_check" name="cerc_parq_check">
-                                                                                    <label class="custom-control-label" for="cerc_parq_check"></label>
+                                                                                    <label class="custom-control-label" for="cerc_parq_check"></label>Sí
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -903,8 +907,9 @@
                                                                         <div class="form-group">
                                                                             <div class="form-check">
                                                                                 <div class="custom-control custom-switch">
+                                                                                    No
                                                                                     <input type="checkbox" class="custom-control-input" id="cerc_carr_sin_check" name="cerc_carr_sin_check">
-                                                                                    <label class="custom-control-label" for="cerc_carr_sin_check"></label>
+                                                                                    <label class="custom-control-label" for="cerc_carr_sin_check"></label>Sí
                                                                                 </div>
                                                                             </div>
                                                                         </div>

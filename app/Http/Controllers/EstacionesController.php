@@ -56,4 +56,14 @@ class EstacionesController extends Controller
         return redirect()->route('estaciones.index')->with('success','Estación eliminada satisfactoriamente');    
     }
 
+    public function show($id)
+    {
+        $estacion = Estacion::find($id);
+        $view = view('estaciones.modal', compact('estacion'))->render();
+
+        return [
+            'titulo' => $estacion->nombre, 
+            'html' => $view
+        ];
+    }
 }
