@@ -77,9 +77,9 @@ while ($row = $result->fetch_assoc()) {
         if ($row2[$row3['nombre_campo']]*$row3['conversion'] < $row3['minimo']){
           include_once('twilio.php');
           $client->messages->create(
-            '+573014161782',
+            $telefono,
             [ 
-                'from' => $telefono,
+                'from' => '+16692013141',
                 'body' => $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final']
             ]
           );
@@ -92,9 +92,9 @@ while ($row = $result->fetch_assoc()) {
           include_once('twilio.php');
 
           $client->messages->create(
-            '+573014161782',
+            $telefono,
             [ 
-                'from' => $telefono,
+                'from' => '+16692013141',
                 'body' => $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final']
             ]
           );
