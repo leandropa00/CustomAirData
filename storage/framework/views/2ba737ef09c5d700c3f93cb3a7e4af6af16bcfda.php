@@ -28,7 +28,7 @@
                                 <div class="card-content">
                                     <div class="card-body">
                               
-                                        <form class="form form-vertical"method="POST" action="<?php echo e(route('register')); ?>">
+                                        <form class="form form-vertical" method="POST" action="<?php echo e(route('users.store')); ?>">
                                             <?php echo csrf_field(); ?>
                                             <div class="form-body">
                                                 <div class="row">
@@ -36,7 +36,7 @@
                                                         <div class="form-group">
                                                             <label>Nombre</label>
                                                             <div class="position-relative has-icon-left">
-                                                                <input id="name" minlength="3" type="text" class="form-control" name="name" autocomplete="name" required placeholder="Ingresa un nombre para el usuario" >
+                                                                <input id="name" minlength="3" maxlength="40" type="text" class="form-control" name="name" autocomplete="name" required placeholder="Ingresa un nombre para el usuario" >
                                                                 
                                                                 <div class="form-control-position">
                                                                     <i class="feather icon-user"></i>
@@ -50,7 +50,7 @@
                                                         <div class="form-group">
                                                             <label>Correo electrónico</label>
                                                             <div class="position-relative has-icon-left">
-                                                                <input id="email" type="email" class="form-control" name="email" placeholder="Ingresa el correo electrónico" required autocomplete="email">
+                                                                <input id="email" type="email" maxlength="30" class="form-control" name="email" placeholder="Ingresa el correo electrónico" required autocomplete="email">
                                                                 
                                                                 <div class="form-control-position">
                                                                     <i class="feather icon-mail"></i>
@@ -59,29 +59,32 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-md-6 col-12">
-                                                        <div class="form-group">
-                                                            <label>Empresa</label>
-                                                            <div class="position-relative has-icon-left">
-                                                                <select name="empresa" class="form-control" required>
-                                                                    <option value="">Selecciona una empresa</option>
-                                                                    <?php $__currentLoopData = $empresas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                                        <option value="<?php echo e($item->id); ?>"><?php echo e(ucwords($item->nombre)); ?></option>
-                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                                </select>
-                                                                <div class="form-control-position">
-                                                                    <i class="feather icon-user"></i>
+                                                    
+                                                    <?php if(Auth::user()->rol=='admin'): ?>
+                                                        <div class="col-md-6 col-12">
+                                                            <div class="form-group">
+                                                                <label>Empresa</label>
+                                                                <div class="position-relative has-icon-left">
+                                                                    <select name="empresa" class="form-control" required>
+                                                                        <option value="">Selecciona una empresa</option>
+                                                                        <?php $__currentLoopData = $empresas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                            <option value="<?php echo e($item->id); ?>"><?php echo e(ucwords($item->nombre)); ?></option>
+                                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                    </select>
+                                                                    <div class="form-control-position">
+                                                                        <i class="feather icon-user"></i>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-
+                                                    <?php else: ?>
+                                                        <input type="hidden" name="empresa" value="<?php echo e(Auth::user()->empresa->id); ?>">
+                                                    <?php endif; ?>
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label>Contraseña</label>
                                                             <div class="position-relative has-icon-left">
-                                                                <input id="password" type="password" minlength="8" class="form-control" name="password" placeholder="Ingresa una contraseña" required autocomplete="new-password">
+                                                                <input id="password" type="password" minlength="8" maxlength="20" class="form-control" name="password" placeholder="Ingresa una contraseña" required autocomplete="new-password">
                                                                 
                                                                 <div class="form-control-position">
                                                                     <i class="feather icon-lock"></i>
