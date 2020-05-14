@@ -1,6 +1,11 @@
 <!-- BEGIN: Main Menu-->
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="navbar-header">
+        {{-- <div class="text-center" style="margin-top: 5px">
+            <a href="{{url('/mapa')}}">
+                <img src="{{asset('includes/app-assets/images/pages/logo.png')}}" width="50%">
+            </a>
+        </div> --}}
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item mr-auto"><a class="navbar-brand" href="{{url('/')}}">
                     <div class="brand-logo"></div>
@@ -12,15 +17,9 @@
 
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
-        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class=" navigation-header li_show li_none">
-                <span>Menú</span>
-                <span onclick="show_menu()" style="float:right;padding-right:10px; font-size: 17px;"><i class="primary feather icon-eye"></i></span>
-            </li>
-            
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">            
             <li class=" navigation-header li_hide ">
                 <span>Menú</span> 
-                <span onclick="hide_menu()" style="float:right;padding-right:10px; font-size: 17px;"><i class="primary feather icon-eye-off"></i></span>
             </li>
             <li class=" nav-item my_menu ">
                 <a href="{{ route('mapa') }}"><i class="feather icon-map"></i><span class="menu-item">Mapa</span></a>
