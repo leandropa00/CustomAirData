@@ -1,0 +1,153 @@
+<?php $__env->startSection('content'); ?>
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <section id="basic-vertical-layouts">
+                    <?php if($message = Session::get('failed')): ?>
+                        <div class="row">
+                             <div class="col-12">
+                                <div class="alert alert-danger alert-block">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    <strong><?php echo e($message); ?></strong>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                        
+                    <div class="row match-height">
+                        <div class="col-md-12 col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Editar estación</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <form class="form form-vertical" action="<?php echo e(route('submit.submit-edit-locaton.post')); ?>" method="POST" >
+                                            <?php echo csrf_field(); ?>
+                                            <div class="form-body">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Nombre</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <input type="text" id="location_name" class="form-control" minlength="3" value="<?php echo e($edit_location->location_name); ?>" name="location_name" required placeholder="Ingrese un nombre para la estación">
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-tag"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Ruta en el servidor</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <input type="text" id="server_path" class="form-control" value="<?php echo e($edit_location->server_path); ?>" name="server_path" placeholder="Ingrese la ruta de archivos en el servidor" required>
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-navigation"></i>
+                                                                    <p class="text-muted ml-75 mt-50">
+                                                                </div>
+                                                                <small>Eg:/home/logjanec/public_html/</small></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Latitud</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <input type="number" step="any" id="latitude" class="form-control" name="latitude" value="<?php echo e($edit_location->latitude); ?>" placeholder="Ingresa la latitud de la estación" required>
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-map-pin"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Longitud</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <input type="number" step="any" id="longitude" class="form-control" name="longitude" value="<?php echo e($edit_location->longitude); ?>" placeholder="Ingresa la longitud de la estación" required>
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-map-pin"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Cliente</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <select name="client" id="client" class="form-control" required>
+                                                                    <option value="">Selecciona un cliente</option>
+                                                                    <?php $__currentLoopData = $clients; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                        <option <?php echo e($item->id == $edit_location->user_id ? 'selected' : ''); ?> value="<?php echo e($item->id); ?>"><?php echo e(ucwords($item->name)); ?></option>
+                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                </select>
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-user"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label for="password-icon">Notas</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <textarea id="notes" class="form-control" name="notes" placeholder="Ingresa información adicional (opcional)"><?php echo e($edit_location->notes); ?></textarea>
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-clipboard"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <h4 class="card-title">Contaminantes</h4>
+                                                    </div>
+
+                                                    <?php $__currentLoopData = $contaminantes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <div class="form-group col-md-2 col-6">
+                                                            <fieldset class="checkbox">
+                                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                    <input class="checkbox_contaminantes" type="checkbox" name="contaminantes[]" value="<?php echo e($item->id); ?>" <?php echo e($item->location_id ? 'checked' : ''); ?>>
+                                                                    <span class="vs-checkbox">
+                                                                        <span class="vs-checkbox--check">
+                                                                            <i class="vs-icon feather icon-check"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span><?php echo e($item->nombre); ?></span>
+                                                                </div>
+                                                            </fieldset>
+                                                        </div>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                                    <input type="hidden" id="id" class="form-control" name="id" value="<?php echo e($edit_location->id); ?>" >
+
+                                                    <div class="col-12">
+                                                        <button type="submit" class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Update</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/logjanec/public_html/customair/resources/views/edit_location.blade.php ENDPATH**/ ?>
