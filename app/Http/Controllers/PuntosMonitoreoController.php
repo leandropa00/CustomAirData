@@ -345,4 +345,28 @@ class PuntosMonitoreoController extends Controller
         $puntoMonitoreo = PuntoMonitoreo::find($id);
         return view('puntosMonitoreo.imprimir', compact('puntoMonitoreo'));
     }
+
+    public function contaminantes($id) 
+    {
+        $puntoMonitoreo = PuntoMonitoreo::find($id);
+        
+        return view('puntosMonitoreo.contaminantes', compact('puntoMonitoreo'));
+    }
+
+    public function rangos(Request $request, $id) 
+    {
+        $puntoMonitoreo = PuntoMonitoreo::find($id);
+
+        foreach ($request['contaminantes'] as $key => $value) {
+            $puntoMonitoreo->contaminantes()->updateExistingPivot(
+                $value, 
+                [
+                    'minimo' => $request['min'][$key], 
+                    'maximo' => $request['max'][$key] 
+                ]
+            );
+        }
+
+        return redirect()->route('puntos-monitoreo.index', $puntoMonitoreo->campana->id)->with('success', 'Niveles actualizados satisfactoriamente');
+    }
 }

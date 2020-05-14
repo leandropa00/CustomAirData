@@ -69,6 +69,7 @@
                                                     <td>
                                                         <button onclick="abrirModal({{$item->id}})" class="btn btn-icon btn-outline-primary waves-effect waves-light"><i class="feather icon-info"></i></button>                                                          
                                                         <a class="btn btn-icon btn-outline-secondary waves-effect waves-light" target="_blank" href="{{route('puntos-monitoreo.imprimir', $item->id)}}"><i class="feather icon-printer"></i></a>
+                                                        <a class="btn btn-icon btn-outline-vimeo waves-effect waves-light" href="{{ route('puntos-monitoreo.contaminantes', $item->id) }}"><i class="feather icon-wind"></i></a>
                                                         @if (Auth::user()->rol=='admin')
                                                             <a class="btn btn-icon btn-outline-warning waves-effect waves-light" href="{{ route('puntos-monitoreo.edit', $item->id) }}"><i class="feather icon-edit"></i></a>
                                                             <a class="btn btn-icon btn-outline-danger waves-effect waves-light" href="{{ route('puntos-monitoreo.destroy', $item->id) }}"><i class="feather icon-trash-2"></i></a>

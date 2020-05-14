@@ -44,6 +44,8 @@ Route::get('puntos-monitoreo/create/{id}', 'PuntosMonitoreoController@create')->
 Route::post('puntos-monitoreo/store/{id}', 'PuntosMonitoreoController@store')->name('puntos-monitoreo.store');
 Route::get('puntos-monitoreo/delete/{id}', 'PuntosMonitoreoController@destroy')->name('puntos-monitoreo.destroy');
 Route::get('puntos-monitoreo/imprimir-detalles/{punto}', 'PuntosMonitoreoController@imprimir')->name('puntos-monitoreo.imprimir');
+Route::get('puntos-monitoreo/contaminantes/{punto}', 'PuntosMonitoreoController@contaminantes')->name('puntos-monitoreo.contaminantes');
+Route::post('puntos-monitoreo/{punto}', 'PuntosMonitoreoController@rangos')->name('puntos-monitoreo.guardar_rangos');
 Route::resource('puntos-monitoreo', 'PuntosMonitoreoController', ['except' => ['index', 'create', 'store', 'show', 'destroy']]); 
 
 // Configuración de cuenta

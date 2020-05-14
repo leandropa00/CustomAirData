@@ -28,7 +28,7 @@ class PuntoMonitoreo extends Model
 
     public function contaminantes()
     {
-        return $this->belongsToMany(Contaminante::class, 'contaminantes_puntos', 'punto_monitoreo_id', 'contaminante_id');
+        return $this->belongsToMany(Contaminante::class, 'contaminantes_puntos', 'punto_monitoreo_id', 'contaminante_id')->withPivot('minimo', 'maximo');
     }
 
     public function detalle()
