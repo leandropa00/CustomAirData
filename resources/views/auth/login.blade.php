@@ -1,6 +1,102 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <!DOCTYPE html>
+<html>
+<head>
+	<title>Ingreso a CustomAirData</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{asset('css/login.css')}}">
+    <style>
+        a {
+            text-decoration: none; 
+            color: #FFC312;
+        }
+        a:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header"><br><br>
+				<div class="text-center">
+                    <h3>CustomAirData</h3>
+                </div>
+				<div class="d-flex justify-content-end social_icon">
+                    <span>
+                        <a href="https://www.facebook.com/Airlab-Consulting-102390931473054" target="_blank" rel="noopener noreferrer" style="">
+                            <i class="fab fa-facebook-square"></i>
+                        </a>
+                    </span>
+					<span>
+                        <a href="https://www.linkedin.com/company/49116067" target="_blank" rel="noopener noreferrer" style="">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </span>
+					<span>
+                        <a href="https://www.instagram.com/airlabconsulting/?hl=es-la" target="_blank" rel="noopener noreferrer" style="">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </span>
+                    <span>
+                        <a href="https://mobile.twitter.com/AirlabC" target="_blank" rel="noopener noreferrer" style="">
+                            <i class="fab fa-twitter-square"></i>
+                        </a>
+                    </span>
+				</div>
+            </div>
+			<div class="card-body">
+                @error('email')
+                    <div class="alert alert-danger text-center" style="padding: 5px; margin 0px" role="alert">
+                        <h6 style="font-size: 13px;margin-bottom: 0px">Credenciales erróneas, intenta nuevamente.</h6>
+                    </div>
+                @enderror
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+						</div>
+						<input placeholder="Ingresa tu correo electrónico" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    </div>
+                    
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						</div>
+                        <input placeholder="Ingresa tu contraseña" id="password" type="password" class="form-control @error('email') is-invalid @enderror" name="password" required autocomplete="current-password">
+                    </div>
+                    
+                    <div class="frow align-items-center remember">
+                        <div class="text-left">
+                            <fieldset class="checkbox">
+                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                    <input type="checkbox">
+                                    <span class="vs-checkbox">
+                                        <span class="vs-checkbox--check">
+                                            <i class="vs-icon feather icon-check"></i>
+                                        </span>
+                                    </span>
+                                    <span class="">Recuérdame</span>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn float-right login_btn">Ingresar</button>
+                </form>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+{{-- <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
-<!-- BEGIN: Head-->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,12 +108,7 @@
     <link rel="apple-touch-icon" href="{{url('/')}}/includes/app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="{{url('/')}}/includes/app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
-
-    <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="{{url('/')}}/includes/app-assets/vendors/css/vendors.min.css">
-    <!-- END: Vendor CSS-->
-
-    <!-- BEGIN: Theme CSS-->
+    
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/includes/app-assets/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/includes/app-assets/css/bootstrap-extended.css">
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/includes/app-assets/css/colors.css">
@@ -25,136 +116,109 @@
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/includes/app-assets/css/themes/dark-layout.css">
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/includes/app-assets/css/themes/semi-dark-layout.css">
 
-    <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="{{url('/')}}/includes/app-assets/css/core/menu/menu-types/vertical-menu.css">
-    <link rel="stylesheet" type="text/css" href="{{url('/')}}/includes/app-assets/css/core/colors/palette-gradient.css">
-    <link rel="stylesheet" type="text/css" href="{{url('/')}}/includes/app-assets/css/pages/authentication.css">
-    <!-- END: Page CSS-->
-
-    <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="{{url('/')}}/includes/assets/css/style.css">
-    <!-- END: Custom CSS-->
-
 </head>
-<!-- END: Head-->
 
-<!-- BEGIN: Body-->
-
-<body class="vertical-layout vertical-menu-modern 1-column  navbar-floating footer-static bg-full-screen-image  blank-page blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
-    <!-- BEGIN: Content-->
-    <div class="app-content content">
-        <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
-        <div class="content-wrapper">
-            <div class="content-header row">
-            </div>
-            <div class="content-body">
-                <section class="row flexbox-container">
-                    <div class="col-xl-8 col-11 d-flex justify-content-center">
-                        <div class="card bg-authentication rounded-0 mb-0">
-                            <div class="row m-0">
-                                <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
-                                    <img src="{{asset('includes/app-assets/images/pages/logo.png')}}" alt="branding logo" width="320 px">
-                                </div>
-                                <div class="col-lg-6 col-12 p-0">
-                                    <div class="card rounded-0 mb-0 px-2">
-                                        <div class="card-header pb-1">
-                                            <div class="card-title">
-                                                <h4 class="mb-0">CustomAirData</h4>
-                                            </div>
-                                        </div>
-                                        <p class="px-2">Bienvenido de nuevo</p>
-                                        <div class="card-content">
-                                            <div class="card-body pt-1">
-                                             <form method="POST" action="{{ route('login') }}">
-                                                    @csrf
-                                                    <fieldset class="form-label-group form-group position-relative has-icon-left">
-                                                          <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                                        @error('email')
-                                                        <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                        </span>
-                                                        @enderror
-                                                       
-                                                        <div class="form-control-position">
-                                                            <i class="feather icon-user"></i>
-                                                        </div>
-                                                        <label for="email">Correo electrónico</label>
-                                                    </fieldset>
-
-                                                    <fieldset class="form-label-group position-relative has-icon-left">
-                                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                                        @error('password')
-                                                        <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                        </span>
-                                                        @enderror
-                                                        <div class="form-control-position">
-                                                            <i class="feather icon-lock"></i>
-                                                        </div>
-                                                        <label for="password">Contraseña</label>
-                                                    </fieldset>
-                                                    <div class="form-group d-flex justify-content-between align-items-center">
-                                                        <div class="text-left">
-                                                            <fieldset class="checkbox">
-                                                                <div class="vs-checkbox-con vs-checkbox-primary">
-                                                                    <input type="checkbox">
-                                                                    <span class="vs-checkbox">
-                                                                        <span class="vs-checkbox--check">
-                                                                            <i class="vs-icon feather icon-check"></i>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span class="">Recuérdame</span>
-                                                                </div>
-                                                            </fieldset>
-                                                        </div>
-                                                        {{-- <div class="text-right">
-                                                             @if (Route::has('password.request'))
-                                                                <a class=" card-link" href="{{ route('password.request') }}">Forgot Password?</a>
-                                                            @endif
-                                                       </div> --}}
-                                                    </div>
-                                                    <!--<a href="auth-register.html" class="btn btn-outline-primary float-left btn-inline">Register</a>-->
-                                                    <button type="submit" class="btn btn-primary float-right btn-inline">Ingresar</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="login-footer">
-                                            <div class="divider">
-                                            </div>
-                                        </div>
+<body>
+    <div class="page-wrapper">
+        <div class="page-inner bg-brand-gradient">
+            <div class="page-content-wrapper bg-transparent m-0">
+                <div class="height-10 w-100 shadow-lg px-4 bg-brand-gradient">
+                    <div class="d-flex align-items-center container p-0">
+                        <div class="page-logo width-mobile-auto m-0 align-items-center justify-content-center p-0 bg-transparent bg-img-none shadow-0 height-9">
+                            <a href="javascript:void(0)" class="page-logo-link press-scale-down d-flex align-items-center">
+                                <img src="img/logo.png" alt="SmartAdmin WebApp" aria-roledescription="logo">
+                                <span class="page-logo-text mr-1">SmartAdmin WebApp</span>
+                            </a>
+                        </div>
+                        <a href="page_register.html" class="btn-link text-white ml-auto">
+                            Create Account
+                        </a>
+                    </div>
+                </div>
+                <div class="flex-1" style="background: {{asset('css/pattern-1.svg')}} no-repeat center bottom fixed; background-size: cover;">
+                    <div class="container py-4 py-lg-5 my-lg-5 px-4 px-sm-0">
+                        <div class="row">
+                            <div class="col col-md-6 col-lg-7 hidden-sm-down">
+                                <h2 class="fs-xxl fw-500 mt-4 text-white">
+                                    The simplest UI toolkit for developers &amp; programmers
+                                    <small class="h3 fw-300 mt-3 mb-5 text-white opacity-60">
+                                        Presenting you with the next level of innovative UX design and engineering. The most modular toolkit available with over 600+ layout permutations. Experience the simplicity of SmartAdmin, everywhere you go!
+                                    </small>
+                                </h2>
+                                <a href="#" class="fs-lg fw-500 text-white opacity-70">Learn more &gt;&gt;</a>
+                                <div class="d-sm-flex flex-column align-items-center justify-content-center d-md-block">
+                                    <div class="px-0 py-1 mt-5 text-white fs-nano opacity-50">
+                                        Find us on social media
+                                    </div>
+                                    <div class="d-flex flex-row opacity-70">
+                                        <a href="#" class="mr-2 fs-xxl text-white">
+                                            <i class="fab fa-facebook-square"></i>
+                                        </a>
+                                        <a href="#" class="mr-2 fs-xxl text-white">
+                                            <i class="fab fa-twitter-square"></i>
+                                        </a>
+                                        <a href="#" class="mr-2 fs-xxl text-white">
+                                            <i class="fab fa-google-plus-square"></i>
+                                        </a>
+                                        <a href="#" class="mr-2 fs-xxl text-white">
+                                            <i class="fab fa-linkedin"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 ml-auto">
+                                <h1 class="text-white fw-300 mb-3 d-sm-block d-md-none">
+                                    Secure login
+                                </h1>
+                                <div class="card p-4 rounded-plus bg-faded">
+                                    <form method="POST" action="{{ route('login') }}">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label class="form-label" for="username">Correo electrónico</label>
+                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                            <div class="help-block">Ingresa tu correo electónico</div>
+                                            @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>Credenciales erróneas, intenta nuevamente.</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" for="password">Contaseña</label>
+                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                            <div class="help-block">Ingresa tu contraseña</div>
+                                        </div>
+                                        <div class="form-group d-flex justify-content-between align-items-center">
+                                            <div class="text-left">
+                                                <fieldset class="checkbox">
+                                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                                        <input type="checkbox">
+                                                        <span class="vs-checkbox">
+                                                            <span class="vs-checkbox--check">
+                                                                <i class="vs-icon feather icon-check"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="">Recuérdame</span>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary float-right btn-inline">Ingresar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="position-absolute pos-bottom pos-left pos-right p-3 text-center text-white">
+                            2019 © SmartAdmin by&nbsp;<a href='https://www.gotbootstrap.com' class='text-white opacity-40 fw-500' title='gotbootstrap.com' target='_blank'>gotbootstrap.com</a>
                         </div>
                     </div>
-                </section>
-
+                </div>
             </div>
         </div>
     </div>
-    <!-- END: Content-->
-
-
-    <!-- BEGIN: Vendor JS-->
     <script src="{{url('/')}}/includes/app-assets/vendors/js/vendors.min.js"></script>
-    <!-- BEGIN Vendor JS-->
-
-    <!-- BEGIN: Page Vendor JS-->
-    <!-- END: Page Vendor JS-->
-
-    <!-- BEGIN: Theme JS-->
     <script src="{{url('/')}}/includes/app-assets/js/core/app-menu.js"></script>
     <script src="{{url('/')}}/includes/app-assets/js/core/app.js"></script>
     <script src="{{url('/')}}/includes/app-assets/js/scripts/components.js"></script>
-    <!-- END: Theme JS-->
-
-    <!-- BEGIN: Page JS-->
-    <!-- END: Page JS-->
-
 </body>
-<!-- END: Body-->
-
-</html>
+</html> --}}

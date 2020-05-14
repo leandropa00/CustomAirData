@@ -139,18 +139,18 @@
                                                                 <div class="row">
                                                                     <div class="col-md-6">
                                                                         <div class="form-group">
-                                                                            <label for="password-icon">Longitud*</label>
+                                                                            <label for="password-icon">Latitud*</label>
                                                                             <div>
-                                                                                <input type="number"  step="any" id="coordA_name" class="form-control" name="coordA_name" minlength="3" maxlength="30" placeholder="Longitud" required>
+                                                                                <input type="number"  step="any" id="coordA_name" class="form-control" name="coordA_name" minlength="3" maxlength="30" placeholder="Latitud" required>
                                                                             </div>
                                                                         </div>
                                                                     </div>
         
                                                                     <div class="col-md-6">
                                                                         <div class="form-group">
-                                                                            <label>Latitud*</label>
+                                                                            <label>Longitud*</label>
                                                                             <div>
-                                                                                <input type="number" step="any" id="coordB_name" class="form-control" name="coordB_name" minlength="3" maxlength="30" placeholder="Latitud" required>
+                                                                                <input type="number" step="any" id="coordB_name" class="form-control" name="coordB_name" minlength="3" maxlength="30" placeholder="Longitud" required>
                                                                             </div>
                                                                         </div>
                                                                     </div>
