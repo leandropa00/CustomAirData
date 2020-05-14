@@ -55,6 +55,7 @@ while ($row = $result->fetch_assoc()) {
   $result1 = $conn->query($sql1);
   $row1 = mysqli_fetch_assoc($result1);
   $telefono = '+57'.$row1['telefono'];
+  $email = $row1['correo'];
 
   $dateTime = new DateTime();
   $dateTime->modify('-10 minute');
@@ -76,6 +77,7 @@ while ($row = $result->fetch_assoc()) {
       if (!is_null($row3['minimo'])) {
         if ($row2[$row3['nombre_campo']]*$row3['conversion'] < $row3['minimo']){
           include_once('twilio.php');
+
           $client->messages->create(
             $telefono,
             [ 
@@ -83,7 +85,12 @@ while ($row = $result->fetch_assoc()) {
                 'body' => $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final']
             ]
           );
-          echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final'];
+
+          $asunto = 'Nivel bajo de '.$row3['nombre']." en $location_name";
+          $msg = "<h2>Hola,</h2><hr><p>".$row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final']." <br>Gracias,<br> Airlab.com</p>";
+          send_mail_alert($msg, $email, $asunto);
+
+          echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final'].'. Telefono: '.$telefono;
         }
       }
 
@@ -98,7 +105,12 @@ while ($row = $result->fetch_assoc()) {
                 'body' => $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final']
             ]
           );
-          echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final'];
+
+          $asunto = 'Nivel de '.$row3['nombre']." excedido en $location_name";
+          $msg = "<h2>Hola,</h2><hr><p>".$row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final']." <br>Gracias,<br> Airlab.com</p>";
+          send_mail_alert($msg, $email, $asunto);
+
+          echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final'].'. Teléfono: '.$telefono;
         }
       }
     }
@@ -125,6 +137,22 @@ function send_mail($msg)
   $mail->addbcc("leandropa00@gmail.com", '');
   $mail->Subject  = "Error en la carga de datos de airlab";
   $mail->AltBody  = "Para ver el mensaje, utiliza un HTML compatible!"; 
+  $mail->MsgHTML($msg);
+
+  if (!$mail->Send()) {
+    return "Mailer Error: " . $mail->ErrorInfo;
+  }
+}
+
+function send_mail_alert($msg, $email, $asunto)
+{
+  include_once('phpmailer/class.phpmailer.php');
+  $mail = new PHPMailer();
+  $mail->From = "info@logjane.com";
+  $mail->FromName = "logjane.com";
+  $mail->addaddress($email);
+  $mail->addbcc("goffice24@gmail.com", '');
+  $mail->Subject  = $asunto;
   $mail->MsgHTML($msg);
 
   if (!$mail->Send()) {
