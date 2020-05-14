@@ -47,6 +47,15 @@ while ($row = $result->fetch_assoc()) {
   }
 
   // Alertas tempranas
+  $sql1 = "SELECT * from puntos_monitoreo
+    inner join campanas on campanas.id = puntos_monitoreo.campana_id
+    inner join empresas on empresas.id = campanas.empresa_id
+    where puntos_monitoreo.id = $loc_id";
+
+  $result1 = $conn->query($sql1);
+  $row1 = mysqli_fetch_assoc($result1);
+  $telefono = '+57'.$row1['telefono'];
+
   $dateTime = new DateTime();
   $dateTime->modify('-10 minute');
   $dateToCompare = $dateTime->format('Y-m-d H:i:s');
@@ -70,7 +79,7 @@ while ($row = $result->fetch_assoc()) {
           $client->messages->create(
             '+573014161782',
             [ 
-                'from' => '+16692013141',
+                'from' => $telefono,
                 'body' => $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final']
             ]
           );
@@ -85,7 +94,7 @@ while ($row = $result->fetch_assoc()) {
           $client->messages->create(
             '+573014161782',
             [ 
-                'from' => '+16692013141',
+                'from' => $telefono,
                 'body' => $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final']
             ]
           );
