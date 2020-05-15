@@ -29,8 +29,8 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <ul>
                         @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                     @endforeach
+                            <li>{{ $error }}</li>
+                        @endforeach
                         </ul>
                     </div>
                 @endif
@@ -53,9 +53,11 @@
                                                 <tr>
                                                     <th>Nombre</th>
                                                     <th>Correo</th>
+                                                    <th>Teléfono</th>
+                                                    <th>Recibe mensajes</th>
                                                     @if (Auth::user()->rol=='admin')
-                                                        <th>Empresa</th>
-                                                        <th>Rol</th>
+                                                    <th>Empresa</th>
+                                                    <th>Rol</th>
                                                     @endif
                                                     <th>Fecha de creación</th>
                                                     <th>Acción</th>
@@ -66,6 +68,13 @@
                                                   <tr>
                                                     <td>{{ ucwords($data->name) }}</td>
                                                     <td>{{ $data->email }}</td>
+                                                    <td>{{ $data->telefono }}</td>
+                                                    <td>
+                                                        <select onchange="cambiarPermisosSms({{ $data->id }}, this.value)" class="form-control">
+                                                            <option value="0" @if($data->recibe_mensajes == 0) selected @endif>No</option>
+                                                            <option value="1" @if($data->recibe_mensajes == 1) selected @endif>Sí</option>
+                                                        </select>
+                                                    </td>
                                                     @if (Auth::user()->rol=='admin')
                                                         <td>{{ ucfirst($data->empresa->nombre) }}</td>
                                                         <td>{{ ucfirst($data->rol) }}</td>
@@ -110,5 +119,20 @@
 <!-- END: Page Vendor JS-->
 <!-- BEGIN: Page JS-->
 <script src="{{url('/')}}/includes/app-assets/js/scripts/datatables/datatable.js"></script>
+<script>
+    function cambiarPermisosSms(id, permiso) { 
+        var url = "{{route('users.permisos-sms', ':id')}}";
+        url = url.replace(':id', id);
+
+        $.ajax({
+            type: "PUT",
+            url: url,
+            data: {
+                '_token': '{{csrf_token()}}',
+                'permiso': permiso
+            }
+        });
+    }
+</script>
 
 @endsection

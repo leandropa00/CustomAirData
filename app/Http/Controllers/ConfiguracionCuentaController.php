@@ -21,6 +21,7 @@ class ConfiguracionCuentaController extends Controller
             $user = User::find(Auth::user()->id);
             $user->name = $request->name;
             $user->email = $request->email;
+            $user->telefono = $request->phone;
             $user->password = Hash::make($request->password);
             $user->save();
 

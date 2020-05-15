@@ -29,6 +29,7 @@ class UsersController extends Controller
             $user = new User;
             $user->name = $request->name;
             $user->email = $request->email;
+            $user->telefono = $request->phone;
             $user->password = Hash::make($request->password);
             $user->empresa_id = $request->empresa;
             $user->rol = 'usuario';
@@ -56,6 +57,7 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->empresa_id = $request->empresa;
+        $user->telefono = $request->phone;
         $user->save();
 
         return redirect()->route('users.index')->with('success','Cliente actualizado satisfactoriamente');  
@@ -64,5 +66,10 @@ class UsersController extends Controller
     function destroy($id){
         User::find($id)->delete();
         return redirect()->route('users.index')->with('success','Usuario eliminado satisfactoriamente');    
+    }
+
+    function permisosSms(User $user, Request $request){
+        $user->recibe_mensajes = $request->permiso;
+        $user->save();        
     }
 }

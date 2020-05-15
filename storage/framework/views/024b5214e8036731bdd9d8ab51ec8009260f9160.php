@@ -28,8 +28,8 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <ul>
                         <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li><?php echo e($error); ?></li>
-                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <li><?php echo e($error); ?></li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </ul>
                     </div>
                 <?php endif; ?>
@@ -52,9 +52,11 @@
                                                 <tr>
                                                     <th>Nombre</th>
                                                     <th>Correo</th>
+                                                    <th>Teléfono</th>
+                                                    <th>Recibe mensajes</th>
                                                     <?php if(Auth::user()->rol=='admin'): ?>
-                                                        <th>Empresa</th>
-                                                        <th>Rol</th>
+                                                    <th>Empresa</th>
+                                                    <th>Rol</th>
                                                     <?php endif; ?>
                                                     <th>Fecha de creación</th>
                                                     <th>Acción</th>
@@ -65,6 +67,13 @@
                                                   <tr>
                                                     <td><?php echo e(ucwords($data->name)); ?></td>
                                                     <td><?php echo e($data->email); ?></td>
+                                                    <td><?php echo e($data->telefono); ?></td>
+                                                    <td>
+                                                        <select onchange="cambiarPermisosSms(<?php echo e($data->id); ?>, this.value)" class="form-control">
+                                                            <option value="0" <?php if($data->recibe_mensajes == 0): ?> selected <?php endif; ?>>No</option>
+                                                            <option value="1" <?php if($data->recibe_mensajes == 1): ?> selected <?php endif; ?>>Sí</option>
+                                                        </select>
+                                                    </td>
                                                     <?php if(Auth::user()->rol=='admin'): ?>
                                                         <td><?php echo e(ucfirst($data->empresa->nombre)); ?></td>
                                                         <td><?php echo e(ucfirst($data->rol)); ?></td>
@@ -109,6 +118,21 @@
 <!-- END: Page Vendor JS-->
 <!-- BEGIN: Page JS-->
 <script src="<?php echo e(url('/')); ?>/includes/app-assets/js/scripts/datatables/datatable.js"></script>
+<script>
+    function cambiarPermisosSms(id, permiso) { 
+        var url = "<?php echo e(route('users.permisos-sms', ':id')); ?>";
+        url = url.replace(':id', id);
+
+        $.ajax({
+            type: "PUT",
+            url: url,
+            data: {
+                '_token': '<?php echo e(csrf_token()); ?>',
+                'permiso': permiso
+            }
+        });
+    }
+</script>
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/logjanec/public_html/customair/resources/views/usuarios/index.blade.php ENDPATH**/ ?>

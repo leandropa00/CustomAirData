@@ -27,6 +27,7 @@ Route::resource('empresas', 'EmpresasController', ['except' => ['destroy']]);
 
 // Usuarios
 Route::get('users/delete/{id}', 'UsersController@destroy')->name('users.destroy');
+Route::put('users/cambiar-permiso/{user}', 'UsersController@permisosSms')->name('users.permisos-sms');
 Route::resource('users', 'UsersController', ['except' => ['destroy']]);
 
 // Estaciones

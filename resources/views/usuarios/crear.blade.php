@@ -61,6 +61,20 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    <div class="col-12 col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Teléfono</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <input id="phone" type="number" maxlength="10" class="form-control" name="phone" placeholder="Ingresa el teléfono" required autocomplete="phone">
+                                                                
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-phone"></i>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     
                                                     @if (Auth::user()->rol=='admin')
                                                         <div class="col-md-6 col-12">
@@ -82,6 +96,7 @@
                                                     @else
                                                         <input type="hidden" name="empresa" value="{{Auth::user()->empresa->id}}">
                                                     @endif
+
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label>Contraseña</label>
