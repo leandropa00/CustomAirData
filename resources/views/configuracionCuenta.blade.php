@@ -114,6 +114,44 @@
                                                 </div>
                                             </div>
                                         </form>
+
+                                        @if (Auth::user()->rol=='manager')
+                                            <hr>
+                                            <div class="card-header">
+                                                <h4 class="card-title">Foto de tu empresa</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <form class="form form-vertical" method="POST" action="{{ route('cuenta.foto-empresa') }}" id="form_foto" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <input type="hidden" name="_method" value="put">
+                                                    <div class="form-body">
+                                                        <div class="col-12 col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-12">
+                                                                    <div class="form-group">
+                                                                        <div>
+                                                                            <input type="file" id="foto_empresa" name="foto">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6 col-12">
+                                                                    <div class="form-group">
+                                                                        <div>
+                                                                            @if ($user->empresa->foto) 
+                                                                                <img width="50%" src="{{asset('images/empresas/'.$user->empresa->foto)}}">   
+                                                                            @else
+                                                                                <b>No se ha cargado un logo</b>
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -145,5 +183,9 @@
 
             }
         }
+
+        $('#foto_empresa').change(function () { 
+            $('#form_foto').submit();        
+        });
     </script>
 @endsection

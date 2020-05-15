@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Empresa;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
@@ -32,4 +33,18 @@ class ConfiguracionCuentaController extends Controller
 
         }
     }
+
+    public function fotoEmpresa(Request $request)
+    {
+        $ruta = '/images/empresas/';
+        $file = $request->file('foto');
+        $name = time().$file->getClientOriginalName();
+        $file->move(public_path().$ruta, $name);
+        
+        $empresa = Empresa::find(Auth::user()->empresa->id);
+        $empresa->foto = $name;
+        $empresa->save();
+        
+        return redirect()->route('cuenta.edit')->with('success', 'El logo de tu empresa fue actualizado correctamente');   
+    } 
 }

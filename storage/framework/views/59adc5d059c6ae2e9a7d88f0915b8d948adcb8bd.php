@@ -112,6 +112,44 @@
                                                 </div>
                                             </div>
                                         </form>
+
+                                        <?php if(Auth::user()->rol=='manager'): ?>
+                                            <hr>
+                                            <div class="card-header">
+                                                <h4 class="card-title">Foto de tu empresa</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <form class="form form-vertical" method="POST" action="<?php echo e(route('cuenta.foto-empresa')); ?>" id="form_foto" enctype="multipart/form-data">
+                                                    <?php echo csrf_field(); ?>
+                                                    <input type="hidden" name="_method" value="put">
+                                                    <div class="form-body">
+                                                        <div class="col-12 col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-12">
+                                                                    <div class="form-group">
+                                                                        <div>
+                                                                            <input type="file" id="foto_empresa" name="foto">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6 col-12">
+                                                                    <div class="form-group">
+                                                                        <div>
+                                                                            <?php if($user->empresa->foto): ?> 
+                                                                                <img width="50%" src="<?php echo e(asset('images/empresas/'.$user->empresa->foto)); ?>">   
+                                                                            <?php else: ?>
+                                                                                <b>No se ha cargado un logo</b>
+                                                                            <?php endif; ?>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -143,6 +181,10 @@
 
             }
         }
+
+        $('#foto_empresa').change(function () { 
+            $('#form_foto').submit();        
+        });
     </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/logjanec/public_html/customair/resources/views/configuracionCuenta.blade.php ENDPATH**/ ?>

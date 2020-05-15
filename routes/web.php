@@ -50,5 +50,6 @@ Route::post('puntos-monitoreo/{punto}', 'PuntosMonitoreoController@rangos')->nam
 Route::resource('puntos-monitoreo', 'PuntosMonitoreoController', ['except' => ['index', 'create', 'store', 'show', 'destroy']]); 
 
 // Configuración de cuenta
+Route::put('cuenta/foto-empresa', 'ConfiguracionCuentaController@fotoEmpresa')->name('cuenta.foto-empresa');
 Route::get('cuenta', 'ConfiguracionCuentaController@edit')->name('cuenta.edit');
 Route::post('cuenta', 'ConfiguracionCuentaController@update')->name('cuenta.update');

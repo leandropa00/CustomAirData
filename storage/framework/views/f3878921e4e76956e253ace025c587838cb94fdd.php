@@ -70,18 +70,25 @@
                             </ul>
                         </li>
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600"><?php echo e(ucwords(Auth::user()->name)); ?></span><span class="user-status">Disponible</span></div><span><img class="round" src="<?php echo e(url('/')); ?>/includes/app-assets/images/portrait/small/default.png" alt="avatar" height="40" width="40"></span>
-                            </a>
+                            <div class="user-nav d-sm-flex d-none">
+                                <span class="user-name text-bold-600"><?php echo e(ucwords(Auth::user()->name)); ?></span><span class="user-status">Disponible</span>
+                            </div>
+                            <?php if(Auth::user()->rol == 'admin'): ?>
+                                <span><img class="round" src="<?php echo e(url('/')); ?>/includes/app-assets/images/portrait/small/default.png" alt="avatar" height="40" width="40"></span>
+                            <?php else: ?>
+                                <span><img class="round" src="<?php echo e(asset('images/empresas/'.Auth::user()->empresa->foto)); ?>" alt="avatar" height="40" width="40"></span>
+                            <?php endif; ?>
                             <div class="dropdown-menu dropdown-menu-right profle_sec">
-                                <a class="dropdown-item" href="setting"><i class="feather icon-user"></i> Editar perfil</a>
+                                <a class="dropdown-item" href="<?php echo e(route('cuenta.edit')); ?>">
+                                    <i class="feather icon-user"></i> Editar perfil
+                                </a>
                                 <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><i class="feather icon-power"></i> Cerrar sesión</a>
-                                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
-                                        <?php echo csrf_field(); ?>
-                            </form>
-                            </li>
+                                <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="feather icon-power"></i> Cerrar sesión
+                                </a>
+                                <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                    <?php echo csrf_field(); ?>
+                                </form>
                             </div>
                         </li>
                     </ul>

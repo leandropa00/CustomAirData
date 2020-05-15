@@ -72,18 +72,25 @@
                             </ul>
                         </li>
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">{{ ucwords(Auth::user()->name) }}</span><span class="user-status">Disponible</span></div><span><img class="round" src="{{url('/')}}/includes/app-assets/images/portrait/small/default.png" alt="avatar" height="40" width="40"></span>
-                            </a>
+                            <div class="user-nav d-sm-flex d-none">
+                                <span class="user-name text-bold-600">{{ ucwords(Auth::user()->name) }}</span><span class="user-status">Disponible</span>
+                            </div>
+                            @if (Auth::user()->rol == 'admin')
+                                <span><img class="round" src="{{url('/')}}/includes/app-assets/images/portrait/small/default.png" alt="avatar" height="40" width="40"></span>
+                            @else
+                                <span><img class="round" src="{{asset('images/empresas/'.Auth::user()->empresa->foto)}}" alt="avatar" height="40" width="40"></span>
+                            @endif
                             <div class="dropdown-menu dropdown-menu-right profle_sec">
-                                <a class="dropdown-item" href="setting"><i class="feather icon-user"></i> Editar perfil</a>
+                                <a class="dropdown-item" href="{{ route('cuenta.edit') }}">
+                                    <i class="feather icon-user"></i> Editar perfil
+                                </a>
                                 <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><i class="feather icon-power"></i> Cerrar sesión</a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                            </form>
-                            </li>
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="feather icon-power"></i> Cerrar sesión
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </div>
                         </li>
                     </ul>
