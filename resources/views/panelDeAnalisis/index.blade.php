@@ -11,7 +11,7 @@
 
             <div class="content-body">
                 <section id="basic-vertical-layouts">
-                    <div class="row match-height">
+                    <div class="row match-height" id="impr">
                         <div class="col-md-12 col-12">
                             <div class="card">
                                 <div class="card-header">
@@ -123,6 +123,12 @@
                                     @empty
                                     @endforelse
                                 </div>
+                                <div class="card col-md-12 text-center">
+                                    <div class="card-body col-md-12">
+                                        <a href="javascript:captura();" class="btn btn-outline-info waves-effect waves-light">Guardar imagen</a>
+                                        <a href="" id="blank"></a>
+                                    </div>    
+                                </div>
                             @endif
                         </div>
                     </div>
@@ -140,6 +146,8 @@
     <script src="{{url('/')}}/includes/dashboard/js/statistics/sparkline/sparkline.bundle.js"></script>
     <script src="{{url('/')}}/includes/dashboard/js/statistics/easypiechart/easypiechart.bundle.js"></script>
     <script src="{{url('/')}}/includes/dashboard/js/statistics/flot/flot.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <!-- END: Bundle js-->
     
     <!-- INI: Datepicker -->
@@ -159,7 +167,7 @@
                 
             } else {
                 var selected = $(this).find('option:selected');
-                var inicio = selected.data('start'); 
+                var inicio = selected.data('start');
                 var fin = selected.data('end'); 
 
                 rangeClass(inicio, fin, inicio, fin);
@@ -238,7 +246,9 @@
                     //         }
                     //     }
                     // }
+                    
                 };
+                
 
                 var linechartData = {
                     labels: JSON.parse('{{ $labels }}'.replace(/&quot;/g,'"')),
@@ -248,10 +258,11 @@
                         @endphp 
                         @foreach ($datos as $key=>$item)
                             {
-                                label: '{{strtoupper($key)}}',
+                                label: '{{strtoupper("$key")}}',
                                 data: {{ $item }},
                                 borderColor: '{{ $colores[$i] }}',
-                                fill: true
+                                fill: true,
+                                hidden : true
                             },
                             @php 
                                 $i++;
@@ -306,6 +317,19 @@
                             "Diciembre"
                         ]
                     }
+            });
+        }
+
+        function captura(){
+            var caption = $('.input-daterange-datepicker').val();
+            $('#caption-text').html(caption);
+            html2canvas(document.getElementById("impr"), {
+                dbi:192,
+                onrendered: function(canvas){
+                    $("#blank").attr('href', canvas.toDataURL("image/png"));
+                    $("#blank").attr('download', caption + '.png');
+                    $("#blank")[0].click();
+                }
             });
         }                
     </script>
