@@ -106,6 +106,8 @@ while ($row = $result->fetch_assoc()) {
   
             echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final'].'. Usuario: '.$row1['name']."\n";
           }
+
+          notify($loc_id, $row2[$row3['nombre_campo']]*$row3['conversion'], $row3['minimo'], 'menor', $row3['nombre']);
         }
       }
 
@@ -132,6 +134,8 @@ while ($row = $result->fetch_assoc()) {
 
             echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final'].'. Usuario: '.$row1['name']."\n";
           }
+
+          notify($loc_id, $row2[$row3['nombre_campo']]*$row3['conversion'], $row3['maximo'], 'mayor', $row3['nombre']);
         }
       }
     }
@@ -147,6 +151,14 @@ function delete_record($conn, $file_date, $loc_id)
 {
   $sql_del = "delete from datos where nombre_archivo='" . $file_date . "' AND punto_id='" . $loc_id . "'";
   $query = mysqli_query($conn, $sql_del) or die(mysqli_error($conn));
+}
+
+function notify($id, $valor, $limite, $tipo, $contaminante) {
+  echo $url = "https://logjane.com/customair/public/notificacion/$id/$valor/$limite/$tipo/$contaminante";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_exec($ch);
+  curl_close($ch);
 }
 
 function send_mail($msg)

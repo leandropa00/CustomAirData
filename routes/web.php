@@ -1,5 +1,4 @@
 <?php
-
 Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 
@@ -53,3 +52,10 @@ Route::resource('puntos-monitoreo', 'PuntosMonitoreoController', ['except' => ['
 Route::put('cuenta/foto-empresa', 'ConfiguracionCuentaController@fotoEmpresa')->name('cuenta.foto-empresa');
 Route::get('cuenta', 'ConfiguracionCuentaController@edit')->name('cuenta.edit');
 Route::post('cuenta', 'ConfiguracionCuentaController@update')->name('cuenta.update');
+
+// Notificaciones
+Route::get('notificacion/{punto}/{valor}/{limite}/{tipo}/{contaminante}', 'NotificacionesController');
+Route::get('marcar-como-leidas', function(){
+    Auth::user()->unreadNotifications->markAsRead();
+    return redirect()->back();
+})->name('marcarComoLeidas');
