@@ -60,7 +60,6 @@ while ($row = $result->fetch_assoc()) {
     inner join empresas on empresas.id = campanas.empresa_id
     inner join users on empresas.id = users.empresa_id
     where puntos_monitoreo.id = $loc_id
-    and users.recibe_mensajes = '1'
     and users.deleted_at is null";
 
   $result1 = $conn->query($sql1);
@@ -89,20 +88,23 @@ while ($row = $result->fetch_assoc()) {
             include_once('twilio.php');
             $telefono = '+57'.$row1['telefono'];
             $email = $row1['email'];
+
+            if ($row1['recibe_mensajes'] == '1') {
+              $client->messages->create(
+                $telefono,
+                [ 
+                    'from' => '+16692013141',
+                    'body' => $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final']
+                ]
+              );
+            }
   
-            $client->messages->create(
-              $telefono,
-              [ 
-                  'from' => '+16692013141',
-                  'body' => $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final']
-              ]
-            );
   
             $asunto = 'Nivel bajo de '.$row3['nombre']." en $location_name";
             $msg = "<h2>Hola,</h2><hr><p>".$row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final']." <br>Gracias,<br> Airlab.com</p>";
             send_mail_alert($msg, $email, $asunto);
   
-            echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final'].". Telefono: $telefono \n";
+            echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final'].'. Usuario: '.$row1['name']."\n";
           }
         }
       }
@@ -113,20 +115,22 @@ while ($row = $result->fetch_assoc()) {
             include_once('twilio.php');
             $telefono = '+57'.$row1['telefono'];
             $email = $row1['email'];
-
-            $client->messages->create(
-              $telefono,
-              [ 
-                  'from' => '+16692013141',
-                  'body' => $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final']
-              ]
-            );
+            
+            if ($row1['recibe_mensajes'] == '1') {
+              $client->messages->create(
+                $telefono,
+                [ 
+                    'from' => '+16692013141',
+                    'body' => $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final']
+                ]
+              );
+            }
 
             $asunto = 'Nivel de '.$row3['nombre']." excedido en $location_name";
             $msg = "<h2>Hola,</h2><hr><p>".$row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final']." <br>Gracias,<br> Airlab.com</p>";
             send_mail_alert($msg, $email, $asunto);
 
-            echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final'].". Telefono: $telefono \n";
+            echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final'].'. Usuario: '.$row1['name']."\n";
           }
         }
       }
