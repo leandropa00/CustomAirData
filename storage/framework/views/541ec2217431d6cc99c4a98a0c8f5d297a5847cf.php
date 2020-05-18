@@ -20,37 +20,20 @@
     </style>
 </head>
 <body>
-<div class="container">
-	<div class="d-flex justify-content-center h-100">
-		<div class="card">
-			<div class="card-header"><br><br>
-				<div class="text-center">
-                    <h3>CustomAirData</h3>
+    <div class="container">
+        <div >
+            <div class="loginMsg">
+                <div class="textcontent">
+                    <!-- <p class="title">Don't have an account?</p> -->
+                    <p>Nuestro entorno enfrenta muchos desafíos. Es por eso que necesitamos colaborar para ayudar a abordar las necesidades de hoy y lo que es más importante, para imaginar y crear soluciones para el futuro.</p>
                 </div>
-				<div class="d-flex justify-content-end social_icon">
-                    <span>
-                        <a href="https://www.facebook.com/Airlab-Consulting-102390931473054" target="_blank" rel="noopener noreferrer" style="">
-                            <i class="fab fa-facebook-square"></i>
-                        </a>
-                    </span>
-					<span>
-                        <a href="https://www.linkedin.com/company/49116067" target="_blank" rel="noopener noreferrer" style="">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                    </span>
-					<span>
-                        <a href="https://www.instagram.com/airlabconsulting/?hl=es-la" target="_blank" rel="noopener noreferrer" style="">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </span>
-                    <span>
-                        <a href="https://mobile.twitter.com/AirlabC" target="_blank" rel="noopener noreferrer" style="">
-                            <i class="fab fa-twitter-square"></i>
-                        </a>
-                    </span>
-				</div>
             </div>
-			<div class="card-body">
+        </div>
+        <!-- backbox -->
+        
+        <div class="frontbox">
+            <div class="login">
+                <h2>Ingresar</h2>
                 <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -65,11 +48,9 @@ endif;
 unset($__errorArgs, $__bag); ?>
                 <form method="POST" action="<?php echo e(route('login')); ?>">
                     <?php echo csrf_field(); ?>
-					<div class="input-group form-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-user"></i></span>
-						</div>
-						<input placeholder="Ingresa tu correo electrónico" id="email" type="email" class="form-control <?php $__errorArgs = ['email'];
+                        <div class="inputbox">
+                            <h6>Correo electrónico</h6>
+                            <input placeholder="Ingresa tu correo electrónico" id="email" type="email" class="form-control <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -77,13 +58,8 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" name="email" value="<?php echo e(old('email')); ?>" required autocomplete="email" autofocus>
-                    </div>
-                    
-					<div class="input-group form-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-key"></i></span>
-						</div>
-                        <input placeholder="Ingresa tu contraseña" id="password" type="password" class="form-control <?php $__errorArgs = ['email'];
+                            <h6>Contraseña</h6>
+                            <input placeholder="Ingresa tu contraseña" id="password" type="password" class="form-control <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -91,30 +67,17 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" name="password" required autocomplete="current-password">
-                    </div>
-                    
-                    <div class="frow align-items-center remember">
-                        <div class="text-left">
-                            <fieldset class="checkbox">
-                                <div class="vs-checkbox-con vs-checkbox-primary">
-                                    <input type="checkbox">
-                                    <span class="vs-checkbox">
-                                        <span class="vs-checkbox--check">
-                                            <i class="vs-icon feather icon-check"></i>
-                                        </span>
-                                    </span>
-                                    <span class="">Recuérdame</span>
-                                </div>
-                            </fieldset>
                         </div>
-                    </div>
-                    <button type="submit" class="btn float-right login_btn">Ingresar</button>
+                        <button type="submit" class="btn float-right login_btn">Ingresar</button>
                 </form>
-			</div>
-		</div>
-	</div>
-</div>
-</body>
+            </div>
+        </div>
+        <!-- frontbox -->
+    </div>
+    <script src="js/login.js"></script>
+    <!-- Style Switcher Start -->
+    </body>
+
 </html>
 
 <?php /**PATH /home/logjanec/public_html/customair/resources/views/auth/login.blade.php ENDPATH**/ ?>

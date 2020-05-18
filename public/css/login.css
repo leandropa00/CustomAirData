@@ -1,89 +1,173 @@
-/* Made with love by Mutiullah Samim*/
-
-@import url('https://fonts.googleapis.com/css?family=Numans');
-
-html,body{
-background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
-background-size: cover;
-background-repeat: no-repeat;
-height: 100%;
-font-family: 'Numans', sans-serif;
+body,
+html {
+    background:url('https://static.iris.net.co/sostenibilidad/upload/images/2020/2/6/48483_1.jpg');
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
 }
 
-.container{
-height: 100%;
-align-content: center;
+.container {
+    /*border:1px solid white;*/
+    width: 600px;
+    height: 350px;
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    display: inline-flex;
 }
 
-.card{
-height: 370px;
-margin-top: auto;
-margin-bottom: auto;
-width: 400px;
-background-color: rgba(0,0,0,0.5) !important;
+.backbox {
+    background-color: #404040;
+    width: 110%;
+    height: 110%;
+    position: absolute;
+    transform: translate(-5%, -50%);
+    top: 50%;
+    display: inline-flex;
+    border-radius: 20px;
 }
 
-.social_icon span{
-font-size: 60px;
-margin-left: 10px;
-color: #FFC312;
+.frontbox {
+    background-color: white;
+    border-radius: 20px;
+    height: 100%;
+    width: 50%;
+    z-index: 10;
+    position: absolute;
+    right: 0;
+    left: 100%;
+    margin-right: 0%;
+    margin-left: 3%;
+    transition: right .8s ease-in-out;
 }
 
-.social_icon span:hover{
-color: white;
-cursor: pointer;
+.moving {
+    right: 45%;
 }
 
-.card-header h3{
-color: white;
+.loginMsg,
+.signupMsg {
+    width: 61%;
+    height: 100%;
+    font-size: 25px;
+    box-sizing: border-box;
+    text-align: justify;
 }
 
-.social_icon{
-position: absolute;
-right: 20px;
-top: -45px;
+.loginMsg .title,
+.signupMsg .title {
+    font-weight: 300;
+    font-size: 23px;
 }
 
-.input-group-prepend span{
-width: 50px;
-background-color: #FFC312;
-color: black;
-border:0 !important;
+.loginMsg p,
+.signupMsg p {
+    font-weight: 100;
 }
 
-input:focus{
-outline: 0 0 0 0  !important;
-box-shadow: 0 0 0 0 !important;
+.textcontent {
+    color: white;
+    margin-top: 33%;
+    margin-left: -40%;
+    margin-right: -50%;
+}
 
+.loginMsg button,
+.signupMsg button {
+    background-color: #404040;
+    border: 2px solid white;
+    border-radius: 10px;
+    color: white;
+    font-size: 12px;
+    box-sizing: content-box;
+    font-weight: 300;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+
+/* front box content*/
+
+.login,
+.signup {
+    padding: 20px;
+    text-align: center;
+}
+
+.login h2,
+.signup h2 {
+    color: #9bc8ce;
+    font-size: 22px;
+}
+
+.inputbox {
+    margin-top: 30px;
+}
+
+.login input,
+.signup input {
+    display: block;
+    width: 100%;
+    height: 40px;
+    background-color: #f2f2f2;
+    border: none;
+    margin-bottom: 20px;
+    font-size: 12px;
+}
+
+.login button,
+.signup button {
+    background-color: #9bc8ce;
+    border: none;
+    color: white;
+    font-size: 12px;
+    font-weight: 300;
+    box-sizing: content-box;
+    padding: 10px;
+    border-radius: 10px;
+    width: 60px;
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    cursor: pointer;
+}
+
+
+/* Fade In & Out*/
+
+.login p {
+    cursor: pointer;
+    color: #404040;
+    font-size: 15px;
+}
+
+.loginMsg,
+.signupMsg {
+    /*opacity: 1;*/
+    transition: opacity .8s ease-in-out;
+}
+
+.visibility {
+    opacity: 0;
+}
+
+.hide {
+    display: none;
 }
 
 .remember{
-color: white;
-}
+    color: rgb(8, 8, 8);
+    }
+    
+    .remember input
+    {
+    width: 20px;
+    height: 20px;
+    margin-left: 15px;
+    margin-right: 5px;
+    }
 
-.remember input
-{
-width: 20px;
-height: 20px;
-margin-left: 15px;
-margin-right: 5px;
-}
-
-.login_btn{
-color: black;
-background-color: #FFC312;
-width: 100px;
-}
-
-.login_btn:hover{
-color: black;
-background-color: white;
-}
-
-.links{
-color: white;
-}
-
-.links a{
-margin-left: 4px;
-}
+    .chkbox{
+        padding-left: 10px;
+        font-weight: bold;
+    }

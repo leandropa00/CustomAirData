@@ -20,6 +20,43 @@
     </style>
 </head>
 <body>
+    <div class="container">
+        <div >
+            <div class="loginMsg">
+                <div class="textcontent">
+                    <!-- <p class="title">Don't have an account?</p> -->
+                    <p>Nuestro entorno enfrenta muchos desafíos. Es por eso que necesitamos colaborar para ayudar a abordar las necesidades de hoy y lo que es más importante, para imaginar y crear soluciones para el futuro.</p>
+                </div>
+            </div>
+        </div>
+        <!-- backbox -->
+        
+        <div class="frontbox">
+            <div class="login">
+                <h2>Ingresar</h2>
+                @error('email')
+                    <div class="alert alert-danger text-center" style="padding: 5px; margin 0px" role="alert">
+                        <h6 style="font-size: 13px;margin-bottom: 0px">Credenciales erróneas, intenta nuevamente.</h6>
+                    </div>
+                @enderror
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+                        <div class="inputbox">
+                            <h6>Correo electrónico</h6>
+                            <input placeholder="Ingresa tu correo electrónico" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            <h6>Contraseña</h6>
+                            <input placeholder="Ingresa tu contraseña" id="password" type="password" class="form-control @error('email') is-invalid @enderror" name="password" required autocomplete="current-password">
+                        </div>
+                        <button type="submit" class="btn float-right login_btn">Ingresar</button>
+                </form>
+            </div>
+        </div>
+        <!-- frontbox -->
+    </div>
+    <script src="js/login.js"></script>
+    <!-- Style Switcher Start -->
+    </body>
+{{-- <body>
 <div class="container">
 	<div class="d-flex justify-content-center h-100">
 		<div class="card">
@@ -93,7 +130,7 @@
 		</div>
 	</div>
 </div>
-</body>
+</body> --}}
 </html>
 {{-- <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
