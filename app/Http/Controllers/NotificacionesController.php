@@ -16,12 +16,12 @@ class NotificacionesController extends Controller
         switch ($tipo) {
             case 'menor':
                 $notificacion['asunto'] = "Nivel bajo de $contaminante en $punto->alias";
-                $notificacion['mensaje'] = "Se registró una medición de $valor del contaminante $contaminante, la cual se encuentra por debajo del nivel mínimo ($limite)";
+                $notificacion['mensaje'] = "El canal $contaminante del punto de monitoreo $punto->alias - ".$punto->campana->nombre." registró $valor, el cual se encuentra por debajo del nivel de alerta establecido en $limite";                
                 break;
 
             case 'mayor':
                 $notificacion['asunto'] = "Nivel de $contaminante excedido en $punto->alias";
-                $notificacion['mensaje'] = "Se registró una medición de $valor del contaminante $contaminante, la cual excede el nivel máximo ($limite)";
+                $notificacion['mensaje'] = "El canal $contaminante del punto de monitoreo $punto->alias - ".$punto->campana->nombre." registró $valor, el cual excede el nivel de alerta establecido en $limite";
                 break;
         }
 

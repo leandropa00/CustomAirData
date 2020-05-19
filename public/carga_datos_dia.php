@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
 date_default_timezone_set('America/Bogota');
 require 'conexion_bd.php';
@@ -94,14 +96,14 @@ while ($row = $result->fetch_assoc()) {
                 $telefono,
                 [ 
                     'from' => '+16692013141',
-                    'body' => $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final']
+                    'body' => "El canal ".$row3['nombre']." del punto de monitoreo $location_name - ".$row['nombre']." registró ".$row2[$row3['nombre_campo']]*$row3['conversion']." ".$row3['unidad_final'].", el cual se encuentra por debajo del nivel de alerta establecido en ".$row3['minimo'].' '.$row3['unidad_final']
                 ]
               );
             }
   
   
             $asunto = 'Nivel bajo de '.$row3['nombre']." en $location_name";
-            $msg = "<h2>Hola,</h2><hr><p>".$row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final']." <br>Gracias,<br> Airlab.com</p>";
+            $msg = "<h2>¡Alerta!</h2><hr><p>El canal ".$row3['nombre']." del punto de monitoreo $location_name - ".$row['nombre']." registró ".$row2[$row3['nombre_campo']]*$row3['conversion']." ".$row3['unidad_final'].", el cual se encuentra por debajo del nivel de alerta establecido en ".$row3['minimo'].' '.$row3['unidad_final']." <br>Gracias,<br> Airlab.com</p>";
             send_mail_alert($msg, $email, $asunto);
   
             echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final'].'. Usuario: '.$row1['name']."\n";
@@ -123,13 +125,13 @@ while ($row = $result->fetch_assoc()) {
                 $telefono,
                 [ 
                     'from' => '+16692013141',
-                    'body' => $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final']
+                    'body' => "El canal ".$row3['nombre']." del punto de monitoreo $location_name - ".$row['nombre']." registró ".$row2[$row3['nombre_campo']]*$row3['conversion']." ".$row3['unidad_final'].", el cual excede el nivel de alerta establecido en ".$row3['maximo'].' '.$row3['unidad_final']
                 ]
               );
             }
 
             $asunto = 'Nivel de '.$row3['nombre']." excedido en $location_name";
-            $msg = "<h2>Hola,</h2><hr><p>".$row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final']." <br>Gracias,<br> Airlab.com</p>";
+            $msg = "<h2>¡Alerta!</h2><hr><p>El canal ".$row3['nombre']." del punto de monitoreo $location_name - ".$row['nombre']." registró ".$row2[$row3['nombre_campo']]*$row3['conversion']." ".$row3['unidad_final'].", el cual excede el nivel de alerta establecido en ".$row3['maximo'].' '.$row3['unidad_final']." <br>Gracias,<br> Airlab.com</p>";
             send_mail_alert($msg, $email, $asunto);
 
             echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final'].'. Usuario: '.$row1['name']."\n";
@@ -154,7 +156,7 @@ function delete_record($conn, $file_date, $loc_id)
 }
 
 function notify($id, $valor, $limite, $tipo, $contaminante) {
-  echo $url = "https://logjane.com/customair/public/notificacion/$id/$valor/$limite/$tipo/$contaminante";
+  $url = "https://logjane.com/customair/public/notificacion/$id/$valor/$limite/$tipo/$contaminante";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_exec($ch);
