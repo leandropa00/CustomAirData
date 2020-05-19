@@ -32,6 +32,9 @@
         },
         scales: {
           xAxes: [{
+            ticks: {
+              fontSize: 10,
+            },
             display: true,
             gridLines: {
               color: '#dae1e7',
