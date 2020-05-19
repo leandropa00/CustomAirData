@@ -10,14 +10,7 @@
                     <ul class="nav navbar-nav float-right">
                         
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
-                        <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i class="ficon feather icon-search"></i></a>
-                            <div class="search-input">
-                                <div class="search-input-icon"><i class="feather icon-search primary"></i></div>
-                                <input class="input" type="text" placeholder="Explore Vuexy..." tabindex="-1" data-search="template-list">
-                                <div class="search-input-close"><i class="feather icon-x"></i></div>
-                                <ul class="search-list search-list-main"></ul>
-                            </div>
-                        </li>
+                        
                         <li class="dropdown dropdown-notification nav-item">
                             <a class="nav-link nav-link-label" href="#" data-toggle="dropdown">
                                 <i class="ficon feather icon-bell"></i>
@@ -68,9 +61,9 @@
                                 <span class="user-name text-bold-600"><?php echo e(ucwords(Auth::user()->name)); ?></span><span class="user-status">Disponible</span>
                             </div>
                             <?php if(Auth::user()->rol == 'admin'): ?>
-                                <span><img class="round" src="<?php echo e(url('/')); ?>/includes/app-assets/images/portrait/small/default.png" alt="avatar" height="40" width="40"></span>
+                                <span><img class="round" src="<?php echo e(url('/')); ?>/includes/app-assets/images/portrait/small/default.png" alt="avatar" height="55" width="55"></span>
                             <?php else: ?>
-                                <span><img class="round" src="<?php echo e(asset('images/empresas/'.Auth::user()->empresa->foto)); ?>" alt="avatar" height="40" width="40"></span>
+                                <span><img class="round" src="<?php echo e(asset('images/empresas/'.Auth::user()->empresa->foto)); ?>" alt="avatar" height="55" width="55"></span>
                             <?php endif; ?>
                             <div class="dropdown-menu dropdown-menu-right profle_sec">
                                 <a class="dropdown-item" href="<?php echo e(route('cuenta.edit')); ?>">
