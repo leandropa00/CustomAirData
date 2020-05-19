@@ -84,7 +84,7 @@
                                         <div class="col-md-3 col-12">
                                             <div class="card">
                                                 <div class="card-header d-flex justify-content-between pb-0">
-                                                    <h4><?php echo e($item->nombre); ?></h4>
+                                                    <h4><?php echo e("$item->nombre ($item->unidad_inicial)"); ?></h4>
                                                 </div>
                                                 <div class="card-content">
                                                     <div class="card-body">
