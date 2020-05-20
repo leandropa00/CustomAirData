@@ -1,5 +1,5 @@
 <?php $__env->startSection('css'); ?>
-<link rel="stylesheet" type="text/css" href="<?php echo e(url('/')); ?>/includes/app-assets/vendors/css/tables/datatable/datatables.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(url('/')); ?>/includes/app-assets/vendors/css/tables/datatable/datatables.min.css">
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 <!-- BEGIN: Content-->
@@ -70,6 +70,9 @@
                                                         <a class="btn btn-icon btn-outline-secondary waves-effect waves-light" target="_blank" href="<?php echo e(route('puntos-monitoreo.imprimir', $item->id)); ?>"><i class="feather icon-printer"></i></a>
                                                         <a class="btn btn-icon btn-outline-vimeo waves-effect waves-light" href="<?php echo e(route('puntos-monitoreo.contaminantes', $item->id)); ?>"><i class="feather icon-wind"></i></a>
                                                         <?php if(Auth::user()->rol=='admin'): ?>
+                                                            <?php if($item->carga_automatica == '0'): ?>
+                                                                <button onclick="modalCarga(<?php echo e($item->id); ?>)" class="btn btn-icon btn-outline-dark waves-effect waves-light"><i class="feather icon-upload"></i></button>                                                          
+                                                            <?php endif; ?>
                                                             <a class="btn btn-icon btn-outline-warning waves-effect waves-light" href="<?php echo e(route('puntos-monitoreo.edit', $item->id)); ?>"><i class="feather icon-edit"></i></a>
                                                             <a class="btn btn-icon btn-outline-danger waves-effect waves-light" href="<?php echo e(route('puntos-monitoreo.destroy', $item->id)); ?>"><i class="feather icon-trash-2"></i></a>
                                                         <?php endif; ?>
@@ -109,6 +112,22 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalCarga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCargaLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalCargaBody">
+                Cargando...
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- END: Content-->
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
@@ -127,7 +146,7 @@
 <script src="<?php echo e(url('/')); ?>/includes/app-assets/js/scripts/datatables/datatable.js"></script>
 <script>
     function abrirModal(id){
-        var url = "<?php echo e(route('puntos-monitoreo.show', ':id')); ?>"
+        var url = "<?php echo e(route('puntos-monitoreo.show', ':id')); ?>";
         url = url.replace(':id', id);
 
         $.ajax({
@@ -141,12 +160,27 @@
         });
     }
 
+    function modalCarga(id){
+        var url = "<?php echo e(route('puntos-monitoreo.modalCargaManual', ':id')); ?>";
+        url = url.replace(':id', id);
+
+        $.ajax({
+            type: "get",
+            url: url,
+            success: function (response) {
+                $("#modalCarga").modal("show");                
+                $("#modalCargaLabel").html('Carga manual de datos para '+response.titulo);                
+                $("#modalCargaBody").html(response.html);                   
+            }
+        });
+    }
+
     function imprimir(id){
         var url = "<?php echo e(route('puntos-monitoreo.imprimir', ':id')); ?>";
         url = url.replace(':id', id)
         window.open(url);
     }
+    
 </script>
-
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/logjanec/public_html/customair/resources/views/puntosMonitoreo/index.blade.php ENDPATH**/ ?>

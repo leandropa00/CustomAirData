@@ -75,7 +75,8 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-    
+
+                                                                    
                                                                     <div class="col-md-6">
                                                                         <div class="form-group">
                                                                             <label for="contact-info-icon">Descripcion del punto</label>
@@ -84,10 +85,22 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-    
+
+                                                                    <div class="col-md-3 col-12">
+                                                                        <div class="form-group">
+                                                                            <label>Carga automática</label>
+                                                                            <div class="form-check">
+                                                                                <div class="custom-control custom-switch">
+                                                                                    No
+                                                                                    <input type="checkbox" class="custom-control-input" id="carga_automatica" name="carga_automatica" checked>
+                                                                                    <label class="custom-control-label" for="carga_automatica"></label>
+                                                                                    Sí
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            
                                                         </div>
                                                     </div>
                                                 </div>

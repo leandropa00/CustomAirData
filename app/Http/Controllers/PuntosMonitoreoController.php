@@ -92,6 +92,7 @@ class PuntosMonitoreoController extends Controller
                 $punto_monitoreo->ruta = $rutaDatos;
                 $punto_monitoreo->latitud = $request->coordA_name;
                 $punto_monitoreo->longitud = $request->coordB_name;
+                $punto_monitoreo->carga_automatica = isset($request->carga_automatica) ? '1' : '0';
                 $campana->puntosDeMonitoreo()->save($punto_monitoreo);
 
                 $punto_monitoreo->contaminantes()->sync($request->contaminantes);
@@ -252,6 +253,7 @@ class PuntosMonitoreoController extends Controller
                 $punto_monitoreo->ruta = $rutaDatos;
                 $punto_monitoreo->latitud = $request->coordA_name;
                 $punto_monitoreo->longitud = $request->coordB_name;
+                $punto_monitoreo->carga_automatica = isset($request->carga_automatica) ? '1' : '0';
                 $punto_monitoreo->save();
 
                 $punto_monitoreo->contaminantes()->sync($request->contaminantes);
@@ -369,4 +371,32 @@ class PuntosMonitoreoController extends Controller
 
         return redirect()->route('puntos-monitoreo.index', $puntoMonitoreo->campana->id)->with('success', 'Niveles actualizados satisfactoriamente');
     }
+
+    public function modalCargaManual(PuntoMonitoreo $punto)
+    {
+        $archivos = array_filter(scandir($punto->ruta), function($archivo) { 
+            return pathinfo($archivo, PATHINFO_EXTENSION) == 'dat';
+        }); 
+
+        return [
+            'titulo' => $punto->alias, 
+            'html' => view('puntosMonitoreo.cargaManual', compact('punto', 'archivos'))->render()
+        ];
+    }
+
+    public function cargaDatos(PuntoMonitoreo $punto, Request $request)
+    {     
+        $nombre = $request->file->getClientOriginalName();
+        $request->file->move($punto->ruta, $nombre);
+    }
+
+    public function recargarTablaDatos(PuntoMonitoreo $punto)
+    {
+        $archivos = array_filter(scandir($punto->ruta), function($archivo) { 
+            return pathinfo($archivo, PATHINFO_EXTENSION) == 'dat';
+        }); 
+
+        return view('puntosMonitoreo.actualizacionTablaDatos', compact('archivos'))->render();
+    }
+
 }

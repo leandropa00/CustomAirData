@@ -16,10 +16,6 @@ Route::get('/submit-filter', 'ConsultaDatosController@cargaFiltro')->name('submi
 Route::get('/cargar-tabla', 'ConsultaDatosController@cargarTabla')->name('cargarTabla');
 Route::get('/cargar-contaminantes/{punto}', 'ConsultaDatosController@cargarContaminantes')->name('cargarContaminantes');
 
-// Carga manual
-Route::get('/manual-upload', 'DatosController@manual_upload')->name('manual-upload');
-Route::post('file-upload', 'DatosController@fileUploadPost')->name('file.upload.post');
-
 //Empresas
 Route::get('empresas/delete/{id}', 'EmpresasController@destroy')->name('empresas.destroy');
 Route::resource('empresas', 'EmpresasController', ['except' => ['destroy']]);
@@ -45,6 +41,9 @@ Route::post('puntos-monitoreo/store/{id}', 'PuntosMonitoreoController@store')->n
 Route::get('puntos-monitoreo/delete/{id}', 'PuntosMonitoreoController@destroy')->name('puntos-monitoreo.destroy');
 Route::get('puntos-monitoreo/imprimir-detalles/{punto}', 'PuntosMonitoreoController@imprimir')->name('puntos-monitoreo.imprimir');
 Route::get('puntos-monitoreo/contaminantes/{punto}', 'PuntosMonitoreoController@contaminantes')->name('puntos-monitoreo.contaminantes');
+Route::get('puntos-monitoreo/carga-manual/{punto}', 'PuntosMonitoreoController@modalCargaManual')->name('puntos-monitoreo.modalCargaManual');
+Route::get('puntos-monitoreo/recargar-tabla-datos/{punto}', 'PuntosMonitoreoController@recargarTablaDatos')->name('puntos-monitoreo.recargarTablaDatos');
+Route::post('puntos-monitoreo/carga-datos/{punto}', 'PuntosMonitoreoController@cargaDatos')->name('puntos-monitoreo.cargaDatos');
 Route::post('puntos-monitoreo/{punto}', 'PuntosMonitoreoController@rangos')->name('puntos-monitoreo.guardar_rangos');
 Route::resource('puntos-monitoreo', 'PuntosMonitoreoController', ['except' => ['index', 'create', 'store', 'show', 'destroy']]); 
 

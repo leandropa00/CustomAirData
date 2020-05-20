@@ -83,10 +83,23 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+
+                                                                    <div class="col-md-3 col-12">
+                                                                        <div class="form-group">
+                                                                            <label>Carga automática</label>
+                                                                            <div class="form-check">
+                                                                                <div class="custom-control custom-switch">
+                                                                                    No
+                                                                                    <input type="checkbox" class="custom-control-input" id="carga_automatica" name="carga_automatica" <?php echo e($puntoMonitoreo->carga_automatica == '1' ? 'checked' : ''); ?>>
+                                                                                    <label class="custom-control-label" for="carga_automatica"></label>
+                                                                                    Sí
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
     
                                                                 </div>
                                                             </div>
-                                                            
                                                         </div>
                                                     </div>
                                                 </div>

@@ -11,6 +11,7 @@ $sql = "SELECT * from puntos_monitoreo
 inner join campanas on campanas.id = puntos_monitoreo.campana_id
 where puntos_monitoreo.deleted_at is null
 and campanas.deleted_at is null
+and puntos_monitoreo.carga_automatica = '1'
 and campanas.fecha_inicio <= '$fechaActual'
 and campanas.fecha_fin >= '$fechaActual'";
 
