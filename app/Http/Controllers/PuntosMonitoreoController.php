@@ -390,12 +390,12 @@ class PuntosMonitoreoController extends Controller
         $request->file->move($punto->ruta, $nombre);
     }
 
-    public function recargarTablaDatos(PuntoMonitoreo $punto)
+    public function recargarTablaDatos(PuntoMonitoreo $punto, $cantidad)
     {
         $archivos = array_filter(scandir($punto->ruta), function($archivo) { 
             return pathinfo($archivo, PATHINFO_EXTENSION) == 'dat';
         }); 
 
-        return view('puntosMonitoreo.actualizacionTablaDatos', compact('archivos'))->render();
+        return view('puntosMonitoreo.actualizacionTablaDatos', compact('archivos', 'cantidad'))->render();
     }
 }

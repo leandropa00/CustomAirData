@@ -1,28 +1,30 @@
 <link rel="stylesheet" href="<?php echo e(asset('dropzone/dist/dropzone.css')); ?>">
 
-<div class="card">
-    <div class="card-header text-center">
-        <div class="col-12 text-center">
-            <h4>Archivos cargados</h4>
+<div id="tabla">
+    <div class="card">
+        <div class="card-header text-center">
+            <div class="col-12 text-center">
+                <h4><?php echo e('Archivos cargados ('.count($archivos).')'); ?></h4>
+            </div>
         </div>
-    </div>
-    <div class="card-body" style="max-height: 200px; overflow: auto" id="tabla">
-        <table class="table table-striped">
-            <?php $__empty_1 = true; $__currentLoopData = $archivos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                <tr>
-                    <td class="text-center">
-                        <?php echo e($item); ?>
+        <div class="card-body" style="max-height: 200px; overflow: auto">
+            <table class="table table-striped">
+                <?php $__empty_1 = true; $__currentLoopData = $archivos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                    <tr>
+                        <td class="text-center">
+                            <?php echo e($item); ?>
 
-                    </td>
-                </tr>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                <tr>
-                    <td class="text-center">
-                        No hay datos para este punto de monitoreo
-                    </td>
-                </tr>
-            <?php endif; ?>
-        </table>
+                        </td>
+                    </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                    <tr>
+                        <td class="text-center">
+                            No hay datos para este punto de monitoreo
+                        </td>
+                    </tr>
+                <?php endif; ?>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -54,18 +56,19 @@
             } else {
                 done("Sólo se aceptan archivos .dat");                
             }
+            this.on("complete", function (file, response) {
+                var url = "<?php echo e(route('puntos-monitoreo.recargarTablaDatos', [$punto->id, ':i'])); ?>"
+                url = url.replace(':i', this.getAcceptedFiles().length);
 
-            this.on("success", function (file, response) {
                 $.ajax({
                     type: "get",
-                    url: "<?php echo e(route('puntos-monitoreo.recargarTablaDatos', $punto->id)); ?>",
+                    url: url,
                     success: function (response) {
-                        $('#tabla').html(response);                        
+                        $('#tabla').html(response);  
                     }
                 });
             })
         },
-
     });
 </script>
 <?php /**PATH /home/logjanec/public_html/customair/resources/views/puntosMonitoreo/cargaManual.blade.php ENDPATH**/ ?>
