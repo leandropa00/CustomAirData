@@ -33,7 +33,7 @@
     </div>
 <?php else: ?>
 <br>
-    <p style="color:red; margin-left:10px">¡Sin datos!<br>El punto no cuenta con datos cargados, por favor verifica.</p>
+    <p style="color:red; margin-left:10px">¡Sin datos!<br>El punto de monitoreo se encuentra inactivo.</p>
 <?php endif; ?>
 
 <?php

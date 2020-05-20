@@ -398,5 +398,4 @@ class PuntosMonitoreoController extends Controller
 
         return view('puntosMonitoreo.actualizacionTablaDatos', compact('archivos'))->render();
     }
-
 }
