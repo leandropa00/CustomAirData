@@ -9,6 +9,7 @@ use App\Campana;
 use App\DetallePunto;
 use App\Contaminante;
 use App\TipoParametro;
+use App\Dato;
 use DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -397,5 +398,117 @@ class PuntosMonitoreoController extends Controller
         }); 
 
         return view('puntosMonitoreo.actualizacionTablaDatos', compact('archivos', 'cantidad'))->render();
+    }
+
+    public function cargaDatosBD(PuntoMonitoreo $punto, Request $request)
+    {     
+
+        $archivos = array_filter(scandir($punto->ruta), function($archivo) { 
+            return pathinfo($archivo, PATHINFO_EXTENSION) == 'dat';
+        }); 
+
+        $punto->datos()->delete();
+
+        foreach ($archivos as $item) {
+            $nombre = explode('.', $item)[0];
+            $data = utf8_encode(file_get_contents($punto->ruta.$item));
+            $newstring = preg_replace("/[\n\r]/", "----------", $data);
+            $content_array = explode("----------", $newstring);
+            $column_name = explode(";", $content_array[2]);
+            $col_seq = array();
+
+            for ($i = 0; $i < count($column_name); $i++) {
+                if ($column_name[$i] != '') {
+                    $col_name = explode(",", $column_name[$i]);
+                    if (isset($col_name[1]))
+                        $col_seq[] = $col_name[1];
+                    else
+                        $col_seq[] = 'HHMM';
+                }
+            }
+
+            $pm10 = array_search('PM10', $col_seq);
+            if ($pm10 == '') $pm10 = '99';
+            $pm25 = array_search('PM25', $col_seq);
+            if ($pm25 == '') $pm25 = '99';
+            $so2 = array_search('SO2', $col_seq);
+            if ($so2 == '') $so2 = '99';
+            $o3 = array_search('O3', $col_seq);
+            if ($o3 == '') $o3 = '99';
+            $co = array_search('CO', $col_seq);
+            if ($co == '') $co = '99';
+            $no = array_search('NO', $col_seq);
+            if ($no == '') $no = '99';
+            $no2 = array_search('NO2', $col_seq);
+            if ($no2 == '') $no2 = '99';
+            $nox = array_search('NOx', $col_seq);
+            if ($nox == '') $nox = '99';
+            $dv = array_search('DV', $col_seq);
+            if ($dv == '') $dv = '99';
+            $vv = array_search('VV', $col_seq);
+            if ($vv == '') $vv = '99';
+            $hr = array_search('HR', $col_seq);
+            if ($hr == '') $hr = '99';
+            $temp = array_search('TEMP', $col_seq);
+            if ($temp == '') $temp = '99';
+            $pb = array_search('PB', $col_seq);
+            if ($pb == '') $pb = '99';
+            $rs = array_search('RS', $col_seq);
+            if ($rs == '') $rs = '99';
+            $rain = array_search('RAIN', $col_seq);
+            if ($rain == '') $rain = '99';
+            $humedad = array_search('Humedad Int', $col_seq);
+            if ($humedad == '') $humedad = '99';
+            $temp2 = array_search('Temperatura Int', $col_seq);
+            if ($temp2 == '') $temp2 = '99';
+            $vel_aspiracion = array_search('Vel Aspiracion', $col_seq);
+            if ($vel_aspiracion == '') $vel_aspiracion = '99';
+            $tsp = array_search('TSP', $col_seq);
+            if ($tsp == '') $tsp = '99';
+            $estado_puerta = array_search('Estado Puerta', $col_seq);
+            if ($estado_puerta == '') $estado_puerta = '99';
+        
+            for ($i = 3; $i < count($content_array); $i++) {
+                if ($content_array[$i] != '') {
+                    $content_array[$i] = preg_replace('/\s+/', ' ', $content_array[$i]);
+                    $column_name = explode(" ", $content_array[$i]);
+                    $column_name[99] = '';
+                    $file_date = explode('.', $item); // 
+                    $file_date1 = str_replace(' ', '', $file_date[0]);
+                    $column_name[0] = str_replace(' ', '', $column_name[0]);
+                    $column_name[0] = preg_replace('/\s+/', '', $column_name[0]);
+                    $newtime = chunk_split($column_name[0], 2, ':');
+                    $newdate = date('Y-m-d', strtotime($file_date1));
+                    $newtime = $newtime . '00';
+                    $datetime = $newdate . ' ' . $newtime;
+
+                    $dato = new Dato;
+                    $dato->punto_id = $punto->id;
+                    $dato->fecha_hora = $datetime;
+                    $dato->nombre_archivo = $file_date1;
+                    $dato->pm10 = $column_name[$pm10]; 
+                    $dato->pm25 = $column_name[$pm25]; 
+                    $dato->tsp = $column_name[$tsp]; 
+                    $dato->so2 = $column_name[$so2]; 
+                    $dato->o3 = $column_name[$o3]; 
+                    $dato->co = $column_name[$co]; 
+                    $dato->no = $column_name[$no]; 
+                    $dato->no2 = $column_name[$no2]; 
+                    $dato->nox = $column_name[$nox]; 
+                    $dato->dv = $column_name[$dv]; 
+                    $dato->vv = $column_name[$vv]; 
+                    $dato->hr = $column_name[$hr]; 
+                    $dato->temp = $column_name[$temp]; 
+                    $dato->pb = $column_name[$pb]; 
+                    $dato->rs = $column_name[$rs]; 
+                    $dato->rain = $column_name[$rain]; 
+                    $dato->humedad = $column_name[$humedad]; 
+                    $dato->temp2 = $column_name[$temp2]; 
+                    $dato->vel_aspiracion = $column_name[$vel_aspiracion]; 
+                    $dato->estado_puerta = $column_name[$estado_puerta]; 
+                    $dato->save();
+                }
+            }
+        }
     }
 }

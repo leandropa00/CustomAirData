@@ -1,3 +1,8 @@
+<div class="alert alert-success" id="alerta" style="display: none">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    Datos cargados correctamente a la base de datos
+</div>
+
 <div class="alert alert-success">
     <button type="button" class="close" data-dismiss="alert">×</button>
     <?php echo e("$cantidad archivos cargados satisfactoriamente"); ?> 

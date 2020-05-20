@@ -1,5 +1,10 @@
 <link rel="stylesheet" href="<?php echo e(asset('dropzone/dist/dropzone.css')); ?>">
 
+<div class="alert alert-success" id="alerta" style="display: none">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    Datos cargados correctamente a la base de datos
+</div>
+
 <div id="tabla">
     <div class="card">
         <div class="card-header text-center">
@@ -44,6 +49,21 @@
     </div>
 </div>
 
+
+<div class="card" id="carga" <?php if(empty($archivos)): ?> style="display: none" <?php endif; ?>>
+    <div class="card-header text-center">
+        <div class="col-12 text-center">
+            <h4>Carga tus archivos a la base de datos</h4>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="col-12 text-center">
+            <button class="btn btn-info" id="cargarBD">Cargar</button>
+        </div>
+    </div>
+</div>
+
+
 <script src="<?php echo e(asset('dropzone/dist/dropzone.js')); ?>"></script>
 <script>
     $("#dropzone-form").dropzone({
@@ -65,10 +85,21 @@
                     url: url,
                     success: function (response) {
                         $('#tabla').html(response);  
+                        $('#carga').show();
                     }
                 });
             })
         },
+    });
+    
+    $('#cargarBD').click(function () { 
+        $.ajax({
+            type: "get",
+            url: "<?php echo e(route('puntos-monitoreo.cargaDatosBD', $punto->id)); ?>",
+            success: function (response) {
+                $('#alerta').show();
+            }
+        });        
     });
 </script>
 <?php /**PATH /home/logjanec/public_html/customair/resources/views/puntosMonitoreo/cargaManual.blade.php ENDPATH**/ ?>

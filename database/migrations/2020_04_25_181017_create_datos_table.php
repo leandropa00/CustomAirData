@@ -14,7 +14,7 @@ class CreateDatosTable extends Migration
     public function up()
     {
         Schema::create('datos', function (Blueprint $table) {
-            $table->integer('id')->autoIncrement();
+            $table->bigInteger('id')->autoIncrement();
             $table->integer('punto_id');
             $table->index('punto_id');
             $table->foreign('punto_id')->references('id')->on('puntos_monitoreo')->constrained()->onDelete('restrict')->onUpdate('cascade');
