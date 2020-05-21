@@ -1,23 +1,20 @@
 <?php $__env->startSection('content'); ?>
-        <!-- BEGIN: Content-->
+
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet"/>
+    
     <style>
-
-        ::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .gm-style-iw.gm-style-iw-c {
-            width: 1200px!important;
-            padding: 0!important;
+        #map {
+            width: 100%;
+            height: 600px;
         }
 
-        .gm-style-iw-d {
-            width: 100%!important;
-            background-color: #f8f8f8;
+        .mapboxgl-popup {
+            max-width: 800px !important;
         }
 
-        .h_heading, .h_text {
-            font-size:12px;
+        .mapboxgl-marker {
+            cursor: pointer;
         }
 
     </style>
@@ -39,164 +36,123 @@
             </div>
 
             <div class="content-body">
-                <!-- gmaps Examples section start -->
                 <section id="gmaps-basic-maps">
-                    <!-- Info Window -->
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">Puntos de monitoreo</h4>
+                                    <button class="btn btn-info float-right" onclick="centrar()">Centrar</button>
                                 </div>
 
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <p class="card-text"></p>
-                                        <div id="info-window" class="height-600"></div>
+                                        <div id="menu">
+                                            <input id="outdoors-v11" type="radio" name="rtoggle" value="outdoors" checked="checked"/>
+                                            <label for="outdoors-v11">Outdoors&nbsp;&nbsp;&nbsp;</label>
+                                            <input id="streets-v11" type="radio" name="rtoggle" value="streets"/>
+                                            <label for="streets-v11">Streets&nbsp;&nbsp;&nbsp;</label>
+                                            <input id="light-v10" type="radio" name="rtoggle" value="light"/>
+                                            <label for="light-v10">Light&nbsp;&nbsp;&nbsp;</label>
+                                            <input id="dark-v10" type="radio" name="rtoggle" value="dark"/>
+                                            <label for="dark-v10">Dark&nbsp;&nbsp;&nbsp;</label>
+                                            <input id="satellite-v9" type="radio" name="rtoggle" value="satellite"/>
+                                            <label for="satellite-v9">Satellite&nbsp;&nbsp;&nbsp;</label>
+                                        </div>
+                                        <div id="map"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
-                <!-- gmaps Examples section End -->
             </div>
         </div>
     </div>
-
-    <!--model-->
-    <div class="modal fade text-left" id="large" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document" style="margin-top: 100px;max-width:950px;">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:black">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="map-responsive">
-                    <iframe id="ifrm" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- END: Content-->
-
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('js'); ?>
 
-    <!-- BEGIN: Page Vendor JS-->
-    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBgjNW0WA93qphgZW-joXVR6VC3IiYFjfo"></script>
-    <script src="<?php echo e(url('/')); ?>/includes/app-assets/vendors/js/charts/gmaps.min.js"></script>
-    <!-- END: Page Vendor JS-->
-
-    <!-- BEGIN: Theme JS-->
-    <script src="<?php echo e(url('/')); ?>/includes/app-assets/js/core/app-menu.js"></script>
-    <script src="<?php echo e(url('/')); ?>/includes/app-assets/js/core/app.js"></script>
-    <script src="<?php echo e(url('/')); ?>/includes/app-assets/js/scripts/components.js"></script>
-    <!-- END: Theme JS-->
-
-    <script src="<?php echo e(url('/')); ?>/includes/app-assets/vendors/js/charts/chart.min.js"></script>
-    <!-- BEGIN: Page JS-->
- 
-<script>
-
-    var markers = [
-
-        <?php $__empty_1 = true; $__currentLoopData = $puntos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-        {
-            "title": '<?php echo e(ucfirst($item->alias) . " - " . ucfirst($item->campana->nombre) . " - " . ucfirst($item->campana->empresa->nombre)); ?>',
-            "lat": '<?php echo e($item->latitud); ?>',
-            "lng": '<?php echo e($item->longitud); ?>',
-            "description": html(<?php echo e($item->id); ?>)
-        },
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-        <?php endif; ?>
-
-    ];
-
-    function html(id) {
-        var html;
-        var url = "<?php echo e(route('mapChart', ':id')); ?>";
-        url = url.replace(':id', id);
-
-        $.ajax({
-            async: false,
-            type: "get",
-            url: url,
-            success: function (res) {
-                html = res;   
-            }
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibGVhbmRyb3BhMDAiLCJhIjoiY2thaDU2Z3N6MGc0bTJxcG5xOGJrODZ5diJ9.ELYLOz9iGjkOCPbXY7DIVA';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/outdoors-v11',
+            center: [-74.2443, 4.2707],
+            zoom: 7
         });
 
-        return html;
-    }
+        var puntos = [];
 
-    window.onload = function () {
+        <?php $__empty_1 = true; $__currentLoopData = $puntos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
 
-        var mapOptions = {
+            puntos.push([<?php echo e($item->longitud); ?>, <?php echo e($item->latitud); ?>]);
 
-            center: new google.maps.LatLng(4.535000, -75.675690),
-            zoom:7,
-            mapTypeId: google.maps.MapTypeId.HYBRID,
-            closeBoxMargin: "200px 20px 2px 2px"
+            var marker = new mapboxgl.Marker()
+            .setLngLat([<?php echo e($item->longitud); ?>, <?php echo e($item->latitud); ?>])
+            .setPopup(
+                new mapboxgl.Popup(
+                    {
+                        anchor: 'center',
+                        closeButton: false
+                    }
+                ).on('open', function(){
+                    map.flyTo({
+                        center: [<?php echo e($item->longitud); ?>, <?php echo e($item->latitud); ?>]
+                    });
+                })
+                .setHTML(html(<?php echo e($item->id); ?>))
+            )
+            .addTo(map);
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+        <?php endif; ?>    
 
-        };
+        centrar();      
 
-        var infoWindow = new google.maps.InfoWindow();
-        var latlngbounds = new google.maps.LatLngBounds();
-        var map = new google.maps.Map(document.getElementById("info-window"), mapOptions);
-        var i = 0;
+        function centrar() {
+            map.fitBounds(puntos, {
+                padding: {top: 100, bottom:100, left: 100, right: 100}
+            });     
+        } 
 
-        var interval = setInterval(function () {
+        function html(id) {
+            var html;
+            var url = "<?php echo e(route('mapChart', ':id')); ?>";
+            url = url.replace(':id', id);
 
-            var data = markers[i]
-            var myLatlng = new google.maps.LatLng(data.lat, data.lng);
-            var marker = new google.maps.Marker({
-
-                position: myLatlng,
-                map: map,
-                title: data.title,
-                animation: google.maps.Animation.DROP
-
+            $.ajax({
+                async: false,
+                type: "get",
+                url: url,
+                success: function (res) {
+                    html = res;   
+                }
             });
 
-            (function (marker, data) {
+            return html;
+        }
 
-                google.maps.event.addListener(marker, "click", function (e) {
+        function get_chart(loc_id,val,conv){
+            var url = "<?php echo e(route('graficar', [':id', ':val', ':conv'])); ?>";
+            url = url.replace(':id', loc_id);
+            url = url.replace(':val', val);
+            url = url.replace(':conv', conv);
 
-                    infoWindow.setContent(data.description);
-                    infoWindow.open(map, marker);
+            $('#crtifrm').attr('src', url);   
+        }
 
-                });
+        var layerList = document.getElementById('menu');
+        var inputs = layerList.getElementsByTagName('input');
+        
+        function switchLayer(layer) {
+            var layerId = layer.target.id;
+            map.setStyle('mapbox://styles/mapbox/' + layerId);
+        }
+        
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].onclick = switchLayer;
+        }
+    </script>
+<?php $__env->stopSection(); ?> 
 
-            })(marker, data);
-
-            latlngbounds.extend(marker.position);
-
-            i++;
-
-            if (i == markers.length) {
-
-                clearInterval(interval);
-                var bounds = new google.maps.LatLngBounds();
-                map.setCenter(latlngbounds.getCenter());
-                map.fitBounds(latlngbounds);
-
-            }
-
-        }, 80);
-    }
-
-    function get_chart(loc_id,val,conv){
-        var url = "<?php echo e(route('graficar', [':id', ':val', ':conv'])); ?>";
-        url = url.replace(':id', loc_id);
-        url = url.replace(':val', val);
-        url = url.replace(':conv', conv);
-
-        $('#crtifrm').attr('src', url);   
-    }
-
-</script>
-<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/logjanec/public_html/customair/resources/views/mapa/index.blade.php ENDPATH**/ ?>

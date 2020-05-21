@@ -1,10 +1,10 @@
 @if ($ultimoDato)
     <div class="row" style="background-color: #f8f8f8;">
         <div class="col-12 col-md-12">
-            <h3 class="h_heading">&nbsp;&nbsp;{{strtoupper($punto->alias)}} - {{strtoupper($campana->nombre)}} - Último dato: {{ carbon\Carbon::parse($ultimoDato->fecha_hora)->format('d/m/Y g:i A') }}</h3>
+            <h5 class="h_heading">&nbsp;&nbsp;{{strtoupper($punto->alias)}} - {{strtoupper($campana->nombre)}} - Último dato: {{ carbon\Carbon::parse($ultimoDato->fecha_hora)->format('d/m/Y g:i A') }}</h5>
         </div>   
         <div class="col-12 col-md-4">
-            <table width="100%" style="background: #f8f8f8; color: black; margin-left:10px">
+            <table class="table" width="100%" style="background: #f8f8f8; color: black; margin-left:10px">
                 <tbody>
                     @forelse ($contaminantes as $item)
                         <tr style="background-color:
@@ -13,10 +13,10 @@
                                 echo color($total, $item->nombre_campo);
                             @endphp
                             " onclick="get_chart({{$punto->id}},'{{$item->nombre_campo}}', '{{$item->conversion}}');" data-toggle="tooltip" title="Ver {{$item->nombre}}">
-                            <td width="30%"> 
+                            <td style="padding: 0px"> 
                                 <b>{{$item->nombre}}</b> 
                             </td>
-                            <td width="70%"> 
+                            <td style="padding: 0px"> 
                                 <b>{{ $total.' '.$item->unidad_final }}</b>
                             </td>
                         </tr>

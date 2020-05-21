@@ -1,10 +1,10 @@
 <?php if($ultimoDato): ?>
     <div class="row" style="background-color: #f8f8f8;">
         <div class="col-12 col-md-12">
-            <h3 class="h_heading">&nbsp;&nbsp;<?php echo e(strtoupper($punto->alias)); ?> - <?php echo e(strtoupper($campana->nombre)); ?> - Último dato: <?php echo e(carbon\Carbon::parse($ultimoDato->fecha_hora)->format('d/m/Y g:i A')); ?></h3>
+            <h5 class="h_heading">&nbsp;&nbsp;<?php echo e(strtoupper($punto->alias)); ?> - <?php echo e(strtoupper($campana->nombre)); ?> - Último dato: <?php echo e(carbon\Carbon::parse($ultimoDato->fecha_hora)->format('d/m/Y g:i A')); ?></h5>
         </div>   
         <div class="col-12 col-md-4">
-            <table width="100%" style="background: #f8f8f8; color: black; margin-left:10px">
+            <table class="table" width="100%" style="background: #f8f8f8; color: black; margin-left:10px">
                 <tbody>
                     <?php $__empty_1 = true; $__currentLoopData = $contaminantes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <tr style="background-color:
@@ -13,10 +13,10 @@
                                 echo color($total, $item->nombre_campo);
                             ?>
                             " onclick="get_chart(<?php echo e($punto->id); ?>,'<?php echo e($item->nombre_campo); ?>', '<?php echo e($item->conversion); ?>');" data-toggle="tooltip" title="Ver <?php echo e($item->nombre); ?>">
-                            <td width="30%"> 
+                            <td style="padding: 0px"> 
                                 <b><?php echo e($item->nombre); ?></b> 
                             </td>
-                            <td width="70%"> 
+                            <td style="padding: 0px"> 
                                 <b><?php echo e($total.' '.$item->unidad_final); ?></b>
                             </td>
                         </tr>
