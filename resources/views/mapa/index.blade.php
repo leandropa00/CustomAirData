@@ -19,6 +19,9 @@
             cursor: pointer;
         }
 
+        .mapboxgl-popup-content {
+            background-color: transparent;
+        }
     </style>
 
     <div class="app-content content">
@@ -43,12 +46,9 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Puntos de monitoreo</h4>
-                                    <button class="btn btn-info float-right" onclick="centrar()">Centrar</button>
-                                </div>
-
-                                <div class="card-content">
-                                    <div class="card-body">
+                                    <div class="col-md-10 col-12">
+                                        <h4 class="card-title">Puntos de monitoreo</h4>
+                                        <br>
                                         <div id="menu">
                                             <input id="outdoors-v11" type="radio" name="rtoggle" value="outdoors" checked="checked"/>
                                             <label for="outdoors-v11">Outdoors&nbsp;&nbsp;&nbsp;</label>
@@ -61,6 +61,14 @@
                                             <input id="satellite-v9" type="radio" name="rtoggle" value="satellite"/>
                                             <label for="satellite-v9">Satellite&nbsp;&nbsp;&nbsp;</label>
                                         </div>
+                                    </div>
+                                    <div class="col-md-2 col 12">
+                                        <button class="btn btn-info float-right" onclick="centrar()">Centrar</button>
+                                    </div>
+                                </div>
+
+                                <div class="card-content">
+                                    <div class="card-body">
                                         <div id="map"></div>
                                     </div>
                                 </div>

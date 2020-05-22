@@ -1,9 +1,9 @@
 @if ($ultimoDato)
-    <div class="row" style="background-color: #f8f8f8;">
+    <div class="row" style="background-color: #f8f8f8; border-radius: 10px">
         <div class="col-12 col-md-12">
             <h5 class="h_heading">&nbsp;&nbsp;{{strtoupper($punto->alias)}} - {{strtoupper($campana->nombre)}} - Último dato: {{ carbon\Carbon::parse($ultimoDato->fecha_hora)->format('d/m/Y g:i A') }}</h5>
         </div>   
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
             <table class="table" width="100%" style="background: #f8f8f8; color: black; margin-left:10px">
                 <tbody>
                     @forelse ($contaminantes as $item)
@@ -27,7 +27,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-9">
             <iframe src="{{ route('graficar', [$punto->id, $contaminantes[0]->nombre_campo, $contaminantes[0]->conversion]) }}" frameBorder="0" id="crtifrm" style="background-color: #f8f8f8; width:95%; height:100%;"></iframe>
         </div>
     </div>
