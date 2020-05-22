@@ -4,57 +4,53 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Ingreso a CustomAirData</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{asset('css/login.css')}}">
-    <style>
-        a {
-            text-decoration: none; 
-            color: #FFC312;
-        }
-        a:hover {
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div >
-            <div class="loginMsg">
-                <div class="textcontent">
-                    <!-- <p class="title">Don't have an account?</p> -->
-                    <p>Nuestro entorno enfrenta muchos desafíos. Es por eso que necesitamos colaborar para ayudar a abordar las necesidades de hoy y lo que es más importante, para imaginar y crear soluciones para el futuro.</p>
-                </div>
-            </div>
-        </div>
-        <!-- backbox -->
-        
-        <div class="frontbox">
-            <div class="login">
-                <h2>Ingresar</h2>
-                @error('email')
-                    <div class="alert alert-danger text-center" style="padding: 5px; margin 0px" role="alert">
-                        <h6 style="font-size: 13px;margin-bottom: 0px">Credenciales erróneas, intenta nuevamente.</h6>
+    <head>
+        <title>Ingreso a CustomAirData</title>
+        <link rel="stylesheet" href="{{asset('css/login.css')}}">
+        <style>
+            a {
+                text-decoration: none; 
+                color: #FFC312;
+            }
+            a:hover {
+                color: white;
+            }
+        </style>
+    </head>
+    <body class="body">
+        <div class="container px-4 py-5 mx-auto">
+            <div class="row">
+                <div class="card2">
+                    <div class="my-auto mx-md-6 px-md-5 right text-format">
+                        <small class="text-format">Nuestro entorno enfrenta muchos desafíos. Es por eso que necesitamos colaborar para ayudar a abordar las necesidades de hoy y lo que es más importante, para imaginar y crear soluciones para el futuro.</small>
                     </div>
-                @enderror
+                </div>
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
-                        <div class="inputbox">
-                            <h6>Correo electrónico</h6>
-                            <input placeholder="Ingresa tu correo electrónico" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                            <h6>Contraseña</h6>
-                            <input placeholder="Ingresa tu contraseña" id="password" type="password" class="form-control @error('email') is-invalid @enderror" name="password" required autocomplete="current-password">
+                    <div class="card3">
+                        <div class="d-flex flex-lg-row flex-column-reverse">
+                            <div class="card-body">
+                                <div class="row justify-content-center my-auto">
+                                    <div class="col-md-8 col-10 my-5">
+                                        <h3 class="mb-5 text-center heading">Ingresar</h3>
+                                        <h6 class="msg-info text-center">Por favor ingresa a tu perfil</h6>
+                                        @error('email')
+                                            <div class="alert alert-danger text-center" style="padding: 5px; margin 0px" role="alert">
+                                                <h6 style="font-size: 13px;margin-bottom: 0px">Credenciales erróneas</h6>
+                                            </div>
+                                        @enderror
+                                        <div class="form-group"> <label class="form-control-label text-muted">Correo</label> <input placeholder="Ingresa tu correo" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus></div>
+                                        <div class="form-group"> <label class="form-control-label text-muted">Contraseña</label> <input placeholder="Ingresa tu contraseña" id="password" type="password" class="form-control @error('email') is-invalid @enderror" name="password" required autocomplete="current-password"></div>
+                                        <div class="row justify-content-center my-3 px-3"> <button class="btn btn-primary">Ingresar</button> </div>
+                                        {{-- <div class="row justify-content-center my-2"> <a href="#"><small class="text-muted">¿Contraseña Olvidada?</small></a> </div> --}}
+                                    </div>
+                                </div>
+                            </div>    
                         </div>
-                        <button type="submit" class="btn float-right login_btn">Ingresar</button>
+                    </div>
                 </form>
             </div>
         </div>
-        <!-- frontbox -->
-    </div>
-    <script src="js/login.js"></script>
-    <!-- Style Switcher Start -->
     </body>
 {{-- <body>
 <div class="container">

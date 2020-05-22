@@ -1,173 +1,185 @@
-body,
-html {
+body {
     background:url('https://static.iris.net.co/sostenibilidad/upload/images/2020/2/6/48483_1.jpg');
     background-size: cover;
     font-family: 'Roboto', sans-serif;
 }
 
-.container {
-    /*border:1px solid white;*/
-    width: 600px;
-    height: 350px;
-    position: absolute;
-    top: 50%;
-    left: 45%;
-    transform: translate(-50%, -50%);
-    display: inline-flex;
-}
-
-.backbox {
-    background-color: #404040;
-    width: 110%;
-    height: 110%;
-    position: absolute;
-    transform: translate(-5%, -50%);
-    top: 50%;
-    display: inline-flex;
-    border-radius: 20px;
-}
-
-.frontbox {
-    background-color: white;
-    border-radius: 20px;
-    height: 100%;
-    width: 50%;
-    z-index: 10;
-    position: absolute;
-    right: 0;
-    left: 100%;
-    margin-right: 0%;
-    margin-left: 3%;
-    transition: right .8s ease-in-out;
-}
-
-.moving {
-    right: 45%;
-}
-
-.loginMsg,
-.signupMsg {
-    width: 61%;
-    height: 100%;
-    font-size: 25px;
+input,
+textarea {
+    background-color: #F3E5F5;
+    border-radius: 50px !important;
+    padding: 12px 15px 12px 15px !important;
+    width: 100%;
     box-sizing: border-box;
+    border: none !important;
+    border: 1px solid #F3E5F5 !important;
+    font-size: 16px !important;
+    color: #000 !important;
+    font-weight: 400
+}
+
+input:focus,
+textarea:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid #D500F9 !important;
+    outline-width: 0;
+    font-weight: 400
+}
+
+button:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    outline-width: 0
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+}
+
+.card1 {
+    width: 50%;
+    padding: 40px 30px 10px 30px
+}
+
+.card2 {
+    margin-top: 27%;
+    width: 60%;
+}
+
+.card3 {
+    margin-top: 40%;
+    margin-left: 40%;
+    width: 170%;
+    background-color: white;
+    border-radius: 10%;
+}
+
+#logo {
+    width: 70px;
+    height: 60px
+}
+
+.heading {
+    margin-bottom: 60px !important
+}
+
+::placeholder {
+    color: #000 !important;
+    opacity: 1
+}
+
+:-ms-input-placeholder {
+    color: #000 !important
+}
+
+::-ms-input-placeholder {
+    color: #000 !important
+}
+
+.form-control-label {
+    font-size: 12px;
+    margin-left: 15px
+}
+
+.msg-info {
+    padding-left: 15px;
+    margin-bottom: 30px
+}
+
+.btn-color {
+    border-radius: 50px;
+    color: #fff;
+    background-image: linear-gradient(to right, #FFD54F, #D500F9);
+    padding: 15px;
+    cursor: pointer;
+    border: none !important;
+    margin-top: 40px
+}
+
+.btn-color:hover {
+    color: #fff;
+    background-image: linear-gradient(to right, #D500F9, #FFD54F)
+}
+
+.btn-white {
+    border-radius: 50px;
+    color: #D500F9;
+    background-color: #fff;
+    padding: 8px 40px;
+    cursor: pointer;
+    border: 2px solid #D500F9 !important
+}
+
+.btn-white:hover {
+    color: #fff;
+    background-image: linear-gradient(to right, rgb(127, 94, 247), #225aa6)
+}
+
+a {
+    color: #000
+}
+
+a:hover {
+    color: #000
+}
+
+.bottom {
+    width: 100%;
+    margin-top: 50px !important
+}
+
+.sm-text {
+    font-size: 15px
+}
+.text-format{
+    color:white;
+    font-size: 20px;
     text-align: justify;
 }
 
-.loginMsg .title,
-.signupMsg .title {
-    font-weight: 300;
-    font-size: 23px;
-}
-
-.loginMsg p,
-.signupMsg p {
-    font-weight: 100;
-}
-
-.textcontent {
-    color: white;
-    margin-top: 33%;
-    margin-left: -40%;
-    margin-right: -50%;
-}
-
-.loginMsg button,
-.signupMsg button {
-    background-color: #404040;
-    border: 2px solid white;
-    border-radius: 10px;
-    color: white;
-    font-size: 12px;
-    box-sizing: content-box;
-    font-weight: 300;
-    padding: 10px;
-    margin-top: 20px;
-}
-
-
-/* front box content*/
-
-.login,
-.signup {
-    padding: 20px;
-    text-align: center;
-}
-
-.login h2,
-.signup h2 {
-    color: #9bc8ce;
-    font-size: 22px;
-}
-
-.inputbox {
-    margin-top: 30px;
-}
-
-.login input,
-.signup input {
-    display: block;
-    width: 100%;
-    height: 40px;
-    background-color: #f2f2f2;
-    border: none;
-    margin-bottom: 20px;
-    font-size: 12px;
-}
-
-.login button,
-.signup button {
-    background-color: #9bc8ce;
-    border: none;
-    color: white;
-    font-size: 12px;
-    font-weight: 300;
-    box-sizing: content-box;
-    padding: 10px;
-    border-radius: 10px;
-    width: 60px;
-    position: absolute;
-    right: 30px;
-    bottom: 30px;
-    cursor: pointer;
-}
-
-
-/* Fade In & Out*/
-
-.login p {
-    cursor: pointer;
-    color: #404040;
-    font-size: 15px;
-}
-
-.loginMsg,
-.signupMsg {
-    /*opacity: 1;*/
-    transition: opacity .8s ease-in-out;
-}
-
-.visibility {
-    opacity: 0;
-}
-
-.hide {
-    display: none;
-}
-
-.remember{
-    color: rgb(8, 8, 8);
-    }
-    
-    .remember input
-    {
-    width: 20px;
-    height: 20px;
-    margin-left: 15px;
-    margin-right: 5px;
+@media screen and (max-width: 992px) {
+    .card1 {
+        width: 100%;
+        padding: 40px 30px 10px 30px
     }
 
-    .chkbox{
-        padding-left: 10px;
-        font-weight: bold;
+    .card2 {
+        margin-top: 50%;
+        width: 70%;
+        margin-left: 15%;
+        margin-bottom: -10%;
     }
+
+    .card3 {
+        width: 170%;
+        margin-left: 50%;
+    }
+
+    .right {
+        margin-top: 100px !important;
+        margin-bottom: 100px !important
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 10px !important
+    }
+
+    .card2 {
+        padding: 50px
+    }
+
+    .right {
+        margin-top: 50px !important;
+        margin-bottom: 50px !important
+    }
+}
+
