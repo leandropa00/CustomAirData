@@ -34,6 +34,7 @@ Route::get('campanas/delete/{id}', 'CampanasController@destroy')->name('campanas
 Route::resource('campanas', 'CampanasController', ['except' => ['destroy']]);
 
 // Puntos de monitoreo
+Route::get('puntos-monitoreo/historial', 'PuntosMonitoreoController@historial')->name('puntos-monitoreo.historial');
 Route::get('puntos-monitoreo/{id}', 'PuntosMonitoreoController@index')->name('puntos-monitoreo.index');
 Route::get('puntos-monitoreo/{id}/show', 'PuntosMonitoreoController@show')->name('puntos-monitoreo.show');
 Route::get('puntos-monitoreo/create/{id}', 'PuntosMonitoreoController@create')->name('puntos-monitoreo.create');

@@ -67,7 +67,11 @@
             <li class=" nav-item my_menu ">
                 <a href="{{ route('campanas.index') }}"><i class="feather icon-map-pin"></i><span class="menu-item">Campañas</span></a>
             </li>
-                
+
+            <li class=" nav-item my_menu ">
+                <a href="{{ route('puntos-monitoreo.historial') }}"><i class="feather icon-monitor"></i><span class="menu-item">Puntos de monitoreo</span></a>
+            </li>
+
             <li class=" nav-item my_menu ">
                 <a href="{{ route('cuenta.edit') }}"><i class="feather icon-settings"></i><span class="menu-item">Configuración de cuenta</span></a>
             </li>

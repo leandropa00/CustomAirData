@@ -11,7 +11,7 @@
 
             <div class="content-body">
                 <section id="basic-vertical-layouts">
-                    <div class="row match-height" id="impr">
+                    <div class="row match-height" id="impr-compl">
                         <div class="col-md-12 col-12">
                             <div class="card">
                                 <div class="card-header">
@@ -69,7 +69,7 @@
                             </div>
 
                             @if ($filtered)
-                                <div class="card">
+                                <div class="card" id="impr-graf">
                                     <div class="card-header"></div>
                                     <div class="card-body">
                                         <div class="col-12">
@@ -124,10 +124,16 @@
                                     @endforelse
                                 </div>
                                 <div class="card col-md-12 text-center">
-                                    <div class="card-body col-md-12">
-                                        <a href="javascript:captura();" class="btn btn-outline-info waves-effect waves-light">Guardar imagen</a>
-                                        <a href="" id="blank"></a>
-                                    </div>    
+                                    <div class="row">
+                                        <div class="card-body col-md-6">
+                                            <a href="javascript:captura();" class="btn btn-outline-info waves-effect waves-light">Guardar gráfica</a>
+                                            <a href="" id="blank"></a>
+                                        </div>    
+                                        <div class="card-body col-md-6">
+                                            <a href="javascript:capturaCompleta();" class="btn btn-outline-info waves-effect waves-light">Guardar imagen completa</a>
+                                            <a href="" id="blank"></a>
+                                        </div>    
+                                    </div>
                                 </div>
                             @endif
                         </div>
@@ -323,7 +329,19 @@
         function captura(){
             var caption = $('.input-daterange-datepicker').val();
             $('#caption-text').html(caption);
-            html2canvas(document.getElementById("impr"), {
+            html2canvas(document.getElementById("impr-graf"), {
+                dbi:192,
+                onrendered: function(canvas){
+                    $("#blank").attr('href', canvas.toDataURL("image/png"));
+                    $("#blank").attr('download', caption + '.png');
+                    $("#blank")[0].click();
+                }
+            });
+        }                
+        function capturaCompleta(){
+            var caption = $('.input-daterange-datepicker').val();
+            $('#caption-text').html(caption);
+            html2canvas(document.getElementById("impr-compl"), {
                 dbi:192,
                 onrendered: function(canvas){
                     $("#blank").attr('href', canvas.toDataURL("image/png"));

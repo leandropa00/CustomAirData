@@ -511,4 +511,9 @@ class PuntosMonitoreoController extends Controller
             }
         }
     }
+
+    public function historial(){
+        $puntosDeMonitoreo = PuntoMonitoreo::all();
+        return view('puntosMonitoreo.historial', compact('puntosDeMonitoreo'));
+    }
 }
