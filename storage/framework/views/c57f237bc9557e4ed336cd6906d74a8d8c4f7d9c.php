@@ -1,9 +1,9 @@
 <?php if($ultimoDato): ?>
-    <div class="row" style="background-color: #f8f8f8;">
+    <div class="row" style="background-color: #f8f8f8; border-radius: 10px">
         <div class="col-12 col-md-12">
             <h5 class="h_heading">&nbsp;&nbsp;<?php echo e(strtoupper($punto->alias)); ?> - <?php echo e(strtoupper($campana->nombre)); ?> - Último dato: <?php echo e(carbon\Carbon::parse($ultimoDato->fecha_hora)->format('d/m/Y g:i A')); ?></h5>
         </div>   
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
             <table class="table" width="100%" style="background: #f8f8f8; color: black; margin-left:10px">
                 <tbody>
                     <?php $__empty_1 = true; $__currentLoopData = $contaminantes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
@@ -27,7 +27,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-9">
             <iframe src="<?php echo e(route('graficar', [$punto->id, $contaminantes[0]->nombre_campo, $contaminantes[0]->conversion])); ?>" frameBorder="0" id="crtifrm" style="background-color: #f8f8f8; width:95%; height:100%;"></iframe>
         </div>
     </div>
