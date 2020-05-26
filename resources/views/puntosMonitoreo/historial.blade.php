@@ -49,8 +49,8 @@
                                                         @if (Auth::user()->rol=='admin')
                                                             <td>{{ $item->campana->empresa->nombre }}</td>
                                                         @endif
-                                                    <td>{{ carbon\Carbon::parse($item->fecha_inicio)->format('d/m/Y')}}</td>
-                                                    <td>{{ carbon\Carbon::parse($item->fecha_fin)->format('d/m/Y')}}</td>
+                                                    <td>{{ carbon\Carbon::parse($item->campana->fecha_inicio)->format('d/m/Y')}}</td>
+                                                    <td>{{ carbon\Carbon::parse($item->campana->fecha_fin)->format('d/m/Y')}}</td>
                                                     <td>
                                                         <button onclick="abrirModal({{$item->id}})" class="btn btn-icon btn-outline-primary waves-effect waves-light"><i class="feather icon-info"></i></button>                                                          
                                                         <a class="btn btn-icon btn-outline-secondary waves-effect waves-light" target="_blank" href="{{route('puntos-monitoreo.imprimir', $item->id)}}"><i class="feather icon-printer"></i></a>

@@ -48,8 +48,8 @@
                                                         <?php if(Auth::user()->rol=='admin'): ?>
                                                             <td><?php echo e($item->campana->empresa->nombre); ?></td>
                                                         <?php endif; ?>
-                                                    <td><?php echo e(carbon\Carbon::parse($item->fecha_inicio)->format('d/m/Y')); ?></td>
-                                                    <td><?php echo e(carbon\Carbon::parse($item->fecha_fin)->format('d/m/Y')); ?></td>
+                                                    <td><?php echo e(carbon\Carbon::parse($item->campana->fecha_inicio)->format('d/m/Y')); ?></td>
+                                                    <td><?php echo e(carbon\Carbon::parse($item->campana->fecha_fin)->format('d/m/Y')); ?></td>
                                                     <td>
                                                         <button onclick="abrirModal(<?php echo e($item->id); ?>)" class="btn btn-icon btn-outline-primary waves-effect waves-light"><i class="feather icon-info"></i></button>                                                          
                                                         <a class="btn btn-icon btn-outline-secondary waves-effect waves-light" target="_blank" href="<?php echo e(route('puntos-monitoreo.imprimir', $item->id)); ?>"><i class="feather icon-printer"></i></a>

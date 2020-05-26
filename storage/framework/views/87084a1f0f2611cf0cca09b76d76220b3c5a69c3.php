@@ -336,7 +336,7 @@
             });
         }                
         function capturaCompleta(){
-            var caption = $('.input-daterange-datepicker'+"completo").val();
+            var caption = $('.input-daterange-datepicker').val();
             $('#caption-text').html(caption);
             html2canvas(document.getElementById("impr-compl"), {
                 dbi:192,
