@@ -24,7 +24,7 @@ while ($row = $result->fetch_assoc()) {
   $location_name = $row['alias'];
 
   if (!is_dir($dir)) {
-    $msg = "<h2>Hola admin,</h2><hr><p>Ruta no existente para <b>" . $row['alias'] . "</b></p><br></br><p><b>Thanks,</b><br> Airlab.com</p>";
+    $msg = "<h2>Hola admin,</h2><hr><p>Ruta no existente para <b>" . $row['alias'] . "</b></p><br></br><p><b>Thanks,</b><br> CustomAirData</p>";
     send_mail($msg);
     echo 'Error, ruta no existente';
 
@@ -34,7 +34,7 @@ while ($row = $result->fetch_assoc()) {
     }); 
     
     if (empty($files)) {
-      $msg = "<h2>Hola admin,</h2><hr><p> No hay datos para el punto <b>" . $row['alias'] . "</b> en la ruta " . $row['ruta'] . "</p><br></br><p><b>Gracias,</b><br> Airlab.com</p>";
+      $msg = "<h2>Hola admin,</h2><hr><p> No hay datos para el punto <b>" . $row['alias'] . "</b> en la ruta " . $row['ruta'] . "</p><br></br><p><b>Gracias,</b><br> CustomAirData</p>";
       send_mail($msg);
       echo 'Error, no hay datos en la ruta '.$row['ruta'];
 
@@ -50,7 +50,7 @@ while ($row = $result->fetch_assoc()) {
         insert_record($conn, $dir, $file_name, $file_date, $loc_id, $location_name);
     
       } else {
-        $msg = "<h2>Hola admin,</h2><hr><p>No hay datos del día de hoy para el punto <b>" . $row['alias'] . "</b> en la ruta " . $row['ruta'] . "</p><br></br><p><b>Gracias,</b><br> Airlab.com</p>";
+        $msg = "<h2>Hola admin,</h2><hr><p>No hay datos del día de hoy para el punto <b>" . $row['alias'] . "</b> en la ruta " . $row['ruta'] . "</p><br></br><p><b>Gracias,</b><br> CustomAirData</p>";
         send_mail($msg);
         echo 'Error, no hay datos del día de hoy para el punto '. $row['alias'] .' en la ruta '. $row['ruta'];
       }
@@ -102,9 +102,8 @@ while ($row = $result->fetch_assoc()) {
               );
             }
   
-  
             $asunto = 'Nivel bajo de '.$row3['nombre']." en $location_name";
-            $msg = "<h2>¡Alerta!</h2><hr><p>El canal ".$row3['nombre']." del punto de monitoreo $location_name - ".$row['nombre']." registró ".$row2[$row3['nombre_campo']]*$row3['conversion']." ".$row3['unidad_final'].", el cual se encuentra por debajo del nivel de alerta establecido en ".$row3['minimo'].' '.$row3['unidad_final']." <br>Gracias,<br> Airlab.com</p>";
+            $msg = "<h2>¡Alerta!</h2><hr><p>El canal ".$row3['nombre']." del punto de monitoreo $location_name - ".$row['nombre']." registró ".$row2[$row3['nombre_campo']]*$row3['conversion']." ".$row3['unidad_final'].", el cual se encuentra por debajo del nivel de alerta establecido en ".$row3['minimo'].' '.$row3['unidad_final']." <br>Gracias,<br> CustomAirData</p>";
             send_mail_alert($msg, $email, $asunto);
   
             echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es menor a '.$row3['minimo'].' '.$row3['unidad_final'].'. Usuario: '.$row1['name']."\n";
@@ -132,7 +131,7 @@ while ($row = $result->fetch_assoc()) {
             }
 
             $asunto = 'Nivel de '.$row3['nombre']." excedido en $location_name";
-            $msg = "<h2>¡Alerta!</h2><hr><p>El canal ".$row3['nombre']." del punto de monitoreo $location_name - ".$row['nombre']." registró ".$row2[$row3['nombre_campo']]*$row3['conversion']." ".$row3['unidad_final'].", el cual excede el nivel de alerta establecido en ".$row3['maximo'].' '.$row3['unidad_final']." <br>Gracias,<br> Airlab.com</p>";
+            $msg = "<h2>¡Alerta!</h2><hr><p>El canal ".$row3['nombre']." del punto de monitoreo $location_name - ".$row['nombre']." registró ".$row2[$row3['nombre_campo']]*$row3['conversion']." ".$row3['unidad_final'].", el cual excede el nivel de alerta establecido en ".$row3['maximo'].' '.$row3['unidad_final']." <br>Gracias,<br> CustomAirData</p>";
             send_mail_alert($msg, $email, $asunto);
 
             echo $row2['fecha_hora'].' - '.$row3['nombre']." del punto de monitoreo $location_name registró ".$row2[$row3['nombre_campo']]*$row3['conversion'].' '.$row3['unidad_final'].' el cual es mayor a '.$row3['maximo'].' '.$row3['unidad_final'].'. Usuario: '.$row1['name']."\n";
@@ -143,9 +142,22 @@ while ($row = $result->fetch_assoc()) {
       }
     }
   } else {
-    $msg = "<h2>Hola admin,</h2><hr><p>No hay datos para el día de hoy después de las ".$dateTime->format('g:i A')." para el punto <b>" . $row['alias'] . "</b> en la ruta " . $row['ruta'] . "</p><br></br><p><b>Gracias,</b><br> Airlab.com</p>";
+
+    $msg = "<h2>Hola admin,</h2><hr><p>No hay datos para el día de hoy ".date('d/m/Y')." después de las ".$dateTime->format('g:i A')." para el punto <b>" . $row['alias'] . "</b> en la ruta " . $row['ruta'] . "</p><br></br><p><b>Gracias,</b><br> CustomAirData</p>";
     send_mail($msg);
-    echo 'No hay datos para hoy después de las '.$dateTime->format('g:i A');
+
+    include_once('twilio.php');
+    $client->messages->create(
+      '+17076815440',
+      [ 
+          'from' => '+16692013141',
+          'body' => 'No hay datos para hoy después de las '.$dateTime->format('g:i A')." en $location_name"
+      ]
+    );
+
+    servicioNotificacion("https://logjane.com/customair/public/notificarAdmin/$loc_id/".$dateTime->format('g:iA'));
+
+    echo 'No hay datos para hoy '.date('d/m/Y').' después de las '.$dateTime->format('g:i A')." en $location_name \n";
   }
   //Alertas tempranas
 }
@@ -157,7 +169,10 @@ function delete_record($conn, $file_date, $loc_id)
 }
 
 function notify($id, $valor, $limite, $tipo, $contaminante) {
-  $url = "https://logjane.com/customair/public/notificacion/$id/$valor/$limite/$tipo/$contaminante";
+  servicioNotificacion("https://logjane.com/customair/public/notificacion/$id/$valor/$limite/$tipo/$contaminante");
+}
+
+function servicioNotificacion($url) {
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_exec($ch);
@@ -169,15 +184,16 @@ function send_mail($msg)
   include_once('phpmailer/class.phpmailer.php');
   $mail = new PHPMailer();
   $mail->From = "info@logjane.com";
-  $mail->FromName = "logjane.com";
-  $mail->addaddress("goffice24@gmail.com");
-  $mail->addbcc("leandropa00@gmail.com", '');
+  $mail->FromName = "CustomAirData";
+  $mail->AddAddress("goffice24@gmail.com");
+  $mail->AddCC("leandropa00@gmail.com");
   $mail->Subject  = "Error en la carga de datos de airlab";
-  $mail->AltBody  = "Para ver el mensaje, utiliza un HTML compatible!"; 
   $mail->MsgHTML($msg);
 
   if (!$mail->Send()) {
-    return "Mailer Error: " . $mail->ErrorInfo;
+    echo "Mailer error: " . $mail->ErrorInfo;
+  } else {
+    echo "Correo enviado correctamente a goffice24@gmail.com \n";
   }
 }
 
@@ -186,14 +202,16 @@ function send_mail_alert($msg, $email, $asunto)
   include_once('phpmailer/class.phpmailer.php');
   $mail = new PHPMailer();
   $mail->From = "info@logjane.com";
-  $mail->FromName = "logjane.com";
-  $mail->addaddress($email);
-  $mail->addbcc("goffice24@gmail.com", '');
+  $mail->FromName = "CustomAirData";
+  $mail->AddAddress($email);
+  $mail->AddCC("goffice24@gmail.com");
   $mail->Subject  = $asunto;
   $mail->MsgHTML($msg);
 
   if (!$mail->Send()) {
-    return "Mailer Error: " . $mail->ErrorInfo;
+    echo "Mailer error: " . $mail->ErrorInfo;
+  } else {
+    echo "Correo enviado correctamente a $email \n";
   }
 }
 
