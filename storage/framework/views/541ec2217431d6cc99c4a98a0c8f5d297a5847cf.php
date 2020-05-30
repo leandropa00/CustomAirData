@@ -46,7 +46,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                                        <div class="form-group"> <label class="form-control-label text-muted">Correo</label> <input placeholder="Ingresa tu correo" id="email" type="email" class="form-control <?php $__errorArgs = ['email'];
+                                        <div class="form-group"> <label class="form-control-label text-white">Correo</label> <input placeholder="Ingresa tu correo" id="email" type="email" class="form-control <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -54,7 +54,7 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" name="email" value="<?php echo e(old('email')); ?>" required autocomplete="email" autofocus></div>
-                                        <div class="form-group"> <label class="form-control-label text-muted">Contraseña</label> <input placeholder="Ingresa tu contraseña" id="password" type="password" class="form-control <?php $__errorArgs = ['email'];
+                                        <div class="form-group"> <label class="form-control-label text-white">Contraseña</label> <input placeholder="Ingresa tu contraseña" id="password" type="password" class="form-control <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -73,7 +73,5 @@ unset($__errorArgs, $__bag); ?>" name="password" required autocomplete="current-
             </div>
         </div>
     </body>
-
 </html>
-
 <?php /**PATH /home/logjanec/public_html/customair/resources/views/auth/login.blade.php ENDPATH**/ ?>

@@ -1,5 +1,5 @@
 body {
-    background:url('https://static.iris.net.co/sostenibilidad/upload/images/2020/2/6/48483_1.jpg');
+    background:url('https://cdn.pixabay.com/photo/2019/04/30/12/34/smart-4168483_1280.jpg');
     background-size: cover;
     font-family: 'Roboto', sans-serif;
 }
@@ -57,7 +57,7 @@ button:focus {
     margin-top: 40%;
     margin-left: 40%;
     width: 170%;
-    background-color: white;
+    background-color: #424242;
     border-radius: 10%;
 }
 
@@ -67,7 +67,8 @@ button:focus {
 }
 
 .heading {
-    margin-bottom: 60px !important
+    margin-bottom: 60px !important;
+    color: white;
 }
 
 ::placeholder {
@@ -90,7 +91,8 @@ button:focus {
 
 .msg-info {
     padding-left: 15px;
-    margin-bottom: 30px
+    margin-bottom: 30px;
+    color: white;
 }
 
 .btn-color {
