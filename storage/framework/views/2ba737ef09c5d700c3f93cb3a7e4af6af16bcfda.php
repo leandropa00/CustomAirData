@@ -95,6 +95,22 @@
                                                         <input type="hidden" name="empresa" value="<?php echo e(Auth::user()->empresa->id); ?>">
                                                     <?php endif; ?>
 
+                                                    <div class="col-md-6 col-12">
+                                                            <div class="form-group">
+                                                                <label>Tipo de usuario</label>
+                                                                <div class="position-relative has-icon-left">
+                                                                    <select name="rol" id="rol" class="form-control select2" data-style="form-control">
+                                                                        <option value="">Seleccione tipo de usuario</option>
+                                                                        <option value="3">Corriente</option>
+                                                                        <option value="4">Básico (Acceso sólo al mapa)</option>
+                                                                    </select>
+                                                                    <div class="form-control-position">
+                                                                        <i class="feather icon-user"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label>Contraseña</label>

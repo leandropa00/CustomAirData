@@ -53,11 +53,11 @@
                                                     <th>Nombre</th>
                                                     <th>Correo</th>
                                                     <th>Teléfono</th>
-                                                    <th>Recibe mensajes</th>
                                                     <?php if(Auth::user()->rol=='admin'): ?>
-                                                    <th>Empresa</th>
-                                                    <th>Rol</th>
+                                                        <th>Recibe mensajes</th>
+                                                        <th>Empresa</th>
                                                     <?php endif; ?>
+                                                    <th>Rol</th>
                                                     <th>Fecha de creación</th>
                                                     <th>Acción</th>
                                                 </tr>
@@ -68,16 +68,25 @@
                                                     <td><?php echo e(ucwords($data->name)); ?></td>
                                                     <td><?php echo e($data->email); ?></td>
                                                     <td><?php echo e($data->telefono); ?></td>
-                                                    <td>
-                                                        <select onchange="cambiarPermisosSms(<?php echo e($data->id); ?>, this.value)" class="form-control">
-                                                            <option value="0" <?php if($data->recibe_mensajes == 0): ?> selected <?php endif; ?>>No</option>
-                                                            <option value="1" <?php if($data->recibe_mensajes == 1): ?> selected <?php endif; ?>>Sí</option>
-                                                        </select>
-                                                    </td>
                                                     <?php if(Auth::user()->rol=='admin'): ?>
+                                                        <td>
+                                                            <select onchange="cambiarPermisosSms(<?php echo e($data->id); ?>, this.value)" class="form-control">
+                                                                <option value="0" <?php if($data->recibe_mensajes == 0): ?> selected <?php endif; ?>>No</option>
+                                                                <option value="1" <?php if($data->recibe_mensajes == 1): ?> selected <?php endif; ?>>Sí</option>
+                                                            </select>
+                                                        </td>
                                                         <td><?php echo e(ucfirst($data->empresa->nombre)); ?></td>
-                                                        <td><?php echo e(ucfirst($data->rol)); ?></td>
                                                     <?php endif; ?>
+                                                    <td>
+                                                        <?php if($data->rol=="usuario"): ?>
+                                                            Usuario corriente
+                                                        <?php elseif($data->rol=="usuario basico"): ?>
+                                                            Usuario básico
+                                                        <?php else: ?>
+                                                            <?php echo e(ucfirst($data->rol)); ?>
+
+                                                        <?php endif; ?>
+                                                    </td>
                                                     <td><?php echo e(carbon\Carbon::parse($data->created_at)->format('d-m-Y g:i A')); ?></td>
                                                     <td>
                                                         <a class="btn btn-icon btn-outline-warning waves-effect waves-light" href="<?php echo e(route('users.edit', $data->id)); ?>"><i class="feather icon-edit"></i></a>
@@ -86,7 +95,7 @@
                                                 </tr>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                     <tr>
-                                                        <td <?php echo e(Auth::user()->rol=='admin' ? "colspan=6" : "colspan=4"); ?> class="text-center">No hay usuarios creados</td>
+                                                        <td <?php echo e(Auth::user()->rol=='admin' ? "colspan=8" : "colspan=6"); ?> class="text-center">No hay usuarios creados</td>
                                                     </tr>
                                                 <?php endif; ?>
                                             </tbody>

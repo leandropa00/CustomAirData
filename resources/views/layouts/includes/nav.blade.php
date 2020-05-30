@@ -69,7 +69,7 @@
                             <div class="user-nav d-sm-flex d-none">
                                 <span class="user-name text-bold-600">{{ ucwords(Auth::user()->name) }}</span><span class="user-status">Disponible</span>
                             </div>
-                            @if (Auth::user()->rol == 'admin')
+                            @if (Auth::user()->rol == 'admin' || is_null(Auth::user()->empresa->foto))
                                 <span><img class="round" src="{{url('/')}}/includes/app-assets/images/portrait/small/default.png" alt="avatar" height="55" width="55"></span>
                             @else
                                 <span><img class="round" src="{{asset('images/empresas/'.Auth::user()->empresa->foto)}}" alt="avatar" height="55" width="55"></span>

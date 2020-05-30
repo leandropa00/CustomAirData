@@ -12,7 +12,7 @@ class UsersController extends Controller
 { 
     public function index()
     {
-        $users_data = User::isAdmin() ? User::where('rol', 'not like', 'admin')->get() : Auth::user()->empresa->usuarios()->where('rol', 'usuario')->get();
+        $users_data = User::isAdmin() ? User::where('rol', 'not like', 'admin')->get() : Auth::user()->empresa->usuarios()->whereIn('rol', ['usuario', 'usuario basico'])->get();
 
         return view('usuarios.index',compact('users_data'));
     } 
@@ -32,7 +32,7 @@ class UsersController extends Controller
             $user->telefono = $request->phone;
             $user->password = Hash::make($request->password);
             $user->empresa_id = $request->empresa;
-            $user->rol = 'usuario';
+            $user->rol = $request->rol;
             $user->save();
 
             return redirect()->route('users.index')->with('success','Cliente creado satisfactoriamente');     
@@ -58,6 +58,7 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->empresa_id = $request->empresa;
         $user->telefono = $request->phone;
+        $user->rol = $request->rol;
         $user->save();
 
         return redirect()->route('users.index')->with('success','Cliente actualizado satisfactoriamente');  

@@ -95,6 +95,21 @@
                                                     <?php else: ?>
                                                         <input type="hidden" name="empresa" value="<?php echo e(Auth::user()->empresa->id); ?>">
                                                     <?php endif; ?>
+
+                                                    <div class="col-md-6 col-12">
+                                                            <div class="form-group">
+                                                                <label>Tipo de usuario</label>
+                                                                <div class="position-relative has-icon-left">
+                                                                    <select name="rol" id="rol" class="form-control select2" data-style="form-control">
+                                                                        <option value="3" <?php echo e($edit_user->rol == 'usuario' ? 'selected' : ''); ?>>Corriente</option>
+                                                                        <option value="4" <?php echo e($edit_user->rol == 'usuario basico' ? 'selected' : ''); ?>>Básico (Acceso solo al mapa)</option>
+                                                                    </select>
+                                                                    <div class="form-control-position">
+                                                                        <i class="feather icon-user"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                 
                                                     <input type="hidden" id="id" class="form-control" name="id" value="<?php echo e($edit_user->id); ?>" >
                                                     <div class="col-12">
