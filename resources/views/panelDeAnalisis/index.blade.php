@@ -255,7 +255,6 @@
                     
                 };
                 
-
                 var linechartData = {
                     labels: JSON.parse('{{ $labels }}'.replace(/&quot;/g,'"')),
                     datasets: [

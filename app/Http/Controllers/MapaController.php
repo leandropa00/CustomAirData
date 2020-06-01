@@ -50,7 +50,15 @@ class MapaController extends Controller
         ->pluck('datetime');
 
         $datos = $punto->datos()
-        ->select(DB::raw("round($val*$conv, 2) as datos"))
+        ->select(DB::raw("
+            CASE 
+                WHEN LENGTH(SUBSTRING_INDEX($val, '.', -1)) = 3 
+                    THEN null 
+                ELSE 
+                round($val*$conv, 2) 
+                END 
+            as datos
+        "))
         ->where('fecha_hora', '>=', Carbon::parse($ultimoDato->fecha_hora)->subHours('12'))
         ->whereDate('fecha_hora', '<=', $campana->fecha_fin)
         ->pluck('datos');

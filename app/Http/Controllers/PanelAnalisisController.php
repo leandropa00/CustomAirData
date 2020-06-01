@@ -38,7 +38,15 @@ class PanelAnalisisController extends Controller
 
                     foreach ($location->contaminantes as $item) {
                         $contaminante = $location->datos()
-                            ->select(DB::raw("round($item->nombre_campo, 2) as datos"))
+                            ->select(DB::raw("
+                                CASE 
+                                    WHEN LENGTH(SUBSTRING_INDEX($item->nombre_campo, '.', -1)) = 3 
+                                        THEN null 
+                                    ELSE 
+                                        round($item->nombre_campo, 2) 
+                                    END 
+                                as datos
+                            "))
                             ->whereDate('fecha_hora', '>=', $start)
                             ->whereDate('fecha_hora', '<=', $end)
                             ->pluck('datos');
@@ -58,7 +66,14 @@ class PanelAnalisisController extends Controller
 
                     foreach ($location->contaminantes as $item) {
                         $contaminante = $location->datos()
-                            ->select(DB::raw("round($item->nombre_campo, 2) as datos, date_format(fecha_hora, '%i') as hora"))
+                            ->select(DB::raw("
+                            CASE 
+                                WHEN LENGTH(SUBSTRING_INDEX($item->nombre_campo, '.', -1)) = 3 
+                                    THEN null 
+                                ELSE 
+                                    round($item->nombre_campo, 2) 
+                                END 
+                            as datos, date_format(fecha_hora, '%i') as hora"))
                             ->whereDate('fecha_hora', '>=', $start)
                             ->whereDate('fecha_hora', '<=', $end)
                             ->having('hora', '00')
@@ -78,7 +93,14 @@ class PanelAnalisisController extends Controller
 
                     foreach ($location->contaminantes as $item) {
                         $contaminante = $location->datos()
-                            ->select(DB::raw("round($item->nombre_campo, 2) as datos, date_format(fecha_hora, '%H:%i') as hora"))
+                            ->select(DB::raw("
+                            CASE 
+                                WHEN LENGTH(SUBSTRING_INDEX($item->nombre_campo, '.', -1)) = 3 
+                                    THEN null 
+                                ELSE 
+                                    round($item->nombre_campo, 2) 
+                                END 
+                            as datos, date_format(fecha_hora, '%H:%i') as hora"))
                             ->whereDate('fecha_hora', '>=', $start)
                             ->whereDate('fecha_hora', '<=', $end)
                             ->havingRaw("hora in ('00:00','08:00','16:00')")

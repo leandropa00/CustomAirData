@@ -252,7 +252,6 @@
                     
                 };
                 
-
                 var linechartData = {
                     labels: JSON.parse('<?php echo e($labels); ?>'.replace(/&quot;/g,'"')),
                     datasets: [
