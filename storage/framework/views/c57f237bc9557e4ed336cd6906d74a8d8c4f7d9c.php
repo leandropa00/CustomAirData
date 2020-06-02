@@ -33,7 +33,11 @@
     </div>
 <?php else: ?>
 <br>
-    <p style="color:red; margin-left:10px">¡Sin datos!<br>El punto de monitoreo se encuentra inactivo.</p>
+<div class="row" style="background-color: #f8f8f8; border-radius: 10px">
+    <div class="col-12 col-md-12">
+        <p style="color:red; margin-left:10px">&nbsp;<br>¡Sin datos!<br>El punto de monitoreo se encuentra inactivo.</p>
+    </div>   
+</div>   
 <?php endif; ?>
 
 <?php

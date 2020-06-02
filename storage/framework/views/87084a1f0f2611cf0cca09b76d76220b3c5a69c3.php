@@ -81,6 +81,12 @@
                             
                                 <div class="row match-height">
                                     <?php $__empty_1 = true; $__currentLoopData = $location->contaminantes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?> 
+                                        <?php
+                                            $array = array_filter(min((array)$datos[$item->nombre_campo]), function($item){
+                                                if ($item)
+                                                    return $item;
+                                            });
+                                        ?> 
                                         <div class="col-md-3 col-12">
                                             <div class="card">
                                                 <div class="card-header d-flex justify-content-between pb-0">
@@ -94,7 +100,7 @@
                                                                 <span class="text-bold-600 ml-50">Promedio</span>
                                                             </div>
                                                             <div class="product-result">
-                                                                <span><?php echo e($minval[$item->nombre_campo.'avg']); ?></span>
+                                                                <span><?php echo e(number_format(array_sum($array)/count($array),2)); ?></span>
                                                             </div>
                                                         </div>
                                                         <div class="chart-info d-flex justify-content-between mb-1">
@@ -103,7 +109,7 @@
                                                                 <span class="text-bold-600 ml-50">Máximo</span>
                                                             </div>
                                                             <div class="product-result">
-                                                                <span><?php echo e($minval[$item->nombre_campo.'max']); ?></span>
+                                                                <span><?php echo e(max($array)); ?></span>
                                                             </div>
                                                         </div>
                                                         <div class="chart-info d-flex justify-content-between mb-75">
@@ -112,7 +118,7 @@
                                                                 <span class="text-bold-600 ml-50">Mínimo</span>
                                                             </div>
                                                             <div class="product-result">
-                                                                <span><?php echo e($minval[$item->nombre_campo]); ?></span>
+                                                                <span><?php echo e(min($array)); ?></span>
                                                             </div>
                                                         </div>
                                                     </div>
