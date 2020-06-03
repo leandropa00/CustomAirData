@@ -75,41 +75,38 @@
                                                         </div>
                                                     </div>
 
-                                                    <?php if(Auth::user()->rol=='admin'): ?>
-                                                        <div class="col-md-6 col-12">
-                                                            <div class="form-group">
-                                                                <label>Empresa</label>
-                                                                <div class="position-relative has-icon-left">
-                                                                    <select name="empresa" class="form-control" required>
-                                                                        <option value="">Selecciona una empresa</option>
-                                                                        <?php $__currentLoopData = $empresas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                                            <option <?php echo e($item->id == $edit_user->empresa_id ? 'selected' : ''); ?> value="<?php echo e($item->id); ?>"><?php echo e(ucwords($item->nombre)); ?></option>
-                                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                                    </select>
-                                                                    <div class="form-control-position">
-                                                                        <i class="feather icon-user"></i>
-                                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Empresa</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <select name="empresa" class="form-control" required>
+                                                                    <option value="">Selecciona una empresa</option>
+                                                                    <?php $__currentLoopData = $empresas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                        <option <?php echo e($item->id == $edit_user->empresa_id ? 'selected' : ''); ?> value="<?php echo e($item->id); ?>"><?php echo e(ucwords($item->nombre)); ?></option>
+                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                </select>
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-user"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    <?php else: ?>
-                                                        <input type="hidden" name="empresa" value="<?php echo e(Auth::user()->empresa->id); ?>">
-                                                    <?php endif; ?>
+                                                    </div>
 
                                                     <div class="col-md-6 col-12">
-                                                            <div class="form-group">
-                                                                <label>Tipo de usuario</label>
-                                                                <div class="position-relative has-icon-left">
-                                                                    <select name="rol" id="rol" class="form-control select2" data-style="form-control">
-                                                                        <option value="3" <?php echo e($edit_user->rol == 'usuario' ? 'selected' : ''); ?>>Corriente</option>
-                                                                        <option value="4" <?php echo e($edit_user->rol == 'usuario basico' ? 'selected' : ''); ?>>Básico (Acceso solo al mapa)</option>
-                                                                    </select>
-                                                                    <div class="form-control-position">
-                                                                        <i class="feather icon-user"></i>
-                                                                    </div>
+                                                        <div class="form-group">
+                                                            <label>Tipo de usuario</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <select name="rol" id="rol" class="form-control select2" data-style="form-control">
+                                                                    <option value="4" <?php echo e($edit_user->rol == 'básico' ? 'selected' : ''); ?>>Básico</option>
+                                                                    <option value="3" <?php echo e($edit_user->rol == 'intermedio' ? 'selected' : ''); ?>>Intermedio</option>
+                                                                    <option value="2" <?php echo e($edit_user->rol == 'avanzado' ? 'selected' : ''); ?>>Avanzado</option>
+                                                                </select>
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-user"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
                                                 
                                                     <input type="hidden" id="id" class="form-control" name="id" value="<?php echo e($edit_user->id); ?>" >
                                                     <div class="col-12">

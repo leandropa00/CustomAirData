@@ -12,7 +12,7 @@ class UsersController extends Controller
 { 
     public function index()
     {
-        $users_data = User::isAdmin() ? User::where('rol', 'not like', 'admin')->get() : Auth::user()->empresa->usuarios()->whereIn('rol', ['usuario', 'usuario basico'])->get();
+        $users_data = User::isAdmin() ? User::where('rol', 'not like', 'admin')->get() : Auth::user()->empresa->usuarios()->whereNotIn('rol', ['admin', 'avanzado'])->get();
 
         return view('usuarios.index',compact('users_data'));
     } 

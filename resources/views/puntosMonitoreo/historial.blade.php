@@ -46,9 +46,9 @@
                                                     <td>{{ ucwords($item->alias) }}</td>
                                                     <td>{{ ucfirst($item->estacion->nombre) }}</td>
                                                     <td>{{ $item->campana->nombre }}</td>
-                                                        @if (Auth::user()->rol=='admin')
-                                                            <td>{{ $item->campana->empresa->nombre }}</td>
-                                                        @endif
+                                                    @if (Auth::user()->rol=='admin')
+                                                        <td>{{ $item->campana->empresa->nombre }}</td>
+                                                    @endif
                                                     <td>{{ carbon\Carbon::parse($item->campana->fecha_inicio)->format('d/m/Y')}}</td>
                                                     <td>{{ carbon\Carbon::parse($item->campana->fecha_fin)->format('d/m/Y')}}</td>
                                                     <td>
@@ -66,7 +66,7 @@
                                                 </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="5" class="text-center">No hay puntos de monitoreo creados</td>
+                                                        <td {{ App\User::isAdmin() ? "colspan=7" : "colspan=6" }} class="text-center">No hay puntos de monitoreo creados</td>
                                                     </tr>
                                                 @endforelse
                                             </tbody>

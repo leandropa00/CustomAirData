@@ -19,54 +19,55 @@
             <li class=" navigation-header li_hide ">
                 <span>Menú</span> 
             </li>
+
             <li class=" nav-item my_menu ">
                 <a href="<?php echo e(route('mapa')); ?>"><i class="feather icon-map"></i><span class="menu-item">Mapa</span></a>
             </li>
-            <?php if(Auth::user()->rol!='usuario basico'): ?>
+            
+            <?php if(App\User::isAdmin() || App\User::isAvanzado() || App\User::isIntermedio()): ?>
                 <li class=" nav-item my_menu ">
                     <a href="<?php echo e(route('dashboard')); ?>"><i class="feather icon-bar-chart-2"></i><span class="menu-item">Panel de análisis</span></a>
                 </li>
+            <?php endif; ?>
 
-
+            <?php if(App\User::isAdmin() || App\User::isAvanzado() || App\User::isIntermedio()): ?>
                 <li class=" nav-item my_menu ">
                     <a href="<?php echo e(route('consulta-de-datos')); ?>"><i class="feather icon-clipboard"></i><span class="menu-item">Consulta de Datos</span></a>
                 </li>
+            <?php endif; ?>
 
-                
-
-                <?php if(Auth::user()->rol=='admin'): ?>
-                    <li class=" nav-item my_menu ">
-                        <a href="#" class="my_menu"><i class="feather icon-users"></i><span class="menu-title">Clientes</span></a>
-                        <ul class="menu-content">
-                            <li>
-                                <a href="<?php echo e(route('empresas.index')); ?>"><span class="menu-item">Empresas</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo e(route('users.index')); ?>"><span class="menu-item">Usuarios</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    
-                <?php elseif(Auth::user()->rol=='manager'): ?>
-                    <li class=" nav-item my_menu ">
-                        <a href="<?php echo e(route('users.index')); ?>"><i class="feather icon-users"></i><span class="menu-item">Usuarios</span></a>
-                    </li>
-                <?php endif; ?>
-                
-                <?php if(Auth::user()->rol=='admin'): ?>
-                    <li class=" nav-item my_menu ">
-                        <a href="<?php echo e(route('estaciones.index')); ?>"><i class="feather icon-server"></i><span class="menu-item">Estaciones</span></a>
-                    </li>
-                <?php endif; ?>
-                
+            <?php if(App\User::isAdmin()): ?>
+                <li class=" nav-item my_menu ">
+                    <a href="#" class="my_menu"><i class="feather icon-users"></i><span class="menu-title">Clientes</span></a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="<?php echo e(route('empresas.index')); ?>"><span class="menu-item">Empresas</span></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo e(route('users.index')); ?>"><span class="menu-item">Usuarios</span></a>
+                        </li>
+                    </ul>
+                </li>
+            <?php endif; ?>
+        
+            <?php if(App\User::isAdmin()): ?>
+                <li class=" nav-item my_menu ">
+                    <a href="<?php echo e(route('estaciones.index')); ?>"><i class="feather icon-server"></i><span class="menu-item">Estaciones</span></a>
+                </li>
+            <?php endif; ?>
+            
+            <?php if(App\User::isAdmin() || App\User::isAvanzado()): ?>
                 <li class=" nav-item my_menu ">
                     <a href="<?php echo e(route('campanas.index')); ?>"><i class="feather icon-map-pin"></i><span class="menu-item">Campañas</span></a>
                 </li>
+            <?php endif; ?>
 
+            <?php if(App\User::isAdmin() || App\User::isAvanzado()): ?>
                 <li class=" nav-item my_menu ">
                     <a href="<?php echo e(route('puntos-monitoreo.historial')); ?>"><i class="feather icon-monitor"></i><span class="menu-item">Puntos de monitoreo</span></a>
                 </li>
             <?php endif; ?>
+
             <li class=" nav-item my_menu ">
                 <a href="<?php echo e(route('cuenta.edit')); ?>"><i class="feather icon-settings"></i><span class="menu-item">Configuración de cuenta</span></a>
             </li>

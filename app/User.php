@@ -51,18 +51,27 @@ class User extends Authenticatable
 
     }
 
-    static function isUser()
+    static function isAvanzado()
     {
-        if(Auth()->user()->rol == 'user')
+        if(Auth()->user()->rol == 'avanzado')
         {
             return true;
         }
         return false;
     }
 
-    static function isManager()
+    static function isIntermedio()
     {
-        if(Auth()->user()->rol == 'manager')
+        if(Auth()->user()->rol == 'intermedio')
+        {
+            return true;
+        }
+        return false;
+    }
+
+    static function isBasico()
+    {
+        if(Auth()->user()->rol == 'basico')
         {
             return true;
         }

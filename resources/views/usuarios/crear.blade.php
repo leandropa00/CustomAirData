@@ -76,42 +76,39 @@
                                                         </div>
                                                     </div>
                                                     
-                                                    @if (Auth::user()->rol=='admin')
-                                                        <div class="col-md-6 col-12">
-                                                            <div class="form-group">
-                                                                <label>Empresa</label>
-                                                                <div class="position-relative has-icon-left">
-                                                                    <select name="empresa" class="form-control" required>
-                                                                        <option value="">Selecciona una empresa</option>
-                                                                        @foreach ($empresas as $item)
-                                                                            <option value="{{$item->id}}">{{ucwords($item->nombre)}}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    <div class="form-control-position">
-                                                                        <i class="feather icon-user"></i>
-                                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Empresa</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <select name="empresa" class="form-control" required>
+                                                                    <option value="">Selecciona una empresa</option>
+                                                                    @foreach ($empresas as $item)
+                                                                        <option value="{{$item->id}}">{{ucwords($item->nombre)}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-user"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <input type="hidden" name="empresa" value="{{Auth::user()->empresa->id}}">
-                                                    @endif
+                                                    </div>
 
                                                     <div class="col-md-6 col-12">
-                                                            <div class="form-group">
-                                                                <label>Tipo de usuario</label>
-                                                                <div class="position-relative has-icon-left">
-                                                                    <select name="rol" id="rol" class="form-control select2" data-style="form-control">
-                                                                        <option value="">Seleccione tipo de usuario</option>
-                                                                        <option value="3">Corriente</option>
-                                                                        <option value="4">Básico (Acceso sólo al mapa)</option>
-                                                                    </select>
-                                                                    <div class="form-control-position">
-                                                                        <i class="feather icon-user"></i>
-                                                                    </div>
+                                                        <div class="form-group">
+                                                            <label>Tipo de usuario</label>
+                                                            <div class="position-relative has-icon-left">
+                                                                <select name="rol" id="rol" class="form-control select2" data-style="form-control">
+                                                                    <option value="">Seleccione tipo de usuario</option>
+                                                                    <option value="4">Básico</option>
+                                                                    <option value="3">Intermedio</option>
+                                                                    <option value="2">Avanzado</option>
+                                                                </select>
+                                                                <div class="form-control-position">
+                                                                    <i class="feather icon-user"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
 
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">

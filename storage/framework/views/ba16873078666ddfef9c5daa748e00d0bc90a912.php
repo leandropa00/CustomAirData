@@ -21,14 +21,14 @@
                             </div>
                         </div>
                     </div>
-                        <?php endif; ?>
-                    <?php if(count($errors) > 0): ?>
+                <?php endif; ?>
+                <?php if(count($errors) > 0): ?>
                     <div class="alert alert-danger">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <ul>
-                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li><?php echo e($error); ?></li>
-                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <li><?php echo e($error); ?></li>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </ul>
                     </div>
                 <?php endif; ?>
@@ -54,7 +54,6 @@
                                                     <th>Correo</th>
                                                     <th>Teléfono</th>
                                                     <th>Dirección</th>
-                                                    <th>Administrador</th>
                                                     <th>Fecha de creación</th>
                                                     <th>Acción</th>
                                                 </tr>
@@ -67,7 +66,6 @@
                                                         <td><?php echo e($item->correo); ?></td>
                                                         <td><?php echo e($item->telefono); ?></td>
                                                         <td><?php echo e(ucfirst($item->direccion)); ?></td>
-                                                        <td><?php echo e($item->manager ? ucwords($item->manager->name) : 'Sin manager'); ?></td>
                                                         <td><?php echo e(carbon\Carbon::parse($item->created_at)->format('d/m/Y g:i A')); ?></td>
                                                         <td>
                                                             <a class="btn btn-icon btn-outline-warning waves-effect waves-light" href="<?php echo e(route('empresas.edit', $item->id)); ?>"><i class="feather icon-edit"></i></a>
@@ -76,7 +74,7 @@
                                                     </tr>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?> 
                                                     <tr>
-                                                        <td colspan="8" class="text-center">No hay empresas existentes</td>
+                                                        <td colspan="7" class="text-center">No hay empresas existentes</td>
                                                     </tr>
                                                 <?php endif; ?>
                                             </tbody>

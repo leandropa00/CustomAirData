@@ -13,7 +13,7 @@ class AddRolColumnsUsersTable extends Migration
      */
     public function up()
     {
-        DB::statement("ALTER TABLE users MODIFY COLUMN rol ENUM('admin', 'manager', 'usuario', 'usuario basico')");
+        DB::statement("ALTER TABLE users MODIFY COLUMN rol ENUM('admin', 'avanzado', 'intermedio', 'básico')");
     }
 
     /**

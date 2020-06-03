@@ -17,11 +17,6 @@ class Empresa extends Model
         return $this->hasMany(User::class);
     }
 
-    public function manager()
-    {
-        return $this->hasOne(User::class)->where('rol', 'manager');
-    }
-
     public function campanas()
     {
         return $this->hasMany(Campana::class);

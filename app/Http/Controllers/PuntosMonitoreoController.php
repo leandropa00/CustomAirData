@@ -10,6 +10,8 @@ use App\DetallePunto;
 use App\Contaminante;
 use App\TipoParametro;
 use App\Dato;
+use App\User;
+use Auth;
 use DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -513,7 +515,8 @@ class PuntosMonitoreoController extends Controller
     }
 
     public function historial(){
-        $puntosDeMonitoreo = PuntoMonitoreo::all();
+
+        $puntosDeMonitoreo = User::isAdmin() ? PuntoMonitoreo::all() : Auth::user()->empresa->puntosMonitoreo;
         return view('puntosMonitoreo.historial', compact('puntosDeMonitoreo'));
     }
 }

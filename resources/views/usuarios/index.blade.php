@@ -54,11 +54,9 @@
                                                     <th>Nombre</th>
                                                     <th>Correo</th>
                                                     <th>Teléfono</th>
-                                                    @if (Auth::user()->rol=='admin')
-                                                        <th>Recibe mensajes</th>
-                                                        <th>Empresa</th>
-                                                    @endif
-                                                    <th>Rol</th>
+                                                    <th>Recibe mensajes</th>
+                                                    <th>Empresa</th>
+                                                    <th>Tipo de usuario</th>
                                                     <th>Fecha de creación</th>
                                                     <th>Acción</th>
                                                 </tr>
@@ -69,24 +67,14 @@
                                                     <td>{{ ucwords($data->name) }}</td>
                                                     <td>{{ $data->email }}</td>
                                                     <td>{{ $data->telefono }}</td>
-                                                    @if (Auth::user()->rol=='admin')
-                                                        <td>
-                                                            <select onchange="cambiarPermisosSms({{ $data->id }}, this.value)" class="form-control">
-                                                                <option value="0" @if($data->recibe_mensajes == 0) selected @endif>No</option>
-                                                                <option value="1" @if($data->recibe_mensajes == 1) selected @endif>Sí</option>
-                                                            </select>
-                                                        </td>
-                                                        <td>{{ ucfirst($data->empresa->nombre) }}</td>
-                                                    @endif
                                                     <td>
-                                                        @if($data->rol=="usuario")
-                                                            Usuario corriente
-                                                        @elseif($data->rol=="usuario basico")
-                                                            Usuario básico
-                                                        @else
-                                                            {{ ucfirst($data->rol) }}
-                                                        @endif
+                                                        <select onchange="cambiarPermisosSms({{ $data->id }}, this.value)" class="form-control">
+                                                            <option value="0" @if($data->recibe_mensajes == 0) selected @endif>No</option>
+                                                            <option value="1" @if($data->recibe_mensajes == 1) selected @endif>Sí</option>
+                                                        </select>
                                                     </td>
+                                                    <td>{{ ucfirst($data->empresa->nombre) }}</td>
+                                                    <td>{{ ucfirst($data->rol) }}</td>
                                                     <td>{{ carbon\Carbon::parse($data->created_at)->format('d-m-Y g:i A') }}</td>
                                                     <td>
                                                         <a class="btn btn-icon btn-outline-warning waves-effect waves-light" href="{{ route('users.edit', $data->id) }}"><i class="feather icon-edit"></i></a>
@@ -95,7 +83,7 @@
                                                 </tr>
                                                 @empty
                                                     <tr>
-                                                        <td {{ Auth::user()->rol=='admin' ? "colspan=8" : "colspan=6" }} class="text-center">No hay usuarios creados</td>
+                                                        <td colspan="8" class="text-center">No hay usuarios creados</td>
                                                     </tr>
                                                 @endforelse
                                             </tbody>

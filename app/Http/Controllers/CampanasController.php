@@ -52,7 +52,7 @@ class CampanasController extends Controller
         $campana->fecha_fin = $request->fecha_fin;
         $campana->observaciones = $request->observaciones;
         $campana->save();
-        return redirect()->route('campanas.index')->with('success','Empresa actualizada satisfactoriamente');
+        return redirect()->route('campanas.index')->with('success','Campaña actualizada satisfactoriamente');
 
     }
     function destroy($id)

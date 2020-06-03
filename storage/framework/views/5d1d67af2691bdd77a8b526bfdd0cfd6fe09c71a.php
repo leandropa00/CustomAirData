@@ -45,9 +45,9 @@
                                                     <td><?php echo e(ucwords($item->alias)); ?></td>
                                                     <td><?php echo e(ucfirst($item->estacion->nombre)); ?></td>
                                                     <td><?php echo e($item->campana->nombre); ?></td>
-                                                        <?php if(Auth::user()->rol=='admin'): ?>
-                                                            <td><?php echo e($item->campana->empresa->nombre); ?></td>
-                                                        <?php endif; ?>
+                                                    <?php if(Auth::user()->rol=='admin'): ?>
+                                                        <td><?php echo e($item->campana->empresa->nombre); ?></td>
+                                                    <?php endif; ?>
                                                     <td><?php echo e(carbon\Carbon::parse($item->campana->fecha_inicio)->format('d/m/Y')); ?></td>
                                                     <td><?php echo e(carbon\Carbon::parse($item->campana->fecha_fin)->format('d/m/Y')); ?></td>
                                                     <td>
@@ -65,7 +65,7 @@
                                                 </tr>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                     <tr>
-                                                        <td colspan="5" class="text-center">No hay puntos de monitoreo creados</td>
+                                                        <td <?php echo e(App\User::isAdmin() ? "colspan=7" : "colspan=6"); ?> class="text-center">No hay puntos de monitoreo creados</td>
                                                     </tr>
                                                 <?php endif; ?>
                                             </tbody>

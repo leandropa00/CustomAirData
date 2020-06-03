@@ -8,9 +8,7 @@
                         </ul>
                     </div>
                     <ul class="nav navbar-nav float-right">
-                        
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
-                        
                         <li class="dropdown dropdown-notification nav-item">
                             <a class="nav-link nav-link-label" href="#" data-toggle="dropdown">
                                 <i class="ficon feather icon-bell"></i>
@@ -60,7 +58,7 @@
                             <div class="user-nav d-sm-flex d-none">
                                 <span class="user-name text-bold-600"><?php echo e(ucwords(Auth::user()->name)); ?></span><span class="user-status">Disponible</span>
                             </div>
-                            <?php if(Auth::user()->rol == 'admin' || is_null(Auth::user()->empresa->foto)): ?>
+                            <?php if(Auth::user()->rol == 'admin' || !isset(Auth::user()->empresa->foto)): ?>
                                 <span><img class="round" src="<?php echo e(url('/')); ?>/includes/app-assets/images/portrait/small/default.png" alt="avatar" height="55" width="55"></span>
                             <?php else: ?>
                                 <span><img class="round" src="<?php echo e(asset('images/empresas/'.Auth::user()->empresa->foto)); ?>" alt="avatar" height="55" width="55"></span>

@@ -22,14 +22,14 @@
                             </div>
                         </div>
                     </div>
-                        @endif
-                    @if (count($errors) > 0)
+                @endif
+                @if (count($errors) > 0)
                     <div class="alert alert-danger">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                     @endforeach
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
                         </ul>
                     </div>
                 @endif
@@ -55,7 +55,6 @@
                                                     <th>Correo</th>
                                                     <th>Teléfono</th>
                                                     <th>Dirección</th>
-                                                    <th>Administrador</th>
                                                     <th>Fecha de creación</th>
                                                     <th>Acción</th>
                                                 </tr>
@@ -68,7 +67,6 @@
                                                         <td>{{ $item->correo }}</td>
                                                         <td>{{ $item->telefono }}</td>
                                                         <td>{{ ucfirst($item->direccion) }}</td>
-                                                        <td>{{ $item->manager ? ucwords($item->manager->name) : 'Sin manager' }}</td>
                                                         <td>{{ carbon\Carbon::parse($item->created_at)->format('d/m/Y g:i A') }}</td>
                                                         <td>
                                                             <a class="btn btn-icon btn-outline-warning waves-effect waves-light" href="{{ route('empresas.edit', $item->id) }}"><i class="feather icon-edit"></i></a>
@@ -77,7 +75,7 @@
                                                     </tr>
                                                 @empty 
                                                     <tr>
-                                                        <td colspan="8" class="text-center">No hay empresas existentes</td>
+                                                        <td colspan="7" class="text-center">No hay empresas existentes</td>
                                                     </tr>
                                                 @endforelse
                                             </tbody>

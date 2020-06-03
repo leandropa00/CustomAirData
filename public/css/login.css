@@ -59,6 +59,7 @@ button:focus {
     width: 170%;
     background-color: #424242;
     border-radius: 10%;
+    opacity: 90%;
 }
 
 #logo {

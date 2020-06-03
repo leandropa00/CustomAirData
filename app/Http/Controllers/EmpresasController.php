@@ -23,22 +23,13 @@ class EmpresasController extends Controller
 
     function store(Request $request)
     {
-        DB::transaction(function () use ($request){
-            $empresa = new Empresa;
-            $empresa->nombre = $request->nombre;
-            $empresa->nit = $request->nit;
-            $empresa->telefono = $request->telefono;
-            $empresa->direccion = $request->direccion;
-            $empresa->correo = $request->correo;
-            $empresa->save();
-
-            $manager = new User;
-            $manager->name = $request->nombre_manager;
-            $manager->email = $request->correo;
-            $manager->password = Hash::make($request->contrasena);
-            $manager->rol = 'manager';
-            $empresa->manager()->save($manager);
-        });
+        $empresa = new Empresa;
+        $empresa->nombre = $request->nombre;
+        $empresa->nit = $request->nit;
+        $empresa->telefono = $request->telefono;
+        $empresa->direccion = $request->direccion;
+        $empresa->correo = $request->correo;
+        $empresa->save();
 
         return redirect()->route('empresas.index')->with('success','Empresa creada satisfactoriamente');     
     }
