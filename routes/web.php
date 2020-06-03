@@ -65,3 +65,7 @@ Route::get('marcar-como-leidas', function(){
     Auth::user()->unreadNotifications->markAsRead();
     return redirect()->back();
 })->name('marcarComoLeidas');
+
+// Recuperar contraseña
+Route::get('enviarCodigo', 'ContrasenaController@enviarMensaje')->name('recuperarContrasena');
+Route::post('cambiarContrasena', 'ContrasenaController@cambiarContrasena')->name('cambiarContrasena');
