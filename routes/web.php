@@ -55,16 +55,10 @@ Route::get('cuenta', 'ConfiguracionCuentaController@edit')->name('cuenta.edit');
 Route::post('cuenta', 'ConfiguracionCuentaController@update')->name('cuenta.update');
 
 // Notificaciones
-Route::get('notificacion/{punto}/{valor}/{limite}/{tipo}/{contaminante}', 'NotificacionesController');
-Route::get('notificarAdmin/{punto}/{hora}', function(App\PuntoMonitoreo $punto, $hora){
-    $notificacion['asunto'] = "Error en la carga de datos de ".$punto->alias;
-    $notificacion['mensaje'] = "No hay datos para hoy después de las $hora en ".$punto->alias.' - '.$punto->campana->nombre.' - '.$punto->campana->empresa->nombre;      
-    App\User::find(1)->notify(new App\Notifications\AlertaTemprana($notificacion)); 
-})->name('notificarAdmin');
-Route::get('marcar-como-leidas', function(){
-    Auth::user()->unreadNotifications->markAsRead();
-    return redirect()->back();
-})->name('marcarComoLeidas');
+Route::get('notificacion-niveles/{punto}/{valor}/{limite}/{tipo}/{contaminante}', 'NotificacionesController@niveles');
+Route::get('notificacion-carga-datos/{punto}/{hora}', 'NotificacionesController@cargaDatos');
+Route::get('notificacion-banderas/{punto}/{hora}/{bandera}', 'NotificacionesController@banderas');
+Route::get('marcar-como-leidas', 'NotificacionesController@marcarComoLeidas')->name('marcarComoLeidas');
 
 // Recuperar contraseña
 Route::get('enviarCodigo', 'ContrasenaController@enviarMensaje')->name('recuperarContrasena');

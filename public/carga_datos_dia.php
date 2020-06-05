@@ -83,8 +83,17 @@ while ($row = $result->fetch_assoc()) {
     inner join contaminantes on contaminantes.id = contaminantes_puntos.contaminante_id
     where punto_monitoreo_id = $loc_id";
     $result3 = $conn->query($sql3);
-
+    
+    $banderas = [];
     while ($row3 = $result3->fetch_assoc()) {
+      // INI Validación banderas
+      $field = str_split(explode('.', $row2[$row3['nombre_campo']])[1]);
+      if(array_key_exists(2, $field)){
+        array_push($banderas, $field[2]);
+      }      
+      // END Validación banderas
+
+      // INI Validación límites
       if (!is_null($row3['minimo'])) {
         if ($row2[$row3['nombre_campo']]*$row3['conversion'] < $row3['minimo']){
           while ($row1 = mysqli_fetch_assoc($result1)){
@@ -97,7 +106,7 @@ while ($row = $result->fetch_assoc()) {
                 $telefono,
                 [ 
                     'from' => '+16692013141',
-                    'body' => "El canal ".$row3['nombre']." del punto de monitoreo $location_name - ".$row['nombre']." registró ".$row2[$row3['nombre_campo']]*$row3['conversion']." ".$row3['unidad_final'].", el cual se encuentra por debajo del nivel de alerta establecido en ".$row3['minimo'].' '.$row3['unidad_final']
+                    'body' => "El canal ".$row3['nombre']." del punto de monitoreo $location_name - ".$row['nombre']." registro ".$row2[$row3['nombre_campo']]*$row3['conversion']." ".$row3['unidad_final'].", el cual se encuentra por debajo del nivel de alerta establecido en ".$row3['minimo'].' '.$row3['unidad_final']
                 ]
               );
             }
@@ -125,7 +134,7 @@ while ($row = $result->fetch_assoc()) {
                 $telefono,
                 [ 
                     'from' => '+16692013141',
-                    'body' => "El canal ".$row3['nombre']." del punto de monitoreo $location_name - ".$row['nombre']." registró ".$row2[$row3['nombre_campo']]*$row3['conversion']." ".$row3['unidad_final'].", el cual excede el nivel de alerta establecido en ".$row3['maximo'].' '.$row3['unidad_final']
+                    'body' => "El canal ".$row3['nombre']." del punto de monitoreo $location_name - ".$row['nombre']." registro ".$row2[$row3['nombre_campo']]*$row3['conversion']." ".$row3['unidad_final'].", el cual excede el nivel de alerta establecido en ".$row3['maximo'].' '.$row3['unidad_final']
                 ]
               );
             }
@@ -141,8 +150,31 @@ while ($row = $result->fetch_assoc()) {
         }
       }
     }
-  } else {
+    // END Validación límites
 
+    // INI Validación banderas 2
+    if(count($banderas) > 0){
+
+      $msg = '<h2>Hola admin,</h2><hr><p>Se encontró la bandera '.$banderas[0]." en el punto de monitoreo $location_name el ".date('d/m/Y', strtotime($row2['fecha_hora'])).' a las '.date('g:i A', strtotime($row2['fecha_hora'])).'</p><br></br><p><b>Gracias,</b><br> CustomAirData</p>';
+      send_mail($msg);
+
+      include_once('twilio.php');
+      $client->messages->create(
+        '+573017979012', // Jose Luis
+        [ 
+            'from' => '+16692013141',
+            'body' => 'Se encontro la bandera '.$banderas[0]." en el punto de monitoreo $location_name el ".date('d/m/Y', strtotime($row2['fecha_hora'])).' a las '.date('g:i A', strtotime($row2['fecha_hora']))
+        ]
+      );
+
+      servicioNotificacion("https://logjane.com/customair/public/notificacion-banderas/$loc_id/".date('g:iA', strtotime($row2['fecha_hora'])).'/'.$banderas[0]);
+
+      echo 'Se encontró la bandera '.$banderas[0]." en el punto de monitoreo $location_name el ".date('d/m/Y', strtotime($row2['fecha_hora'])).' a las '.date('g:i A', strtotime($row2['fecha_hora']))."\n";
+    }  
+    // END Validación banderas 2
+
+  // INI Notificación cuando no hay datos
+  } else {
     $msg = "<h2>Hola admin,</h2><hr><p>No hay datos para el día de hoy ".date('d/m/Y')." después de las ".$dateTime->format('g:i A')." para el punto <b>" . $row['alias'] . "</b> en la ruta " . $row['ruta'] . "</p><br></br><p><b>Gracias,</b><br> CustomAirData</p>";
     send_mail($msg);
 
@@ -151,15 +183,17 @@ while ($row = $result->fetch_assoc()) {
       '+573017979012', // Jose Luis
       [ 
           'from' => '+16692013141',
-          'body' => 'No hay datos para hoy después de las '.$dateTime->format('g:i A')." en $location_name"
+          'body' => 'No hay datos para hoy despues de las '.$dateTime->format('g:i A')." en $location_name"
       ]
     );
 
-    servicioNotificacion("https://logjane.com/customair/public/notificarAdmin/$loc_id/".$dateTime->format('g:iA'));
+    servicioNotificacion("https://logjane.com/customair/public/notificacion-carga-datos/$loc_id/".$dateTime->format('g:iA'));
 
     echo 'No hay datos para hoy '.date('d/m/Y').' después de las '.$dateTime->format('g:i A')." en $location_name \n";
   }
-  //Alertas tempranas
+  // END Notificación cuando no hay datos
+
+  // ENDAlertas tempranas
 }
 
 function delete_record($conn, $file_date, $loc_id)
@@ -169,7 +203,7 @@ function delete_record($conn, $file_date, $loc_id)
 }
 
 function notify($id, $valor, $limite, $tipo, $contaminante) {
-  servicioNotificacion("https://logjane.com/customair/public/notificacion/$id/$valor/$limite/$tipo/$contaminante");
+  servicioNotificacion("https://logjane.com/customair/public/notificacion-niveles/$id/$valor/$limite/$tipo/$contaminante");
 }
 
 function servicioNotificacion($url) {
@@ -185,15 +219,16 @@ function send_mail($msg)
   $mail = new PHPMailer();
   $mail->From = "info@logjane.com";
   $mail->FromName = "CustomAirData";
-  $mail->AddAddress("goffice24@gmail.com");
+  $mail->AddAddress("mails@goffice24.com");
   $mail->AddCC("leandropa00@gmail.com");
+  $mail->AddCC("jose.mateus@airlab.com.co");
   $mail->Subject  = "Error en la carga de datos de airlab";
   $mail->MsgHTML($msg);
 
   if (!$mail->Send()) {
     echo "Mailer error: " . $mail->ErrorInfo;
   } else {
-    echo "Correo enviado correctamente a goffice24@gmail.com \n";
+    echo "Correo enviado correctamente a mails@goffice24.com \n";
   }
 }
 
