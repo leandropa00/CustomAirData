@@ -69,10 +69,10 @@
                                                         <button onclick="abrirModal(<?php echo e($item->id); ?>)" class="btn btn-icon btn-outline-primary waves-effect waves-light"><i class="feather icon-info"></i></button>                                                          
                                                         <a class="btn btn-icon btn-outline-secondary waves-effect waves-light" target="_blank" href="<?php echo e(route('puntos-monitoreo.imprimir', $item->id)); ?>"><i class="feather icon-printer"></i></a>
                                                         <a class="btn btn-icon btn-outline-vimeo waves-effect waves-light" href="<?php echo e(route('puntos-monitoreo.contaminantes', $item->id)); ?>"><i class="feather icon-wind"></i></a>
-                                                        <?php if(Auth::user()->rol=='admin'): ?>
-                                                            <?php if($item->carga_automatica == '0'): ?>
-                                                                <button onclick="modalCarga(<?php echo e($item->id); ?>)" class="btn btn-icon btn-outline-dark waves-effect waves-light"><i class="feather icon-upload"></i></button>                                                          
-                                                            <?php endif; ?>
+                                                        <?php if($item->carga_automatica == '0' && (App\User::isAdmin() || App\User::isAvanzado())): ?>
+                                                            <button onclick="modalCarga(<?php echo e($item->id); ?>)" class="btn btn-icon btn-outline-dark waves-effect waves-light"><i class="feather icon-upload"></i></button>                                                          
+                                                        <?php endif; ?>
+                                                        <?php if(App\User::isAdmin()): ?>
                                                             <a class="btn btn-icon btn-outline-warning waves-effect waves-light" href="<?php echo e(route('puntos-monitoreo.edit', $item->id)); ?>"><i class="feather icon-edit"></i></a>
                                                             <a class="btn btn-icon btn-outline-danger waves-effect waves-light" href="<?php echo e(route('puntos-monitoreo.destroy', $item->id)); ?>"><i class="feather icon-trash-2"></i></a>
                                                         <?php endif; ?>
